@@ -341,6 +341,9 @@ const handleMessage = (sender_psid, received_message) => {
       case "hi":
           hiReply(sender_psid);
         break;
+      case "mingalarbar":
+          greetInMyanmar(sender_psid);
+        break;
       case "text":
         textReply(sender_psid);
         break;
@@ -500,6 +503,12 @@ function webviewTest(sender_psid){
 
 const hiReply =(sender_psid) => {
   let response = {"text": "You sent hi message"};
+  callSend(sender_psid, response);
+}
+
+
+const greetInMyanmar =(sender_psid) => {
+  let response = {"text": "Mingalarbar. How may I help"};
   callSend(sender_psid, response);
 }
 
