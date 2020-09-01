@@ -243,16 +243,16 @@ app.post('/webview',upload.single('file'),function(req,res){
      
       
       
-      /*db.collection('webview').add({
+      db.collection('webview').add({
             name: name,
-           email: email,
-            image: img_url
+            email: email,
+            image: "https://i.pinimg.com/originals/01/df/e5/01dfe56515362ce77a9651569d16c2d7.jpg"
           }).then(success => {   
              console.log("DATA SAVED")
              thankyouReply(sender, name, img_url);    
           }).catch(error => {
             console.log(error);
-      });   */     
+      });      
 });
 
 //Set up Get Started Button. To run one time
