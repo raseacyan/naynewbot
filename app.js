@@ -1,6 +1,6 @@
 'use strict';
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const APP_URL = "https://fbstarter.herokuapp.com";
+const APP_URL = process.env.APP_URL;
 
 //new text
 
@@ -55,7 +55,7 @@ var firebaseConfig = {
     "project_id": process.env.FIREBASE_PROJECT_ID,    
     }),
     databaseURL: process.env.FIREBASE_DB_URL,   
-    storageBucket: "gs://sample-project-2c26a.appspot.com" 
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
   };
 
 
