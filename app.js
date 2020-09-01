@@ -228,11 +228,17 @@ app.post('/webview',upload.single('file'),function(req,res){
 
       let file = req.file;
       if (file) {
-        uploadImageToStorage(file).then((success) => {
-          console.log('SUCCESS', success);
-          res.status(200).send({
-            status: 'success'
-          });
+        uploadImageToStorage(file).then((img_url) => {
+            db.collection('webview').add({
+              name: name,
+              email: email,
+              image: img_url
+              }).then(success => {   
+                console.log("DATA SAVED")
+                thankyouReply(sender, name, img_url);    
+              }).catch(error => {
+                console.log(error);
+              }); 
         }).catch((error) => {
           console.error(error);
         });
@@ -243,16 +249,7 @@ app.post('/webview',upload.single('file'),function(req,res){
      
       
       
-      db.collection('webview').add({
-            name: name,
-            email: email,
-            image: "https://i.pinimg.com/originals/01/df/e5/01dfe56515362ce77a9651569d16c2d7.jpg"
-          }).then(success => {   
-             console.log("DATA SAVED")
-             thankyouReply(sender, name, img_url);    
-          }).catch(error => {
-            console.log(error);
-      });      
+           
 });
 
 //Set up Get Started Button. To run one time
