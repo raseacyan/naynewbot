@@ -420,12 +420,14 @@ const handleAttachments = (sender_psid, attachments) => {
 /*********************************************
 Function to handle when user click button
 **********************************************/
-const handlePostback = (sender_psid, received_postback) => {
+const handlePostback = (sender_psid, received_postback) => { 
 
-  console.log('BUTTON', received_postback);
-
+  
 
   let payload = received_postback.payload;
+
+  console.log('BUTTON PAYLOAD', payload);
+
   switch(payload) {        
       case "yes":
           showButtonReplyYes(sender_psid);
@@ -556,7 +558,7 @@ const showDoctor = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "James Smith",
-                  "payload": "James Smith",
+                  "payload": "Doctor:James Smith",
                 },               
               ],
           },{
@@ -567,7 +569,7 @@ const showDoctor = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Kenneth Martinez",
-                  "payload": "Kenneth Martinez",
+                  "payload": "Doctor:Kenneth Martinez",
                 },               
               ],
           },{
@@ -578,7 +580,7 @@ const showDoctor = (sender_psid) => {
                 {
                   "type": "postback",
                   "title": "Barbara Young",
-                  "payload": "Barbara Young",
+                  "payload": "Doctor:Barbara Young",
                 },               
               ],
           }
