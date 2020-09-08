@@ -83,7 +83,7 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       let sender_psid = webhook_event.sender.id; 
 
-      console.log("Event: ", webhook_event);
+      
 
 
       if (webhook_event.message) {
@@ -305,8 +305,13 @@ Function to Handle when user send quick reply message
 ***********************************************/
 
 function handleQuickReply(sender_psid, received_message) {
+
+  console.log('QUICK REPLY', received_message);
   
-  switch(received_message) {        
+  switch(received_message) {  
+        case "general surgery":
+          showDoctor(sender_psid);
+        break;       
         case "on":
             showQuickReplyOn(sender_psid);
           break;
@@ -324,6 +329,8 @@ Function to Handle when user send text message
 ***********************************************/
 
 const handleMessage = (sender_psid, received_message) => {
+
+  console.log('TEXT REPLY', received_message);
   //let message;
   let response;
 
@@ -344,10 +351,7 @@ const handleMessage = (sender_psid, received_message) => {
 
       case "hospital":
           hospitalAppointment(sender_psid);
-        break;
-      case "general surgery":
-          showDoctor(sender_psid);
-        break;           
+        break;                
       case "text":
         textReply(sender_psid);
         break;
@@ -375,7 +379,13 @@ const handleMessage = (sender_psid, received_message) => {
 /*********************************************
 Function to handle when user send attachment
 **********************************************/
+
+
 const handleAttachments = (sender_psid, attachments) => {
+  
+  console.log('ATTACHMENT', attachments);
+
+
   let response; 
   let attachment_url = attachments[0].payload.url;
     response = {
@@ -411,6 +421,10 @@ const handleAttachments = (sender_psid, attachments) => {
 Function to handle when user click button
 **********************************************/
 const handlePostback = (sender_psid, received_postback) => {
+
+  console.log('BUTTON POSTBACK', received_postback);
+
+
   let payload = received_postback.payload;
   switch(payload) {        
       case "yes":
