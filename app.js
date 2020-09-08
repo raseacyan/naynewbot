@@ -342,7 +342,9 @@ const handleMessage = (sender_psid, received_message) => {
       case "hospital":
           hospitalAppointment(sender_psid);
         break;
-      
+      case "general surgery":
+          showDoctor(sender_psid);
+        break;           
       case "text":
         textReply(sender_psid);
         break;
@@ -525,6 +527,34 @@ const hospitalAppointment = (sender_psid) => {
   callSend(sender_psid, response1).then(()=>{
     return callSend(sender_psid, response2);
   });
+}
+
+
+const showDoctor (sender_psid) = {
+    let response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "James Smith",
+            "subtitle": "General Surgeon"
+            "image_url":"https://image.freepik.com/free-vector/doctor-icon-avatar-white_136162-58.jpg",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "James Smith",
+                  "payload": "James Smith",
+                },               
+              ],
+          }]
+        }
+      }
+    }
+
+  
+  callSend(sender_psid, response);
+
 }
 
 /**************
