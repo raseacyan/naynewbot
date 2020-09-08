@@ -307,6 +307,8 @@ Function to Handle when user send quick reply message
 function handleQuickReply(sender_psid, received_message) {
 
   console.log('QUICK REPLY', received_message);
+
+  received_message = received_message.toLowerCase();
   
   switch(received_message) {  
         case "general surgery":
@@ -338,9 +340,7 @@ const handleMessage = (sender_psid, received_message) => {
      handleAttachments(sender_psid, received_message.attachments);
   } else {
       
-      let user_message = received_message.text;
-
-      console.log('USER MESSAGE', user_message);
+      let user_message = received_message.text;      
      
       user_message = user_message.toLowerCase(); 
 
@@ -422,7 +422,7 @@ Function to handle when user click button
 **********************************************/
 const handlePostback = (sender_psid, received_postback) => {
 
-  console.log('BUTTON POSTBACK', received_postback);
+  console.log('BUTTON', received_postback);
 
 
   let payload = received_postback.payload;
@@ -483,10 +483,6 @@ const showImages = (sender_psid) => {
 /*********************************************
 END GALLERY SAMPLE
 **********************************************/
-
-
-
-
 
 
 function webviewTest(sender_psid){
