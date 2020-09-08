@@ -309,8 +309,13 @@ function handleQuickReply(sender_psid, received_message) {
   console.log('QUICK REPLY', received_message);
 
   received_message = received_message.toLowerCase();
-  
-  switch(received_message) {  
+
+  if(payload.startsWith("visit:")){
+    let visit = payload.slice(6);
+    console.log('VISIT: ', visit);
+  }else{
+
+      switch(received_message) {  
         case "general surgery":
           showDoctor(sender_psid);
         break;       
@@ -322,7 +327,11 @@ function handleQuickReply(sender_psid, received_message) {
           break;                
         default:
             defaultReply(sender_psid);
-  } 
+    } 
+
+  }
+  
+  
  
 }
 
@@ -432,6 +441,7 @@ const handlePostback = (sender_psid, received_postback) => {
   if(payload.startsWith("Doctor:")){
     let doctor_name = payload.slice(7);
     console.log('SELECTED DOCTOR IS: ', doctor_name);
+    firstOrFollowUp(sender_psid);
   }else{
 
       switch(payload) {        
@@ -444,7 +454,7 @@ const handlePostback = (sender_psid, received_postback) => {
       default:
           defaultReply(sender_psid);
     } 
-    
+
   }
 
 
@@ -602,6 +612,26 @@ const showDoctor = (sender_psid) => {
     }
 
   
+  callSend(sender_psid, response);
+
+}
+
+const firstOrFollowUp = (sender_psid) => {
+
+  let response = {
+    "text": "First Time Visit or Follow Up",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"First Time",
+              "payload":"visit:first time",              
+            },{
+              "content_type":"text",
+              "title":"Follow Up",
+              "payload":"visit:follow up",             
+            }
+    ]
+  };
   callSend(sender_psid, response);
 
 }
