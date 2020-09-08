@@ -310,8 +310,8 @@ function handleQuickReply(sender_psid, received_message) {
 
   received_message = received_message.toLowerCase();
 
-  if(payload.startsWith("visit:")){
-    let visit = payload.slice(6);
+  if(received_message.startsWith("visit:")){
+    let visit = received_message.slice(6);
     console.log('VISIT: ', visit);
   }else{
 
