@@ -338,9 +338,11 @@ const handleMessage = (sender_psid, received_message) => {
       case "hi":
           hiReply(sender_psid);
         break;
-      case "mingalarbar":
-          greetInMyanmar(sender_psid);
+
+      case "hospital":
+          hospitalAppointment(sender_psid);
         break;
+      
       case "text":
         textReply(sender_psid);
         break;
@@ -494,6 +496,40 @@ function webviewTest(sender_psid){
     }
   callSendAPI(sender_psid, response);
 }
+
+/**************
+start hospital
+**************/
+const hospitalAppointment = (sender_psid) => {
+   let response1 = {"text": "Welcome to ABC Hospital"};
+   let response2 = {
+    "text": "Please select department",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"General Surgery",
+              "payload":"General Surgery",              
+            },{
+              "content_type":"text",
+              "title":"ENT",
+              "payload":"ENT",             
+            },{
+              "content_type":"text",
+              "title":"Dermatology",
+              "payload":"Dermatology", 
+            }
+
+    ]
+  };
+
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, repsonse2);
+  });
+}
+
+/**************
+end hospital
+**************/
 
 
 
