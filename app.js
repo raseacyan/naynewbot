@@ -354,8 +354,7 @@ const handleMessage = (sender_psid, received_message) => {
       case "quick":
         quickReply(sender_psid);
         break;
-      case "button":
-        console.log('CASE: BUTTON');            
+      case "button":                  
         buttonReply(sender_psid);
         break;
       case "webview":
@@ -541,7 +540,7 @@ const showDoctor = (sender_psid) => {
           "template_type": "generic",
           "elements": [{
             "title": "James Smith",
-            "subtitle": "General Surgeon"
+            "subtitle": "General Surgeon",
             "image_url":"https://image.freepik.com/free-vector/doctor-icon-avatar-white_136162-58.jpg",                       
             "buttons": [
                 {
