@@ -334,6 +334,7 @@ function handleQuickReply(sender_psid, received_message) {
     let visit = received_message.slice(6);
     console.log('VISIT: ', visit);
     userInputs[user_id].visit = visit;
+    console.log('TEST2', userInputs);
     current_question = 'q1';
     botQuestions(current_question, sender_psid);
   }else{
