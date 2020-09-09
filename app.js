@@ -725,7 +725,7 @@ const botQuestions = (current_question, sender_psid) => {
 }
 
 const confirmAppointment = (sender_psid) => {
-  console.log('APPOINTMENT INFO', userInputs[user_id]);
+  console.log('APPOINTMENT INFO', userInputs);
   let response = {"text": "summery"};
   callSend(sender_psid, response);
 }
