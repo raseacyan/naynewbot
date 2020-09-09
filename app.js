@@ -23,6 +23,18 @@ const uuidv4 = uuid();
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
+const bot_questions = {
+  "q1": "please enter date?",
+  "q2": "please enter time",
+  "q3": "please enter full name",
+  "q4": "please enter gender",
+  "q5": "please enter phone number",
+  "q6": "please enter email",
+  "q7": "please leave a message"
+}
+
+let current_question = '';
+
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -313,6 +325,8 @@ function handleQuickReply(sender_psid, received_message) {
   if(received_message.startsWith("visit:")){
     let visit = received_message.slice(6);
     console.log('VISIT: ', visit);
+    current_question = 'q1';
+    botQuestions(current_question, sender_psid);
   }else{
 
       switch(received_message) {  
@@ -357,7 +371,6 @@ const handleMessage = (sender_psid, received_message) => {
       case "hi":
           hiReply(sender_psid);
         break;
-
       case "hospital":
           hospitalAppointment(sender_psid);
         break;                
@@ -633,6 +646,14 @@ const firstOrFollowUp = (sender_psid) => {
     ]
   };
   callSend(sender_psid, response);
+
+}
+
+const botQuestions = (current_question, sender_psid) => {
+  if(current_question == 'q1'){
+    let response = {"text": bot_questions.q1};
+    callSend(sender_psid, response);
+  }
 
 }
 
