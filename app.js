@@ -504,6 +504,7 @@ const handlePostback = (sender_psid, received_postback) => {
     let doctor_name = payload.slice(7);
     console.log('SELECTED DOCTOR IS: ', doctor_name);
     userInputs[user_id].doctor = doctor_name;
+    console.log('TEST', userInputs);
     firstOrFollowUp(sender_psid);
   }else{
 
