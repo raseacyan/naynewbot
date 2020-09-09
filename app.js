@@ -40,7 +40,6 @@ let user_id = '';
 let userInputs = [];
 
 
-
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -103,7 +102,7 @@ app.post('/webhook', (req, res) => {
 
       user_id = sender_psid; 
 
-      userInputs[user_id] = {};  
+        
 
 
       if (webhook_event.message) {
