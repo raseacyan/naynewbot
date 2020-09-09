@@ -729,8 +729,37 @@ const botQuestions = (current_question, sender_psid) => {
 
 const confirmAppointment = (sender_psid) => {
   console.log('APPOINTMENT INFO', userInputs);
-  let response = {"text": "summery \u000A another lne"};
-  callSend(sender_psid, response);
+  let summery = "department:" + userInputs[user_id].department + "\u000A";
+  summery += "doctor:" + userInputs[user_id].doctor + "\u000A";
+  summery += "visit:" + userInputs[user_id].visit + "\u000A";
+  summery += "date:" + userInputs[user_id].date + "\u000A";
+  summery += "time:" + userInputs[user_id].time + "\u000A";
+  summery += "name:" + userInputs[user_id].name + "\u000A";
+  summery += "gender:" + userInputs[user_id].gender + "\u000A";
+  summery += "phone:" + userInputs[user_id].phone + "\u000A";
+  summery += "email:" + userInputs[user_id].email + "\u000A";
+  summery += "message:" + userInputs[user_id].message + "\u000A";
+
+  let response1 = {"text": summery};
+
+  let response2 = {
+    "text": "Select your reply",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"OK",
+              "payload":"on",              
+            },{
+              "content_type":"text",
+              "title":"Cancel",
+              "payload":"off",             
+            }
+    ]
+  };
+  
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, response2);
+  });
 }
 
 /**************
