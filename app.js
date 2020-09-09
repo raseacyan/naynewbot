@@ -362,7 +362,7 @@ const handleMessage = (sender_psid, received_message) => {
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
-     console.log('DATE ENTERED' : received_message.text);
+     console.log('DATE ENTERED',received_message.text);
   }
   else {
       
