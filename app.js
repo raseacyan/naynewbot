@@ -37,7 +37,7 @@ let current_question = '';
 
 let user_id = ''; 
 
-let userInputs = {};
+let userInputs = [];
 
 
 /*
@@ -102,7 +102,9 @@ app.post('/webhook', (req, res) => {
 
       user_id = sender_psid; 
 
-        
+      if(!user[user_id].hasOwnProperty('department')){
+        userInputs[user_id] = {};
+      }    
 
 
       if (webhook_event.message) {
@@ -375,37 +377,37 @@ const handleMessage = (sender_psid, received_message) => {
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
      console.log('DATE ENTERED',received_message.text);
-     userInputs.date = received_message.text;
+     userInputs[user_id].date = received_message.text;
      current_question = 'q2';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q2'){
      console.log('TIME ENTERED',received_message.text);
-     userInputs.time = received_message.text;
+     userInputs[user_id].time = received_message.text;
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
      console.log('FULL NAME ENTERED',received_message.text);
-     userInputs.name = received_message.text;
+     userInputs[user_id].name = received_message.text;
      current_question = 'q4';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q4'){
      console.log('GENDER ENTERED',received_message.text);
-     userInputs.gender = received_message.text;
+     userInputs[user_id].gender = received_message.text;
      current_question = 'q5';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q5'){
      console.log('PHONE NUMBER ENTERED',received_message.text);
-     userInputs.phone = received_message.text;
+     userInputs[user_id].phone = received_message.text;
      current_question = 'q6';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q6'){
      console.log('EMAIL ENTERED',received_message.text);
-     userInputs.email = received_message.text;
+     userInputs[user_id].email = received_message.text;
      current_question = 'q7';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q7'){
      console.log('MESSAGE ENTERED',received_message.text);
-     userInputs.message = received_message.text;
+     userInputs[user_id].message = received_message.text;
      current_question = '';
      
      confirmAppointment(sender_psid);
@@ -503,7 +505,7 @@ const handlePostback = (sender_psid, received_postback) => {
   if(payload.startsWith("Doctor:")){
     let doctor_name = payload.slice(7);
     console.log('SELECTED DOCTOR IS: ', doctor_name);
-    userInputs.doctor = doctor_name;
+    userInputs[user_id].doctor = doctor_name;
     console.log('TEST', userInputs);
     firstOrFollowUp(sender_psid);
   }else{
