@@ -102,7 +102,7 @@ app.post('/webhook', (req, res) => {
 
       user_id = sender_psid; 
 
-      if(!user[user_id].hasOwnProperty('department')){
+      if(!userInputs[user_id]){
         userInputs[user_id] = {};
       }    
 
