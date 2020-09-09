@@ -37,7 +37,8 @@ let current_question = '';
 
 let user_id = ''; 
 
-let userInputs[user_id] = {
+let userInputs = [];
+userInputs[user_id] = {
   'department':'',
   'doctor':'',
   'visit':'',
