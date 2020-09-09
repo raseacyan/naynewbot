@@ -38,18 +38,8 @@ let current_question = '';
 let user_id = ''; 
 
 let userInputs = [];
-userInputs[user_id] = {
-  'department':'',
-  'doctor':'',
-  'visit':'',
-  'date':'',
-  'time':'',
-  'name':'',
-  'gender':'',
-  'phone':'',
-  'email':'',
-  'message':''
-} 
+
+
 
 /*
 var storage = multer.diskStorage({
@@ -111,7 +101,9 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       let sender_psid = webhook_event.sender.id; 
 
-      user_id = sender_psid;   
+      user_id = sender_psid; 
+
+      userInputs[user_id] = {};  
 
 
       if (webhook_event.message) {
