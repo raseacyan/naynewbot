@@ -24,8 +24,8 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
 const bot_questions = {
-  "q1": "please enter date?",
-  "q2": "please enter time",
+  "q1": "please enter date (dd-mm-yyyy)",
+  "q2": "please enter time (hh:mm)",
   "q3": "please enter full name",
   "q4": "please enter gender",
   "q5": "please enter phone number",
@@ -361,7 +361,10 @@ const handleMessage = (sender_psid, received_message) => {
 
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
-  } else {
+  }else if(current_question == 'q1'){
+     console.log('DATE ENTERED' : received_message.text);
+  }
+  else {
       
       let user_message = received_message.text;      
      
