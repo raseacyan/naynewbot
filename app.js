@@ -348,8 +348,8 @@ function handleQuickReply(sender_psid, received_message) {
 
       switch(received_message) {  
         case "general surgery":
-          console.log(USERID, user_id);
-          console.log(USERINPUTS, userInputs);
+          console.log('USERID', user_id);
+          console.log('USERINPUTS', userInputs);
           userInputs[user_id].department = 'general surgery';
           showDoctor(sender_psid);
         break;       
