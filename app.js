@@ -333,20 +333,18 @@ function handleQuickReply(sender_psid, received_message) {
 
   if(received_message.startsWith("visit:")){
     let visit = received_message.slice(6);
-    console.log('VISIT: ', visit);
+    
     userInputs[user_id].visit = visit;
-    console.log('TEST2', userInputs);
+    
     current_question = 'q1';
     botQuestions(current_question, sender_psid);
+  }else if(received_message.startsWith("department:")){
+    let dept = received_message.slice(11);
+    userInputs[user_id].department = dept;
+    showDoctor(sender_psid);
   }else{
 
-      switch(received_message) {  
-        case "general surgery":
-          console.log('USERID', user_id);
-          console.log('USERINPUTS', userInputs);
-          userInputs[user_id].department = 'general surgery';
-          showDoctor(sender_psid);
-        break;       
+      switch(received_message) {                
         case "on":
             showQuickReplyOn(sender_psid);
           break;
@@ -533,7 +531,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
 const generateRandom = (length) => {
    var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
    var charactersLength = characters.length;
    for ( var i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -614,15 +612,15 @@ const hospitalAppointment = (sender_psid) => {
             {
               "content_type":"text",
               "title":"General Surgery",
-              "payload":"General Surgery",              
+              "payload":"department:General Surgery",              
             },{
               "content_type":"text",
               "title":"ENT",
-              "payload":"ENT",             
+              "payload":"department:ENT",             
             },{
               "content_type":"text",
               "title":"Dermatology",
-              "payload":"Dermatology", 
+              "payload":"department:Dermatology", 
             }
 
     ]
@@ -766,7 +764,7 @@ const confirmAppointment = (sender_psid) => {
 }
 
 const saveAppointment = async (data) => {
-  const res = await db.collection('appointment').doc(user_id).set(data);
+  const res = await db.collection('appointment').add(data);
   res.then(console.log('SAVED'));
 }
 
