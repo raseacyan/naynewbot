@@ -764,6 +764,8 @@ const confirmAppointment = (sender_psid) => {
 }
 
 const saveAppointment = async (data) => {
+  let data = data;
+  data.ref = generateRandom(6);
   const res = await db.collection('appointment').add(data);
   res.then(console.log('SAVED'));
 }
