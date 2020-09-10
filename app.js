@@ -763,17 +763,16 @@ const confirmAppointment = (sender_psid) => {
   });
 }
 
-const saveAppointment = async (arg) => {
+const saveAppointment = (arg) => {
   let data = arg;
   data.ref = generateRandom(6);
-  const res = await db.collection('appointments').add(data);
-  res.then((success)=>{
+  db.collection('appointments').add(data).then((success)=>{
     console.log('SAVED', success);
-    //let text = "Thank you. We have received your appointment."+ "\u000A";
-    //text += " We wil call you to confirm soon"+ "\u000A";
-    //text += "Your booking reference number is:" + data.ref;
-    //let response = {"text": "Thank you. We have received your appointment. We will call you to confirm soon"};
-    //callSend(sender_psid, response);
+    let text = "Thank you. We have received your appointment."+ "\u000A";
+    text += " We wil call you to confirm soon"+ "\u000A";
+    text += "Your booking reference number is:" + data.ref;
+    let response = {"text": "Thank you. We have received your appointment. We will call you to confirm soon"};
+    callSend(sender_psid, response);
   }).catch((err)=>{
      console.log('Error', err);
   });
