@@ -771,7 +771,7 @@ const saveAppointment = (arg, sender_psid) => {
     let text = "Thank you. We have received your appointment."+ "\u000A";
     text += " We wil call you to confirm soon"+ "\u000A";
     text += "Your booking reference number is:" + data.ref;
-    let response = {"text": "Thank you. We have received your appointment. We will call you to confirm soon"};
+    let response = {"text": text};
     callSend(sender_psid, response);
   }).catch((err)=>{
      console.log('Error', err);
