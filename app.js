@@ -352,7 +352,10 @@ function handleQuickReply(sender_psid, received_message) {
           break;
         case "off":
             showQuickReplyOff(sender_psid);
-          break;                
+          break; 
+        case "confirm-appointment":
+              saveAppointment(userInputs[user_id]);
+          break;              
         default:
             defaultReply(sender_psid);
     } 
@@ -747,8 +750,8 @@ const confirmAppointment = (sender_psid) => {
     "quick_replies":[
             {
               "content_type":"text",
-              "title":"OK",
-              "payload":"on",              
+              "title":"Confirm",
+              "payload":"confirm-appointment",              
             },{
               "content_type":"text",
               "title":"Cancel",
@@ -760,6 +763,11 @@ const confirmAppointment = (sender_psid) => {
   callSend(sender_psid, response1).then(()=>{
     return callSend(sender_psid, response2);
   });
+}
+
+const saveAppointment(data){
+  const res = await db.collection('appointment').doc(user_id).set(data);
+  res.then(console.log('SAVED'));
 }
 
 /**************
