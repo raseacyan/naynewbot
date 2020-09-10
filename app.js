@@ -763,10 +763,12 @@ const confirmAppointment = (sender_psid) => {
   });
 }
 
-const saveAppointment = (arg, sender_psid) => {
+const saveAppointment = async (arg, sender_psid) => {
   let data = arg;
   data.ref = generateRandom(6);
-  db.collection('appointments').add(data).then((success)=>{
+  const res = await db.collection('appointments').add(data);
+
+  res.then((success)=>{
     console.log('SAVED', success);
     let text = "Thank you. We have received your appointment."+ "\u000A";
     text += " We wil call you to confirm soon"+ "\u000A";
