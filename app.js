@@ -772,7 +772,7 @@ const saveAppointment = async (arg) => {
     text += " We wil call you to confirm soon"+ "\u000A";
     text += "Your booking reference number is:" + data.ref;
     let response = {"text": "Thank you. We have received your appointment. We will call you to confirm soon"};
-    callSend(sender_psid, response);
+     return callSend(sender_psid, response);
   });
 }
 
