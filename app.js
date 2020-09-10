@@ -352,7 +352,7 @@ function handleQuickReply(sender_psid, received_message) {
             showQuickReplyOff(sender_psid);
           break; 
         case "confirm-appointment":
-              saveAppointment(userInputs[user_id]);
+              saveAppointment(userInputs[user_id], sender_psid);
           break;              
         default:
             defaultReply(sender_psid);
@@ -763,7 +763,7 @@ const confirmAppointment = (sender_psid) => {
   });
 }
 
-const saveAppointment = (arg) => {
+const saveAppointment = (arg, sender_psid) => {
   let data = arg;
   data.ref = generateRandom(6);
   db.collection('appointments').add(data).then((success)=>{
