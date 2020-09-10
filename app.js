@@ -765,7 +765,7 @@ const confirmAppointment = (sender_psid) => {
   });
 }
 
-const saveAppointment = (data) => {
+const saveAppointment = async (data) => {
   const res = await db.collection('appointment').doc(user_id).set(data);
   res.then(console.log('SAVED'));
 }
