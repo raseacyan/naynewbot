@@ -172,7 +172,7 @@ app.get('/admin/appointments', async function(req,res){
   
 });
 
-app.get('/admin/updateappointment/:doc_id', function(req,res){
+app.get('/admin/updateappointment/:doc_id', async function(req,res){
   let doc_id = req.params.doc_id; 
   
   const appoinmentRef = db.collection('appointments').doc(doc_id);
