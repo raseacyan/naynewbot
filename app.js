@@ -181,7 +181,7 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
     console.log('No such document!');
   } else {
     console.log('Document data:', doc.data());
-    res.render('confirmappointments.ejs');
+    res.render('editappointment.ejs');
   }
 
 
