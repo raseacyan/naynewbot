@@ -161,7 +161,7 @@ app.get('/admin/appointments', async function(req,res){
 
   snapshot.forEach(doc => {
     let appointment = {};
-    appointment = doc;
+    appointment = doc.data();
     appointment.doc_id = doc.id;
 
     data.push(appointment);
