@@ -168,7 +168,7 @@ app.get('/admin/appointments', async function(req,res){
 
   console.log(data);
 
-  res.render('appointments.ejs');
+  res.render('appointments.ejs', {data:data});
   
 });
 
