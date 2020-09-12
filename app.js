@@ -159,11 +159,13 @@ app.get('/admin/appointments', async function(req,res){
 
   snapshot.forEach(doc => {
     data.push(doc.data())
-    console.log(doc);
+    
   });
 
+  console.log(doc);
 
-  //res.json({'text':'here we will show all appointments'});
+
+  res.send({'done'});
 });
 
 /*********************************************
