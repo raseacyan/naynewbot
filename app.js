@@ -194,25 +194,34 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
 app.post('/admin/updateappointment', async function(req,res){
   console.log('REQ:', req.body); 
 
-  //const appointmentRef = db.collection('appointments').doc('DC');
-
-// Set the 'capital' field of the city
-  //const res = await cityRef.update({capital: true});
-
-
-  res.send('ok');
   
-  /*
-  const appoinmentRef = db.collection('appointments').doc(doc_id);
-  const doc = await appoinmentRef.get();
-  if (!doc.exists) {
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-    let data = doc.data();
-    res.render('editappointment.ejs', {data:data});
-  } */
 
+  let data = {
+    name:req.body.name,
+    phone:req.body.phone,
+    email:req.body.email,
+    gender:req.body.gender,
+    doctor:req.body.doctor,
+    department:req.body.department,
+    visit:req.body.visit,
+    date:req.body.date,
+    time:req.body.time,
+    message:req.body.message,
+    status:req.body.status,
+    doc_id:req.body.doc_id,
+    ref:req.body.ref 
+  }
+
+  const appointmentRef = db.collection('appointments').doc('DC');
+
+
+  const res = await appointmentRef.update(data);
+
+
+  res.then(()=>{
+      res.redirect('/admin/appointment');
+  }); 
+ 
 });
 
 /*********************************************
