@@ -183,10 +183,27 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
     console.log('Document data:', doc.data());
     let data = doc.data();
     res.render('editappointment.ejs', {data:data});
-  }
+  } 
+
+});
 
 
+app.post('/admin/updateappointment', async function(req,res){
+  console.log('REQ:', req.params); 
+
+
+  res.send('ok');
   
+  /*
+  const appoinmentRef = db.collection('appointments').doc(doc_id);
+  const doc = await appoinmentRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    console.log('Document data:', doc.data());
+    let data = doc.data();
+    res.render('editappointment.ejs', {data:data});
+  } */
 
 });
 
