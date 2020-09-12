@@ -214,7 +214,7 @@ app.post('/admin/updateappointment', function(req,res){
 
   db.collection('appointments').doc(req.body.doc_id)
   .update(data).then(()=>{
-      res.redirect('/admin/appointment');
+      res.redirect('/admin/appointments');
   }).catch((err)=>console.log('ERROR:', error)); 
  
 });
