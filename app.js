@@ -182,6 +182,7 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
   } else {
     console.log('Document data:', doc.data());
     let data = doc.data();
+    data.doc_id = doc.id;
     res.render('editappointment.ejs', {data:data});
   } 
 
