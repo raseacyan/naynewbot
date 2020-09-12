@@ -155,8 +155,11 @@ app.get('/admin/appointments', async function(req,res){
     return;
   }  
 
+  let data = [];
+
   snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
+    data.push(doc)
+    console.log(data);
   });
 
 
