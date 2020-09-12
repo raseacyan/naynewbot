@@ -8,9 +8,28 @@
 
   <body>
   <h1>Appointments</h1>
-   <h2><%= data[0].email %></h2>
+  
+  <table>
 
-	
+
+  <% data.forEach(function(appointment){ %>
+     <tr>
+       <td><%= appointment.doc_id %></td>
+       <td><%= appointment.name %></td>
+       <td><%= appointment.phone %></td>
+       <td><%= appointment.email %></td>
+       <td><%= appointment.gender %></td>
+       <td><%= appointment.doctor %></td>
+       <td><%= appointment.department %></td>
+       <td><%= appointment.visit %></td>
+       <td><%= appointment.date %></td>
+       <td><%= appointment.time %></td>
+       <td><%= appointment.message %></td>
+       <td><%= appointment.ref %></td>
+     </tr>
+  <% }); %>
+
+	</table>
  
 
   </body>
