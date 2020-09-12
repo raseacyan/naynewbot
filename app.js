@@ -160,7 +160,7 @@ app.get('/admin/appointments', function(req,res){
   });
 
 
-  res.json({'text':'here we will show all appointments'});
+  //res.json({'text':'here we will show all appointments'});
 });
 
 /*********************************************
