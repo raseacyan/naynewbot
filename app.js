@@ -146,7 +146,7 @@ app.post('/test',function(req,res){
     callSend(sender_psid, response);
 });
 
-app.get('/admin/appointments', function(req,res){
+app.get('/admin/appointments', async function(req,res){
  
   const appointmentsRef = db.collection('appointments');
   const snapshot = await appointmentsRef.get();
