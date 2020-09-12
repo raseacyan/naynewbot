@@ -151,8 +151,7 @@ app.get('/admin/appointments', async function(req,res){
   const appointmentsRef = db.collection('appointments');
   const snapshot = await appointmentsRef.get();
   if (snapshot.empty) {
-    console.log('No matching documents.');
-    return;
+    res.send('no data');
   }  
 
   let data = []; 
