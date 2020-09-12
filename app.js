@@ -191,7 +191,7 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
 });
 
 
-app.post('/admin/updateappointment', async function(req,res){
+app.post('/admin/updateappointment', function(req,res){
   console.log('REQ:', req.body); 
 
   
@@ -212,15 +212,10 @@ app.post('/admin/updateappointment', async function(req,res){
     ref:req.body.ref 
   }
 
-  const appointmentRef = db.collection('appointments').doc(req.body.doc_id);
-
-
-  const response = await appointmentRef.update(data);
-
-
-  response.then(()=>{
+  db.collection('appointments').doc(req.body.doc_id)
+  .update(data).then(()=>{
       res.redirect('/admin/appointment');
-  }); 
+  }).catch((err)=>console.log('ERROR:', error)); 
  
 });
 
