@@ -173,6 +173,7 @@ app.get('/admin/appointments', async function(req,res){
 });
 
 app.get('/admin/updateappointment/:doc_id', function(req,res){
+  let doc_id = req.params.doc_id; 
   res.send(doc_id);  
 });
 
