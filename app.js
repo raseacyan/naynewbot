@@ -174,7 +174,19 @@ app.get('/admin/appointments', async function(req,res){
 
 app.get('/admin/updateappointment/:doc_id', function(req,res){
   let doc_id = req.params.doc_id; 
-  res.send(doc_id);  
+  
+  const appoinmentRef = db.collection('appointments').doc(doc_id);
+  const doc = await appoinmentRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    console.log('Document data:', doc.data());
+    res.render('confirmappointments.ejs');
+  }
+
+
+  
+
 });
 
 /*********************************************
