@@ -31,7 +31,7 @@
     };
   </script>
   
-  <h1><%= title %></h1>
+ 
 
   <form id="form" enctype="multipart/form-data" method="post" action="">
   <div class="form-group">
@@ -39,14 +39,72 @@
     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">    
   </div>
   <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-  </div> 
-  <div class="form-group">
-    <label for="email">Image</label>
-    <input type="file" name="file" />
+    <label for="name">Phone</label>
+    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">    
   </div>
-  <input type="hidden"  id="sender" name="sender" value="<%= sender_id %>">
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+  </div>
+  <div class="form-group">
+
+    <input type="radio" id="male" name="gender" value="M" 
+    <%if(true){%>
+        <%="checked"%>
+    <%}%>
+    >
+    <label for="male">Male</label><br>
+    <input type="radio" id="female" name="gender" value="F"
+    <%if(true){%>
+        <%="checked"%>
+    <%}%>
+    >
+    <label for="female">Female</label><br>  
+  </div>
+  <div class="form-group">
+    <label for="name">Doctor</label>
+    <input type="text" class="form-control" id="doctor" name="doctor" placeholder="Enter Gender">    
+  </div>
+  <div class="form-group">
+    <label for="name">Department</label>
+    <input type="text" class="form-control" id="department" name="department" placeholder="Enter Gender">    
+  </div>
+  <div class="form-group">
+    <input type="radio" id="male" name="gender" value="first time" 
+    <%if(true){%>
+        <%="checked"%>
+    <%}%>
+    >
+    <label for="male">First Time</label><br>
+    <input type="radio" id="female" name="gender" value="follow up"
+    <%if(true){%>
+        <%="checked"%>
+    <%}%>
+    >
+    <label for="female">Follow Up</label><br>     
+  </div>
+  <div class="form-group">
+    <label for="name">Date</label>
+    <input type="text" class="form-control" id="date" name="date" placeholder="Enter Gender">    
+  </div>
+  <div class="form-group">
+    <label for="name">Time</label>
+    <input type="text" class="form-control" id="time" name="time" placeholder="Enter Gender">    
+  </div>
+  <div class="form-group">
+    <label for="name">Message</label>
+    <input type="text" class="form-control" id="message" name="message" placeholder="Enter Gender">    
+  </div>
+  <div class="form-group">
+    <label for="status">Status:</label>
+  <select name="status" id="status">
+    <option value="pending">Pending</option>
+    <option value="confirm">Confirm</option>
+   
+  </select>   
+  </div>
+  
+  <input type="hidden"  id="doc_id" name="doc_id" value="<%= data.doc_id %>">
   <input type="submit" value="Submit"> 
   </form>
 
