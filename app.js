@@ -209,7 +209,8 @@ app.post('/admin/updateappointment', function(req,res){
     message:req.body.message,
     status:req.body.status,
     doc_id:req.body.doc_id,
-    ref:req.body.ref 
+    ref:req.body.ref,
+    comment:req.body.comment
   }
 
   db.collection('appointments').doc(req.body.doc_id)
