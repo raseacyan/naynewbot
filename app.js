@@ -172,6 +172,10 @@ app.get('/admin/appointments', async function(req,res){
   
 });
 
+app.get('/admin/updateappointment/:doc_id', function(req,res){
+  res.send(doc_id);  
+});
+
 /*********************************************
 Gallery page
 **********************************************/

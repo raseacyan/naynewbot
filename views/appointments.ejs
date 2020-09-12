@@ -45,7 +45,7 @@
        <td><%= appointment.message %></td>
        <td><%= appointment.ref %></td>
        <td><%= appointment.status %></td>
-       <td>Edit | Delete</td>
+       <td><a href="admin/updateappointment/<%= appointment.doc_id %>">Edit</a> | Delete</td>
      </tr>
   <% }); %>
 
