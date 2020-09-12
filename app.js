@@ -183,6 +183,8 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
     console.log('Document data:', doc.data());
     let data = doc.data();
     data.doc_id = doc.id;
+
+    console.log('Document data:', data);
     res.render('editappointment.ejs', {data:data});
   } 
 
@@ -191,6 +193,11 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
 
 app.post('/admin/updateappointment', async function(req,res){
   console.log('REQ:', req.body); 
+
+  //const appointmentRef = db.collection('appointments').doc('DC');
+
+// Set the 'capital' field of the city
+  //const res = await cityRef.update({capital: true});
 
 
   res.send('ok');
