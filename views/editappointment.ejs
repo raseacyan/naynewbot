@@ -36,7 +36,7 @@
   <form id="form" enctype="multipart/form-data" method="post" action="">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" name="name" placeholder="Enter name">    
+    <input type="text" class="form-control" name="name" value="<%= data.name %>">    
   </div>
   <div class="form-group">
     <label for="name">Phone</label>
@@ -76,7 +76,7 @@
         <%="checked"%>
     <%}%>
     >
-    <label for="male">First Time</label><br>
+    <label for="male">First Time</label>
     <input type="radio" name="vist" value="follow up"
     <%if(data.visit == 'follow up'){%>
         <%="checked"%>
@@ -100,12 +100,12 @@
     <label for="status">Status:</label>
   <select name="status" id="status">    
     <option value="pending"
-    <%if(data.status = 'pending'){%>
+    <%if(data.status == "pending"){%>
         <%="selected"%>
     <%}%>
     >Pending</option>
     <option value="confirm"
-    <%if(data.status = 'confirm'){%>
+    <%if(data.status == "confirm"){%>
         <%="selected"%>
     <%}%>
     >Confirm</option>
