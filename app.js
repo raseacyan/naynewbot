@@ -147,7 +147,7 @@ app.post('/test',function(req,res){
 });
 
 app.get('/admin/appointments', function(req,res){
-  res.send('here we will show all appointments');
+  res.json({'text':'here we will show all appointments'});
 });
 
 /*********************************************
