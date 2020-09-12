@@ -165,7 +165,7 @@ app.get('/admin/appointments', async function(req,res){
   console.log(doc);
 
 
-  res.send({'done'});
+  res.send('done');
 });
 
 /*********************************************
