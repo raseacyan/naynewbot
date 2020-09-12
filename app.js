@@ -215,10 +215,10 @@ app.post('/admin/updateappointment', async function(req,res){
   const appointmentRef = db.collection('appointments').doc(req.body.doc_id);
 
 
-  const res = await appointmentRef.update(data);
+  const response = await appointmentRef.update(data);
 
 
-  res.then(()=>{
+  response.then(()=>{
       res.redirect('/admin/appointment');
   }); 
  
