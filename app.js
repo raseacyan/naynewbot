@@ -212,7 +212,7 @@ app.post('/admin/updateappointment', async function(req,res){
     ref:req.body.ref 
   }
 
-  const appointmentRef = db.collection('appointments').doc('DC');
+  const appointmentRef = db.collection('appointments').doc(req.body.doc_id);
 
 
   const res = await appointmentRef.update(data);
