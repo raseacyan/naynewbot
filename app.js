@@ -147,6 +147,19 @@ app.post('/test',function(req,res){
 });
 
 app.get('/admin/appointments', function(req,res){
+ 
+  const appointmentsRef = db.collection('appointments');
+  const snapshot = await appointmentsRef.get();
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return;
+  }  
+
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+  });
+
+
   res.json({'text':'here we will show all appointments'});
 });
 
