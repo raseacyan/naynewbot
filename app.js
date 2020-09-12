@@ -189,7 +189,7 @@ app.get('/admin/updateappointment/:doc_id', async function(req,res){
 
 
 app.post('/admin/updateappointment', async function(req,res){
-  console.log('REQ:', req.params); 
+  console.log('REQ:', req.body); 
 
 
   res.send('ok');
