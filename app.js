@@ -158,8 +158,8 @@ app.get('/admin/appointments', async function(req,res){
   let data = [];
 
   snapshot.forEach(doc => {
-    data.push(doc)
-    console.log(data);
+    data.push(doc.data())
+    console.log(doc);
   });
 
 
