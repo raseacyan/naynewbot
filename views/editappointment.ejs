@@ -49,13 +49,13 @@
   <div class="form-group">
     Gender: 
     <input type="radio" id="male" name="gender" value="M" 
-    <%if(true){%>
+    <%if(data.gender == "M"){%>
         <%="checked"%>
     <%}%>
     >
     <label for="male">Male</label>
     <input type="radio" id="female" name="gender" value="F"
-    <%if(true){%>
+    <%if(data.gender == "F"){%>
         <%="checked"%>
     <%}%>
     >
@@ -72,13 +72,13 @@
   <div class="form-group">
     Visit: 
     <input type="radio" name="visit" value="first time" 
-    <%if(data.visit = 'first time' ){%>
+    <%if(data.visit == 'first time' ){%>
         <%="checked"%>
     <%}%>
     >
     <label for="male">First Time</label><br>
     <input type="radio" name="vist" value="follow up"
-    <%if(data.visit = 'follow up'){%>
+    <%if(data.visit == 'follow up'){%>
         <%="checked"%>
     <%}%>
     >
