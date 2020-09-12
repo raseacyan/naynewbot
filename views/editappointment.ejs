@@ -36,24 +36,24 @@
   <form id="form" enctype="multipart/form-data" method="post" action="">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">    
+    <input type="text" class="form-control" name="name" placeholder="Enter name">    
   </div>
   <div class="form-group">
     <label for="name">Phone</label>
-    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">    
+    <input type="text" class="form-control" name="phone" placeholder="Enter phone number">    
   </div>
   <div class="form-group">
     <label for="email">Email</label>
-    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+    <input type="email" class="form-control" name="email" placeholder="Enter Email">
   </div>
   <div class="form-group">
-
+    Gender: 
     <input type="radio" id="male" name="gender" value="M" 
     <%if(true){%>
         <%="checked"%>
     <%}%>
     >
-    <label for="male">Male</label><br>
+    <label for="male">Male</label>
     <input type="radio" id="female" name="gender" value="F"
     <%if(true){%>
         <%="checked"%>
@@ -63,21 +63,22 @@
   </div>
   <div class="form-group">
     <label for="name">Doctor</label>
-    <input type="text" class="form-control" id="doctor" name="doctor" placeholder="Enter Gender">    
+    <input type="text" class="form-control" name="doctor" placeholder="Enter Doctor">    
   </div>
   <div class="form-group">
     <label for="name">Department</label>
-    <input type="text" class="form-control" id="department" name="department" placeholder="Enter Gender">    
+    <input type="text" class="form-control" id="department" name="department" placeholder="Enter Department">    
   </div>
   <div class="form-group">
-    <input type="radio" id="male" name="gender" value="first time" 
-    <%if(true){%>
+    Visit: 
+    <input type="radio" name="visit" value="first time" 
+    <%if(data.visit = 'first time' ){%>
         <%="checked"%>
     <%}%>
     >
     <label for="male">First Time</label><br>
-    <input type="radio" id="female" name="gender" value="follow up"
-    <%if(true){%>
+    <input type="radio" name="vist" value="follow up"
+    <%if(data.visit = 'follow up'){%>
         <%="checked"%>
     <%}%>
     >
@@ -85,21 +86,29 @@
   </div>
   <div class="form-group">
     <label for="name">Date</label>
-    <input type="text" class="form-control" id="date" name="date" placeholder="Enter Gender">    
+    <input type="text" class="form-control" name="date" placeholder="Enter Date">    
   </div>
   <div class="form-group">
     <label for="name">Time</label>
-    <input type="text" class="form-control" id="time" name="time" placeholder="Enter Gender">    
+    <input type="text" class="form-control" name="time" placeholder="Enter Time">    
   </div>
   <div class="form-group">
     <label for="name">Message</label>
-    <input type="text" class="form-control" id="message" name="message" placeholder="Enter Gender">    
+    <input type="text" class="form-control" name="message" placeholder="Enter Message">    
   </div>
   <div class="form-group">
     <label for="status">Status:</label>
-  <select name="status" id="status">
-    <option value="pending">Pending</option>
-    <option value="confirm">Confirm</option>
+  <select name="status" id="status">    
+    <option value="pending"
+    <%if(data.status = 'pending'){%>
+        <%="selected"%>
+    <%}%>
+    >Pending</option>
+    <option value="confirm"
+    <%if(data.status = 'confirm'){%>
+        <%="selected"%>
+    <%}%>
+    >Confirm</option>
    
   </select>   
   </div>
