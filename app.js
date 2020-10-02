@@ -314,7 +314,7 @@ app.get('/webview/:sender_id',function(req,res){
 
 app.get('/webview2',function(req,res){
     
-    res.render('webview2.ejs');
+    res.render('webviews2.ejs');
 });
 
 app.post('/webview',upload.single('file'),function(req,res){
