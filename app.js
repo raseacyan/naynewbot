@@ -19,7 +19,6 @@ const
 
 const uuidv4 = uuid();
 
-
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
@@ -311,6 +310,11 @@ END Gallery Page
 app.get('/webview/:sender_id',function(req,res){
     const sender_id = req.params.sender_id;
     res.render('webview.ejs',{title:"Hello!! from WebView", sender_id:sender_id});
+});
+
+app.get('/webview2',function(req,res){
+    
+    res.render('webview2.ejs');
 });
 
 app.post('/webview',upload.single('file'),function(req,res){
