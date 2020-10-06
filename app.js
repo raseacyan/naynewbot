@@ -98,7 +98,7 @@ app.post('/webhook', (req, res) => {
 
       
       
-       sess.user_id =  sender_psid;
+      sess.user_id =  sender_psid;
                
 
       if (webhook_event.message) {
@@ -432,9 +432,9 @@ const handleMessage = (sender_psid, received_message) => {
 
 
   }else if(current_question == 'q2'){
-
+      console.log('BEFORE PH ENTERED: ',sess);
      sess.user_phone = received_message.text; 
-     console.log('PH ENTERED: ',sess);
+     console.log('AFTER PH ENTERED: ',sess);
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
