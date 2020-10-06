@@ -498,12 +498,13 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
-      case "hi":
-          hiReply(sender_psid);
-        break;
+      
       case "hospital":
           hospitalAppointment(sender_psid);
-        break;                
+        break; 
+      case "start":{
+          startGreeting(sender_psid);
+      }              
       case "text":
         textReply(sender_psid);
         break;
@@ -862,18 +863,18 @@ end hospital
 **************/
 
 
+/**************
+start shop
+**************/
 
-
-const hiReply =(sender_psid) => {
-  let response = {"text": "You sent hi message"};
+const startGreeting =(sender_psid) => {
+  let response = {"text": "Welcome to NAY shop."};
   callSend(sender_psid, response);
 }
 
-
-const greetInMyanmar =(sender_psid) => {
-  let response = {"text": "Mingalarbar. How may I help"};
-  callSend(sender_psid, response);
-}
+/**************
+end sshop
+**************/
 
 const textReply =(sender_psid) => {
   let response = {"text": "You sent text message"};
