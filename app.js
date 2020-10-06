@@ -925,7 +925,8 @@ const buttonReply =(sender_psid) => {
         "type": "template",
         "payload": {
           "template_type": "generic",
-          "elements": [{
+          "elements": [
+          {
             "title": "Are you OK?",
             "image_url":"https://www.mindrops.com/images/nodejs-image.png",                       
             "buttons": [
@@ -940,7 +941,44 @@ const buttonReply =(sender_psid) => {
                   "payload": "no",
                 }
               ],
-          }]
+          },
+          {
+            "title": "Are you OK?",
+            "image_url":"https://www.mindrops.com/images/nodejs-image.png",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ],
+          },
+          {
+            "title": "Are you OK?",
+            "image_url":"https://www.mindrops.com/images/nodejs-image.png",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ],
+          },
+
+
+
+
+          ]
         }
       }
     }
