@@ -930,19 +930,19 @@ const stcwsRef = db.collection('stcw');
   snapshot.forEach(doc => {
 
       let course = {};
-      course.id = doc.id;
+      //course.id = doc.id;
       course.title = doc.data().title;
       course.subtitle = doc.data().subtitle;
       course.image_url = "https://www.mindrops.com/images/nodejs-image.png";
       course.button = [
                 {
                   "type": "postback",
-                  "title": "Yes!",
+                  "title": doc.id,
                   "payload": "yes",
                 },
                 {
                   "type": "postback",
-                  "title": "No!",
+                  "title": doc.id,
                   "payload": "no",
                 }
               ];
