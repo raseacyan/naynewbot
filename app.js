@@ -135,14 +135,10 @@ app.get('/',function(req,res){
 });
 
 
-app.get('/admin/products',function(req,res){    
-    res.render('products.ejs');
-});
+app.get('/admin/products', async(req,res) =>{   
 
-app.get('/admin/addproducts', async function(req,res){
- 
-  /*
-  const appointmentsRef = db.collection('appointments');
+   
+  const productsRef = db.collection('products');
   const snapshot = await appointmentsRef.get();
 
   if (snapshot.empty) {
@@ -152,27 +148,34 @@ app.get('/admin/addproducts', async function(req,res){
   let data = []; 
 
   snapshot.forEach(doc => {
-    let appointment = {};
-    appointment = doc.data();
-    appointment.doc_id = doc.id;
+    let product = {};
+    product = doc.data();
+    product.doc_id = doc.id;
 
-    data.push(appointment);
+    data.push(product);
     
   });
 
-  console.log('DATA:', data);*/
+  console.log('DATA:', data); 
+  res.render('products.ejs', {data:data});
+});
+
+app.get('/admin/addproduct', async function(req,res){
+ 
+  
 
   res.render('addproduct.ejs');
   
 });
 
 
-app.post('/admin/saveproducts',upload.single('file'),function(req,res){
+app.post('/admin/saveproduct',upload.single('file'),function(req,res){
        
       let name  = req.body.name;
       let description = req.body.description;
       let img_url = "";
-      let price = req.body.price;  
+      let price = req.body.price; 
+      let sku = req.body.sku;
 
       let today = new Date();
 
