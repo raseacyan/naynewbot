@@ -185,7 +185,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
 
       let today = new Date();
 
-      console.log("REQ FILE:",req.file);
+      
 
 
       let file = req.file;
@@ -196,6 +196,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
               description: description,
               image: img_url,
               price:price,
+              sku:sku,
               created_on:today
               }).then(success => {   
                 console.log("DATA SAVED")
