@@ -825,9 +825,9 @@ const showMenu = async(sender_psid) => {
   const userRef = db.collection('users').doc(sender_psid);
     const user = await userRef.get();
     if (!user.exists) {
-        title = "Register",      
+        title = "Register";     
     } else {
-      title = "Update Profile",     
+      title = "Update Profile";   
     } 
 
 
