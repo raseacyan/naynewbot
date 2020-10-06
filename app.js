@@ -23,13 +23,9 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded());
 
 const bot_questions = {
-  "q1": "please enter date (yyyy-mm-dd)",
-  "q2": "please enter time (hh:mm)",
-  "q3": "please enter full name",
-  "q4": "please enter gender",
-  "q5": "please enter phone number",
-  "q6": "please enter email",
-  "q7": "please leave a message"
+  "q1": "please enter you name",
+  "q2": "please enter your phone number",
+  "q3": "please enter your address"  
 }
 
 let current_question = '';
@@ -407,38 +403,22 @@ function handleQuickReply(sender_psid, received_message) {
 
   console.log('QUICK REPLY', received_message);
 
-  received_message = received_message.toLowerCase();
+  received_message = received_message.toLowerCase();  
 
-  if(received_message.startsWith("visit:")){
-    let visit = received_message.slice(6);
-    
-    userInputs[user_id].visit = visit;
-    
-    current_question = 'q1';
-    botQuestions(current_question, sender_psid);
-  }else if(received_message.startsWith("department:")){
-    let dept = received_message.slice(11);
-    userInputs[user_id].department = dept;
-    showDoctor(sender_psid);
-  }else{
-
-      switch(received_message) {                
-        case "on":
-            showQuickReplyOn(sender_psid);
-          break;
-        case "off":
-            showQuickReplyOff(sender_psid);
-          break; 
-        case "confirm-appointment":
-              saveAppointment(userInputs[user_id], sender_psid);
-          break;              
-        default:
-            defaultReply(sender_psid);
-    } 
-
-  }
-  
-  
+  switch(received_message) {                
+      case "register":
+          current_question = "q1";
+          botQuestions(current_question, sender_psid);
+        break;
+      case "shop":
+          showShop(sender_psid);
+        break; 
+      case "confirm-appointment":
+            saveAppointment(userInputs[user_id], sender_psid);
+        break;              
+      default:
+          defaultReply(sender_psid);
+  }  
  
 }
 
@@ -455,41 +435,20 @@ const handleMessage = (sender_psid, received_message) => {
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
-     console.log('DATE ENTERED',received_message.text);
-     userInputs[user_id].date = received_message.text;
+     console.log('NAME ENTERED',received_message.text);
+     userInputs[user_id].name = received_message.text;
      current_question = 'q2';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q2'){
-     console.log('TIME ENTERED',received_message.text);
-     userInputs[user_id].time = received_message.text;
+     console.log('PHONE ENTERED',received_message.text);
+     userInputs[user_id].phone = received_message.text; 
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
-     console.log('FULL NAME ENTERED',received_message.text);
-     userInputs[user_id].name = received_message.text;
-     current_question = 'q4';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q4'){
-     console.log('GENDER ENTERED',received_message.text);
-     userInputs[user_id].gender = received_message.text;
-     current_question = 'q5';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q5'){
-     console.log('PHONE NUMBER ENTERED',received_message.text);
-     userInputs[user_id].phone = received_message.text;
-     current_question = 'q6';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q6'){
-     console.log('EMAIL ENTERED',received_message.text);
-     userInputs[user_id].email = received_message.text;
-     current_question = 'q7';
-     botQuestions(current_question, sender_psid);
-  }else if(current_question == 'q7'){
-     console.log('MESSAGE ENTERED',received_message.text);
-     userInputs[user_id].message = received_message.text;
-     current_question = '';
-     
-     confirmAppointment(sender_psid);
+     console.log('ADDRESS ENTERED',received_message.text);
+     userInputs[user_id].address = received_message.text;
+     current_question = '';     
+     confirmRegister(sender_psid);
   }
   else {
       
@@ -508,10 +467,7 @@ const handleMessage = (sender_psid, received_message) => {
       }              
       case "text":
         textReply(sender_psid);
-        break;
-      case "quick":
-        quickReply(sender_psid);
-        break;
+        break;      
       case "button":                  
         buttonReply(sender_psid);
         break;
@@ -793,18 +749,6 @@ const botQuestions = (current_question, sender_psid) => {
   }else if(current_question == 'q3'){
     let response = {"text": bot_questions.q3};
     callSend(sender_psid, response);
-  }else if(current_question == 'q4'){
-    let response = {"text": bot_questions.q4};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q5'){
-    let response = {"text": bot_questions.q5};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q6'){
-    let response = {"text": bot_questions.q6};
-    callSend(sender_psid, response);
-  }else if(current_question == 'q7'){
-    let response = {"text": bot_questions.q7};
-    callSend(sender_psid, response);
   }
 }
 
@@ -865,7 +809,7 @@ end hospital
 
 
 /**************
-start shop
+startshop
 **************/
 
 const startGreeting =(sender_psid) => {
@@ -873,8 +817,76 @@ const startGreeting =(sender_psid) => {
   callSend(sender_psid, response);
 }
 
+const showMenu = (sender_psid) => {
+  let response = {
+    "text": "Select your reply",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Register",
+              "payload":"register",              
+            },{
+              "content_type":"text",
+              "title":"Shop",
+              "payload":"shop",             
+            }
+    ]
+  };
+  callSend(sender_psid, response);
+}
+
+const showRegister =(sender_psid) => {
+  let response = {"text": "You sent text message"};
+  callSend(sender_psid, response);
+}
+
+
+const confirmRegister = (sender_psid) => {
+  console.log('APPOINTMENT INFO', userInputs);
+  let summery = "";
+  summery += "name:" + userInputs[user_id].name + "\u000A";
+  summery += "phone:" + userInputs[user_id].phone + "\u000A";
+  summery += "address:" + userInputs[user_id].address + "\u000A";
+
+
+  let response1 = {"text": summery};
+
+  let response2 = {
+    "text": "Select your reply",
+    "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Confirm",
+              "payload":"confirm-register",              
+            },{
+              "content_type":"text",
+              "title":"Cancel",
+              "payload":"off",             
+            }
+    ]
+  };
+  
+  callSend(sender_psid, response1).then(()=>{
+    return callSend(sender_psid, response2);
+  });
+}
+
+const saveRegister = (arg, sender_psid) => {
+  let data = arg;
+  
+  db.collection('users').add(data).then((success)=>{
+    console.log('SAVED', success);
+    let text = "Thank you. You have been registered."+ "\u000A";      
+    let response = {"text": text};
+    callSend(sender_psid, response);
+  }).catch((err)=>{
+     console.log('Error', err);
+  });
+}
+
+
 /**************
-end sshop
+endshop
 **************/
 
 const textReply =(sender_psid) => {
@@ -882,34 +894,6 @@ const textReply =(sender_psid) => {
   callSend(sender_psid, response);
 }
 
-
-const quickReply =(sender_psid) => {
-  let response = {
-    "text": "Select your reply",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"On",
-              "payload":"on",              
-            },{
-              "content_type":"text",
-              "title":"Off",
-              "payload":"off",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
-}
-
-const showQuickReplyOn =(sender_psid) => {
-  let response = { "text": "You sent quick reply ON" };
-  callSend(sender_psid, response);
-}
-
-const showQuickReplyOff =(sender_psid) => {
-  let response = { "text": "You sent quick reply OFF" };
-  callSend(sender_psid, response);
-}
 
 const buttonReply =(sender_psid) => {
 
