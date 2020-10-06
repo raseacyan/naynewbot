@@ -86,6 +86,8 @@ app.post('/webhook', (req, res) => {
   let body = req.body;
 
   sess = req.session;
+
+  console.log('REQ SESS:', sess);
   
 
   // Check the webhook event is from a Page subscription
@@ -329,12 +331,7 @@ app.post('/webview',upload.single('file'),function(req,res){
         }).catch((error) => {
           console.error(error);
         });
-      }
-
-
-
-     
-      
+      } 
       
            
 });
