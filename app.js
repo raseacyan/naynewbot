@@ -33,6 +33,8 @@ const bot_questions = {
 let sess;
 
 let current_question = '';
+let user_id = ''; 
+let userInputs = [];
 
 /*
 var storage = multer.diskStorage({
@@ -85,9 +87,8 @@ app.post('/webhook', (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
 
-  sess = req.session;
 
-  console.log('REQ SESS:', sess);
+
   
 
   // Check the webhook event is from a Page subscription
@@ -95,12 +96,13 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function(entry) {
 
       let webhook_event = entry.messaging[0];
-      let sender_psid = webhook_event.sender.id; 
+      let sender_psid = webhook_event.sender.id;       
       
+      user_id = sender_psid; 
 
-      
-      
-      sess.user_id =  sender_psid;
+      if(!userInputs[user_id]){
+        userInputs[user_id] = {};
+      } 
                
 
       if (webhook_event.message) {
@@ -206,92 +208,6 @@ app.post('/admin/updateappointment', function(req,res){
  
 });
 
-/*********************************************
-Gallery page
-**********************************************/
-app.get('/showimages/:sender_id/',function(req,res){
-    const sender_id = req.params.sender_id;
-
-    let data = [];
-
-    db.collection("images").limit(20).get()
-    .then(  function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            let img = {};
-            img.id = doc.id;
-            img.url = doc.data().url;         
-
-            data.push(img);                      
-
-        });
-        console.log("DATA", data);
-        res.render('gallery.ejs',{data:data, sender_id:sender_id, 'page-title':'welcome to my page'}); 
-
-    }
-    
-    )
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });    
-});
-
-
-app.post('/imagepick',function(req,res){
-      
-  const sender_id = req.body.sender_id;
-  const doc_id = req.body.doc_id;
-
-  console.log('DOC ID:', doc_id); 
-
-  db.collection('images').doc(doc_id).get()
-  .then(doc => {
-    if (!doc.exists) {
-      console.log('No such document!');
-    } else {
-      const image_url = doc.data().url;
-
-      console.log('IMG URL:', image_url);
-
-      let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Is this the image you like?",
-            "image_url":image_url,                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Yes!",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "No!",
-                  "payload": "no",
-                }
-              ],
-          }]
-        }
-      }
-    }
-
-  
-    callSend(sender_id, response); 
-    }
-  })
-  .catch(err => {
-    console.log('Error getting document', err);
-  });
-      
-});
-
-
-
-/*********************************************
-END Gallery Page
-**********************************************/
 
 //webview test
 app.get('/webview/:sender_id',function(req,res){
@@ -399,7 +315,7 @@ function handleQuickReply(sender_psid, received_message) {
           showShop(sender_psid);
         break; 
       case "confirm-register":
-            saveRegistration({name:sess.user_name, phone:sess.user_phone, address:sess.user_address}, sender_psid);
+            saveRegistration(userInputs[user_id], sender_psid);
         break;              
       default:
           defaultReply(sender_psid);
@@ -419,25 +335,16 @@ const handleMessage = (sender_psid, received_message) => {
 
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
-  }else if(current_question == 'q1'){
-     
-     sess.user_name = received_message.text;
-
-     console.log('NAME ENTERED: ',sess);
+  }else if(current_question == 'q1'){     
+     userInputs[user_id].name = received_message.text;
      current_question = 'q2';
      botQuestions(current_question, sender_psid);
-
-
-  }else if(current_question == 'q2'){
-      console.log('BEFORE PH ENTERED: ',sess);
-     sess.user_phone = received_message.text; 
-     console.log('AFTER PH ENTERED: ',sess);
+  }else if(current_question == 'q2'){    
+     userInputs[user_id].phone = received_message.text; 
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
-
-     sess.user_address = received_message.text;
-     console.log('ADDRESS ENTERED: ',sess);
+     userInputs[user_id].user_address = received_message.text;     
      current_question = '';     
      confirmRegister(sender_psid);
   }
@@ -464,10 +371,8 @@ const handleMessage = (sender_psid, received_message) => {
         break;
       case "webview":
         webviewTest(sender_psid);
-        break;       
-      case "show images":
-        showImages(sender_psid)
-        break;               
+        break;      
+                    
       default:
           defaultReply(sender_psid);
       }       
@@ -566,40 +471,7 @@ const generateRandom = (length) => {
    return result;
 }
 
-/*********************************************
-GALLERY SAMPLE
-**********************************************/
 
-const showImages = (sender_psid) => {
-  let response;
-  response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "show images",                       
-            "buttons": [              
-              {
-                "type": "web_url",
-                "title": "enter",
-                "url":"https://fbstarter.herokuapp.com/showimages/"+sender_psid,
-                 "webview_height_ratio": "full",
-                "messenger_extensions": true,          
-              },
-              
-            ],
-          }]
-        }
-      }
-    }
-  callSendAPI(sender_psid, response);
-}
-
-
-/*********************************************
-END GALLERY SAMPLE
-**********************************************/
 
 
 function webviewTest(sender_psid){
@@ -778,11 +650,11 @@ const showRegister =(sender_psid) => {
 
 
 const confirmRegister = (sender_psid) => {
-  console.log('SESSION: ',sess);
+
   let summery = "";
-  summery += "name:" + sess.user_name + "\u000A";
-  summery += "phone:" + sess.user_phone + "\u000A";
-  summery += "address:" + sess.user_address + "\u000A";
+  summery += "name:" + userInputs[user_id].name + "\u000A";
+  summery += "phone:" + userInputs[user_id]phone + "\u000A";
+  summery += "address:" + userInputs[user_id].address + "\u000A";
 
   let response1 = {"text": summery};
 
