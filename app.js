@@ -653,7 +653,7 @@ const confirmRegister = (sender_psid) => {
 
   let summery = "";
   summery += "name:" + userInputs[user_id].name + "\u000A";
-  summery += "phone:" + userInputs[user_id]phone + "\u000A";
+  summery += "phone:" + userInputs[user_id].phone + "\u000A";
   summery += "address:" + userInputs[user_id].address + "\u000A";
 
   let response1 = {"text": summery};
