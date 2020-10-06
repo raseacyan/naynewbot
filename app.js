@@ -18,15 +18,19 @@ const
   app = express(); 
 
 const uuidv4 = uuid();
+const session = require('express-session');
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded());
+app.use(session({secret: 'effystonem'}));
 
 const bot_questions = {
   "q1": "please enter you name",
   "q2": "please enter your phone number",
   "q3": "please enter your address"  
 }
+
+let sess;
 
 let current_question = '';
 
@@ -95,7 +99,11 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       let sender_psid = webhook_event.sender.id; 
 
-      user_id = sender_psid; 
+      user_id = sender_psid;
+      sess = req.session;
+      sess.user_id =  sender_psid;
+
+      console.log('SESION:', sess);
 
       if(!userInputs[user_id]){
         userInputs[user_id] = {};
