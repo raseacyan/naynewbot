@@ -918,7 +918,7 @@ const textReply =(sender_psid) => {
 }
 
 
-const buttonReply = asyc(sender_psid) => {
+const buttonReply = async(sender_psid) => {
 
 const stcwsRef = db.collection('stcw');
   const snapshot = await stcwsRef.get();
