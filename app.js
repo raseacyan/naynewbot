@@ -934,15 +934,15 @@ const stcwsRef = db.collection('stcw');
       course.title = doc.data().title;
       course.subtitle = doc.data().subtitle;
       course.image_url = "https://www.mindrops.com/images/nodejs-image.png";
-      course.button = [
+      course.buttons = [
                 {
                   "type": "postback",
-                  "title": doc.id,
+                  "title": "yes",
                   "payload": "yes",
                 },
                 {
                   "type": "postback",
-                  "title": doc.id,
+                  "title": "no",
                   "payload": "no",
                 }
               ];
