@@ -151,7 +151,7 @@ app.get('/admin/products', async(req,res) =>{
     let product = {};
     product = doc.data();
     product.doc_id = doc.id;
-    product.create_on = new Date(doc.data().created_on);
+    product.create_on = doc.data().created_on.toString();
 
     data.push(product);
     
@@ -175,7 +175,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
       let name  = req.body.name;
       let description = req.body.description;
       let img_url = "";
-      let price = req.body.price; 
+      let price = parseInt(req.body.price); 
       let sku = req.body.sku;
 
       let today = new Date();
