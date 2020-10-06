@@ -151,6 +151,7 @@ app.get('/admin/products', async(req,res) =>{
     let product = {};
     product = doc.data();
     product.doc_id = doc.id;
+    product.create_on = new Date(doc.data().created_on);
 
     data.push(product);
     
