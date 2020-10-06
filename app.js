@@ -946,7 +946,27 @@ const stcwsRef = db.collection('stcw');
                   "payload": "no",
                 }
               ];
-      elementArray.push(course);        
+      elementArray.push(course); 
+
+      let last = {
+        title:"view more",
+        subtitle : "view more";
+        image_url : "https://www.mindrops.com/images/nodejs-image.png";
+        buttons: [
+                {
+                  "type": "postback",
+                  "title": "yes",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "no",
+                  "payload": "no",
+                }
+              ]
+
+      } 
+      elementArray.push(last);      
   }); 
 
   console.log("ELEMENT ARRAY:", elementArray);
