@@ -134,8 +134,9 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
-app.get('/admin/appointments', async function(req,res){
+app.get('/admin/products', async function(req,res){
  
+  /*
   const appointmentsRef = db.collection('appointments');
   const snapshot = await appointmentsRef.get();
 
@@ -154,9 +155,9 @@ app.get('/admin/appointments', async function(req,res){
     
   });
 
-  console.log('DATA:', data);
+  console.log('DATA:', data);*/
 
-  res.render('appointments.ejs', {data:data});
+  res.render('products.ejs');
   
 });
 
