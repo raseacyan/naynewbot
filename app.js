@@ -161,6 +161,39 @@ app.get('/admin/products', async function(req,res){
   
 });
 
+
+app.post('/admin/products',upload.single('file'),function(req,res){
+       
+      let name  = req.body.name;
+      let description = req.body.description;
+      let img_url = "";
+      let price = req.body.price;  
+
+      console.log("REQ FILE:",req.file);
+
+
+      let file = req.file;
+      if (file) {
+        uploadImageToStorage(file).then((img_url) => {
+            db.collection('products').add({
+              name: name,
+              description: description,
+              image: img_url,
+              price:price
+              }).then(success => {   
+                console.log("DATA SAVED")
+                res.redirect('../admin/products');    
+              }).catch(error => {
+                console.log(error);
+              }); 
+        }).catch((error) => {
+          console.error(error);
+        });
+      } 
+      
+           
+});
+
 app.get('/admin/updateappointment/:doc_id', async function(req,res){
   let doc_id = req.params.doc_id; 
   
