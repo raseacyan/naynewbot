@@ -344,7 +344,7 @@ const handleMessage = (sender_psid, received_message) => {
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
-     userInputs[user_id].user_address = received_message.text;     
+     userInputs[user_id].address = received_message.text;     
      current_question = '';     
      confirmRegister(sender_psid);
   }
@@ -713,65 +713,29 @@ const textReply =(sender_psid) => {
 }
 
 
-const buttonReply = async(sender_psid) => {
-
-const stcwsRef = db.collection('stcw');
-  const snapshot = await stcwsRef.get();
-  if (snapshot.empty) {
-    console.log('No courses.');
-    return;
-  }  
-  let elementArray = [];
-  snapshot.forEach(doc => {
-
-      let course = {};
-      //course.id = doc.id;
-      course.title = doc.data().title;
-      course.subtitle = doc.data().subtitle;
-      course.image_url = "https://www.mindrops.com/images/nodejs-image.png";
-      course.buttons = [
-                {
-                  "type": "postback",
-                  "title": "yes",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "no",
-                  "payload": "no",
-                }
-              ];
-      elementArray.push(course); 
-
-      let last = {
-        title:"view more",
-        subtitle : "view more",
-        image_url : "https://www.mindrops.com/images/nodejs-image.png",
-        buttons: [
-                {
-                  "type": "postback",
-                  "title": "yes",
-                  "payload": "yes",
-                },
-                {
-                  "type": "postback",
-                  "title": "no",
-                  "payload": "no",
-                }
-              ]
-
-      } 
-      elementArray.push(last);      
-  }); 
-
-  console.log("ELEMENT ARRAY:", elementArray);
+const buttonReply =(sender_psid) => {
 
   let response = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
-          "elements": elementArray
+          "elements": [{
+            "title": "Are you OK?",
+            "image_url":"https://www.mindrops.com/images/nodejs-image.png",                       
+            "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ],
+          }]
         }
       }
     }
