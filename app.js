@@ -821,12 +821,22 @@ const startGreeting =(sender_psid) => {
 }
 
 const showMenu = (sender_psid) => {
+  let title = "";
+  const userRef = db.collection('users').doc(currentUser.id);
+    const user = await userRef.get();
+    if (!user.exists) {
+        title = "Register",      
+    } else {
+      title = "Update Profile",     
+    } 
+
+
   let response = {
     "text": "Select your reply",
     "quick_replies":[
             {
               "content_type":"text",
-              "title":"Register",
+              "title":title,
               "payload":"register",              
             },{
               "content_type":"text",
