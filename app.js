@@ -778,7 +778,7 @@ const showRegister =(sender_psid) => {
 
 
 const confirmRegister = (sender_psid) => {
-  console.log('SESSION:'sess);
+  console.log('SESSION: ',sess);
   let summery = "";
   summery += "name:" + sess.user_name + "\u000A";
   summery += "phone:" + sess.user_phone + "\u000A";
