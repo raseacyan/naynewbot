@@ -155,7 +155,7 @@ app.get('/admin/products', async(req,res) =>{
     
     let d = new Date(doc.data().created_on);
     d = d.toString();
-    product.create_on = d;
+    product.created_on = d;
 
     data.push(product);
     
