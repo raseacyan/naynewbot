@@ -156,12 +156,13 @@ app.get('/admin/products', async(req,res) =>{
     //let d = new Date(doc.data().created_on);
     //d = d.toString();
     //product.created_on = d;
+    console.log('DATE:', doc.data().created_on);
 
     data.push(product);
     
   });
 
-  console.log('DATA:', product.created_on); 
+  console.log('DATA:', data); 
   res.render('products.ejs', {data:data});
 });
 
