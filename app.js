@@ -413,8 +413,8 @@ function handleQuickReply(sender_psid, received_message) {
       case "shop":
           showShop(sender_psid);
         break; 
-      case "confirm-appointment":
-            saveAppointment(userInputs[user_id], sender_psid);
+      case "confirm-register":
+            saveRegistration(userInputs[user_id], sender_psid);
         break;              
       default:
           defaultReply(sender_psid);
@@ -845,17 +845,16 @@ const showRegister =(sender_psid) => {
 
 
 const confirmRegister = (sender_psid) => {
-  console.log('APPOINTMENT INFO', userInputs);
+  console.log('REGISTER INFO', userInputs);
   let summery = "";
   summery += "name:" + userInputs[user_id].name + "\u000A";
   summery += "phone:" + userInputs[user_id].phone + "\u000A";
   summery += "address:" + userInputs[user_id].address + "\u000A";
 
-
   let response1 = {"text": summery};
 
   let response2 = {
-    "text": "Select your reply",
+    "text": "Confirm to register",
     "quick_replies":[
             {
               "content_type":"text",
@@ -876,6 +875,13 @@ const confirmRegister = (sender_psid) => {
 
 const saveRegister = (arg, sender_psid) => {
   let data = arg;
+
+  let today = new Date();
+
+  data.fid = sender_psid;
+  data.created_on = today;
+  data.point = 0;
+  data.status = "pending";
   
   db.collection('users').add(data).then((success)=>{
     console.log('SAVED', success);
@@ -1024,7 +1030,7 @@ const callSendAPI = (sender_psid, response) => {
     }, (err, res, body) => {
       if (!err) {
         //console.log('RES', res);
-        console.log('BODY', body);
+        //console.log('BODY', body);
         resolve('message sent!')
       } else {
         console.error("Unable to send message:" + err);
