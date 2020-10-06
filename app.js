@@ -134,7 +134,12 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
-app.get('/admin/products', async function(req,res){
+
+app.get('/admin/products',function(req,res){    
+    res.render('products.ejs');
+});
+
+app.get('/admin/addproducts', async function(req,res){
  
   /*
   const appointmentsRef = db.collection('appointments');
@@ -157,12 +162,12 @@ app.get('/admin/products', async function(req,res){
 
   console.log('DATA:', data);*/
 
-  res.render('products.ejs');
+  res.render('addproduct.ejs');
   
 });
 
 
-app.post('/admin/products',upload.single('file'),function(req,res){
+app.post('/admin/saveproducts',upload.single('file'),function(req,res){
        
       let name  = req.body.name;
       let description = req.body.description;
@@ -192,8 +197,7 @@ app.post('/admin/products',upload.single('file'),function(req,res){
         }).catch((error) => {
           console.error(error);
         });
-      } 
-      
+      }   
            
 });
 
