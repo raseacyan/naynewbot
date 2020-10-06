@@ -96,16 +96,16 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id; 
       
 
-      sess = req.session;
-      if(!sess.user_id){
-        sess.user_id =  sender_psid;
-      }           
+      
+      
+       sess.user_id =  sender_psid;
+               
 
       if (webhook_event.message) {
         if(webhook_event.message.quick_reply){
             handleQuickReply(sender_psid, webhook_event.message.quick_reply.payload);
           }else{
-            handleMessage(sender_psid, webhook_event.message, req);                       
+            handleMessage(sender_psid, webhook_event.message);                       
           }                
       } else if (webhook_event.postback) {        
         handlePostback(sender_psid, webhook_event.postback);
@@ -414,13 +414,11 @@ function handleQuickReply(sender_psid, received_message) {
 Function to Handle when user send text message
 ***********************************************/
 
-const handleMessage = (sender_psid, received_message, req) => {
+const handleMessage = (sender_psid, received_message) => {
 
   console.log('TEXT REPLY', received_message);
  
   let response;
-  sess = req.session;
-
 
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
