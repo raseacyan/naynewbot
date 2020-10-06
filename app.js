@@ -918,7 +918,38 @@ const textReply =(sender_psid) => {
 }
 
 
-const buttonReply =(sender_psid) => {
+const buttonReply = asyc(sender_psid) => {
+
+const stcwsRef = db.collection('stcw');
+  const snapshot = await stcwsRef.get();
+  if (snapshot.empty) {
+    console.log('No courses.');
+    return;
+  }  
+  let elementArray = [];
+  snapshot.forEach(doc => {
+
+      let course = {};
+      course.id = doc.id;
+      course.title = doc.data().title;
+      course.subtitle = doc.data().subtitle;
+      course.image_url = "https://www.mindrops.com/images/nodejs-image.png";
+      course.button = [
+                {
+                  "type": "postback",
+                  "title": "Yes!",
+                  "payload": "yes",
+                },
+                {
+                  "type": "postback",
+                  "title": "No!",
+                  "payload": "no",
+                }
+              ];
+      data.push(user);        
+  }); 
+
+  console.log("ELEMENT ARRAY:", elementArray);
 
   let response = {
       "attachment": {
