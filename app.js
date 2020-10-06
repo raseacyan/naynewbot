@@ -504,6 +504,7 @@ const handleMessage = (sender_psid, received_message) => {
         break; 
       case "start":{
           startGreeting(sender_psid);
+        break;
       }              
       case "text":
         textReply(sender_psid);
