@@ -139,7 +139,7 @@ app.get('/admin/products', async(req,res) =>{
 
    
   const productsRef = db.collection('products');
-  const snapshot = await appointmentsRef.get();
+  const snapshot = await productsRef.get();
 
   if (snapshot.empty) {
     res.send('no data');
