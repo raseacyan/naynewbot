@@ -138,7 +138,7 @@ app.get('/',function(req,res){
 app.get('/admin/products', async(req,res) =>{   
 
    
-  const productsRef = db.collection('products');
+  const productsRef = db.collection('products').orderBy('created_on', 'desc';
   const snapshot = await productsRef.get();
 
   if (snapshot.empty) {
