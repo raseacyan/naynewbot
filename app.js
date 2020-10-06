@@ -876,12 +876,16 @@ const confirmRegister = (sender_psid) => {
 const saveRegistration = (arg, sender_psid) => {
   let data = arg;
 
+  console.log();
+
   let today = new Date();
 
   data.fid = sender_psid;
   data.created_on = today;
   data.point = 0;
   data.status = "pending";
+
+  console.log('USER DATA', data);
   
   db.collection('users').add(data).then((success)=>{
     console.log('SAVED', success);
