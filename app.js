@@ -873,7 +873,7 @@ const confirmRegister = (sender_psid) => {
   });
 }
 
-const saveRegister = (arg, sender_psid) => {
+const saveRegistration = (arg, sender_psid) => {
   let data = arg;
 
   let today = new Date();
