@@ -34,11 +34,6 @@ let sess;
 
 let current_question = '';
 
-let user_id = ''; 
-
-let userInputs = [];
-
-
 /*
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -86,10 +81,11 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {  
-
+   
   // Parse the request body from the POST
   let body = req.body;
 
+  sess = req.session;
   
 
   // Check the webhook event is from a Page subscription
@@ -99,16 +95,14 @@ app.post('/webhook', (req, res) => {
       let webhook_event = entry.messaging[0];
       let sender_psid = webhook_event.sender.id; 
 
-      user_id = sender_psid;
+      
+
       sess = req.session;
-      sess.user_id =  sender_psid;
+      if(!sess.user_id){
+        sess.user_id =  sender_psid;
+      }      
 
       console.log('SESION:', sess);
-
-      if(!userInputs[user_id]){
-        userInputs[user_id] = {};
-      }    
-
 
       if (webhook_event.message) {
         if(webhook_event.message.quick_reply){
@@ -137,16 +131,6 @@ app.use('/uploads', express.static('uploads'));
 
 app.get('/',function(req,res){    
     res.send('your app is up and running');
-});
-
-app.get('/test',function(req,res){    
-    res.render('test.ejs');
-});
-
-app.post('/test',function(req,res){
-    const sender_psid = req.body.sender_id;     
-    let response = {"text": "You  click delete button"};
-    callSend(sender_psid, response);
 });
 
 app.get('/admin/appointments', async function(req,res){
@@ -384,8 +368,7 @@ app.get('/whitelists',function(req,res){
 
 
 // Accepts GET requests at the /webhook endpoint
-app.get('/webhook', (req, res) => {
-  
+app.get('/webhook', (req, res) => {  
 
   const VERIFY_TOKEN = process.env.VERIFY_TOKEN;  
 
@@ -422,7 +405,7 @@ function handleQuickReply(sender_psid, received_message) {
           showShop(sender_psid);
         break; 
       case "confirm-register":
-            saveRegistration(userInputs[user_id], sender_psid);
+            saveRegistration({name:sess.user_name, phone:sess.user_phone, address:sess.user_address}, sender_psid);
         break;              
       default:
           defaultReply(sender_psid);
@@ -443,18 +426,18 @@ const handleMessage = (sender_psid, received_message) => {
   if(received_message.attachments){
      handleAttachments(sender_psid, received_message.attachments);
   }else if(current_question == 'q1'){
-     console.log('NAME ENTERED',received_message.text);
-     userInputs[user_id].name = received_message.text;
+     
+     sess.user_name = received_message.text;
      current_question = 'q2';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q2'){
-     console.log('PHONE ENTERED',received_message.text);
-     userInputs[user_id].phone = received_message.text; 
+
+     sess.user_phone = received_message.text; 
      current_question = 'q3';
      botQuestions(current_question, sender_psid);
   }else if(current_question == 'q3'){
-     console.log('ADDRESS ENTERED',received_message.text);
-     userInputs[user_id].address = received_message.text;
+
+     sess.user_address = received_message.text;
      current_question = '';     
      confirmRegister(sender_psid);
   }
@@ -465,7 +448,7 @@ const handleMessage = (sender_psid, received_message) => {
       user_message = user_message.toLowerCase(); 
 
       switch(user_message) { 
-      
+
       case "hospital":
           hospitalAppointment(sender_psid);
         break; 
@@ -727,26 +710,18 @@ const showDoctor = (sender_psid) => {
 
 }
 
-const firstOrFollowUp = (sender_psid) => {
 
-  let response = {
-    "text": "First Time Visit or Follow Up",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"First Time",
-              "payload":"visit:first time",              
-            },{
-              "content_type":"text",
-              "title":"Follow Up",
-              "payload":"visit:follow up",             
-            }
-    ]
-  };
-  callSend(sender_psid, response);
 
-}
 
+
+/**************
+end hospital
+**************/
+
+
+/**************
+startshop
+**************/
 const botQuestions = (current_question, sender_psid) => {
   if(current_question == 'q1'){
     let response = {"text": bot_questions.q1};
@@ -759,66 +734,6 @@ const botQuestions = (current_question, sender_psid) => {
     callSend(sender_psid, response);
   }
 }
-
-const confirmAppointment = (sender_psid) => {
-  console.log('APPOINTMENT INFO', userInputs);
-  let summery = "department:" + userInputs[user_id].department + "\u000A";
-  summery += "doctor:" + userInputs[user_id].doctor + "\u000A";
-  summery += "visit:" + userInputs[user_id].visit + "\u000A";
-  summery += "date:" + userInputs[user_id].date + "\u000A";
-  summery += "time:" + userInputs[user_id].time + "\u000A";
-  summery += "name:" + userInputs[user_id].name + "\u000A";
-  summery += "gender:" + userInputs[user_id].gender + "\u000A";
-  summery += "phone:" + userInputs[user_id].phone + "\u000A";
-  summery += "email:" + userInputs[user_id].email + "\u000A";
-  summery += "message:" + userInputs[user_id].message + "\u000A";
-
-  let response1 = {"text": summery};
-
-  let response2 = {
-    "text": "Select your reply",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"Confirm",
-              "payload":"confirm-appointment",              
-            },{
-              "content_type":"text",
-              "title":"Cancel",
-              "payload":"off",             
-            }
-    ]
-  };
-  
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
-}
-
-const saveAppointment = (arg, sender_psid) => {
-  let data = arg;
-  data.ref = generateRandom(6);
-  data.status = "pending";
-  db.collection('appointments').add(data).then((success)=>{
-    console.log('SAVED', success);
-    let text = "Thank you. We have received your appointment."+ "\u000A";
-    text += " We wil call you to confirm soon"+ "\u000A";
-    text += "Your booking reference number is:" + data.ref;
-    let response = {"text": text};
-    callSend(sender_psid, response);
-  }).catch((err)=>{
-     console.log('Error', err);
-  });
-}
-
-/**************
-end hospital
-**************/
-
-
-/**************
-startshop
-**************/
 
 const startGreeting =(sender_psid) => {
   let response = {"text": "Welcome to NAY shop."};
@@ -863,11 +778,11 @@ const showRegister =(sender_psid) => {
 
 
 const confirmRegister = (sender_psid) => {
-  console.log('REGISTER INFO', userInputs);
+  console.log('SESSION:'sess);
   let summery = "";
-  summery += "name:" + userInputs[user_id].name + "\u000A";
-  summery += "phone:" + userInputs[user_id].phone + "\u000A";
-  summery += "address:" + userInputs[user_id].address + "\u000A";
+  summery += "name:" + sess.user_name + "\u000A";
+  summery += "phone:" + sess.user_phone + "\u000A";
+  summery += "address:" + sess.user_address + "\u000A";
 
   let response1 = {"text": summery};
 
