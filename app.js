@@ -820,7 +820,7 @@ const startGreeting =(sender_psid) => {
   
 }
 
-const showMenu = aync (sender_psid) => {
+const showMenu = async(sender_psid) => {
   let title = "";
   const userRef = db.collection('users').doc(sender_psid);
     const user = await userRef.get();
