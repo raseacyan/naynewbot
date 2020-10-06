@@ -149,9 +149,13 @@ app.get('/admin/products', async(req,res) =>{
 
   snapshot.forEach(doc => {
     let product = {};
+    
     product = doc.data();
     product.doc_id = doc.id;
-    product.create_on = doc.data().created_on.toString();
+    
+    let d = new Date(doc.data().created_on);
+    d = d.toString();
+    product.create_on = d;
 
     data.push(product);
     
