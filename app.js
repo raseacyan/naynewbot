@@ -814,8 +814,10 @@ startshop
 
 const startGreeting =(sender_psid) => {
   let response = {"text": "Welcome to NAY shop."};
-  callSend(sender_psid, response);
-  showMenu(sender_psid);
+  callSend(sender_psid, response).then(()=>{
+    showMenu(sender_psid);
+  });
+  
 }
 
 const showMenu = (sender_psid) => {
