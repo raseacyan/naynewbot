@@ -946,7 +946,7 @@ const stcwsRef = db.collection('stcw');
                   "payload": "no",
                 }
               ];
-      data.push(user);        
+      elementArray.push(user);        
   }); 
 
   console.log("ELEMENT ARRAY:", elementArray);
