@@ -950,8 +950,8 @@ const stcwsRef = db.collection('stcw');
 
       let last = {
         title:"view more",
-        subtitle : "view more";
-        image_url : "https://www.mindrops.com/images/nodejs-image.png";
+        subtitle : "view more",
+        image_url : "https://www.mindrops.com/images/nodejs-image.png",
         buttons: [
                 {
                   "type": "postback",
