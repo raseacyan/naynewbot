@@ -224,7 +224,7 @@ app.get('/shop', async function(req,res){
 
     product = doc.data();
     
-    product.doc_id = doc.id; 
+    product.id = doc.id; 
     
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
