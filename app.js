@@ -218,24 +218,17 @@ app.get('/shop', async function(req,res){
 
   let data = []; 
 
-  snapshot.forEach(doc => {
-
- 
+  snapshot.forEach(doc => { 
     
-    let product = {};
-    
-    product.doc_id = doc.id;
+    let product = {}; 
 
-    console.log('PRODID:', product.doc_id);
     product = doc.data();
     
+    product.doc_id = doc.id; 
     
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
-    product.created_on = d;
-
-   
-    
+    product.created_on = d;   
 
     data.push(product);
     
