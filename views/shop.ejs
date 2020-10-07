@@ -20,36 +20,32 @@
   <body>
   <h1>Shop</h1>
   <p><a href="../cart">View cart</a> | <a href="../emptycart">Empty cart</a></p>
-  <div class="product">
-  	<img src="https://www.seriouseats.com/recipes/images/20110221-127355-dinner-tonight-beer-battered-fish.jpg" />
-  	<h3>Fish</h3>
-  	<p>crispy battered fish<p>
-    <p>price: 500</p>
-    <form action="../cart" method="post">
-    <input type="hidden" name="item_id" value="1"/>
-    <input type="hidden" name="item_name" value="Fish"/>
-    <input type="hidden" name="item_price" value="500"/>
-    quantity: <input type="number" name="item_qty" min="1" value="1"/> 
-    <input type="submit" name="submit"/>
-    </form> 	
-  </div>
 
 
-  <div class="product">
-  	<img src="https://assets.epicurious.com/photos/57b361d4df05218810c5212b/master/pass/the-one-and-only-truly-belgian-fries.jpg" />
-  	<h3>Chips</h3>
-  	<p>crispy friend potato</p>
-    <p>price: 200</p>
-    
-    <form action="../cart" method="post">
-    <input type="hidden" name="item_id" value="2"/>
-    <input type="hidden" name="item_name" value="Chips"/>
-    <input type="hidden" name="item_price" value="200"/>
-    quantity: <input  type="number" name="item_qty" min="1" value="1"/> 
-    <input type="submit" name="submit"/>
-    </form>
-     	
-  </div>
+  <% data.forEach(function(product){ %>
+
+  	<div class="product">
+	  	<img src="https://www.seriouseats.com/recipes/images/20110221-127355-dinner-tonight-beer-battered-fish.jpg" />
+	  	<h3><%= product.name %</h3>
+	  	<p><%= product.description %><p>
+	    <p>price: <%= product.price %></p>
+
+
+	    <form action="../cart" method="post">
+	    <input type="hidden" name="item_id" value="product.id"/>
+	    <input type="hidden" name="item_name" value="<%= product.name %>"/>
+	    <input type="hidden" name="item_price" value="<%= product.price %>"/>
+	    quantity: <input type="number" name="item_qty" min="1" value="1"/> 
+	    <input type="submit" name="submit"/>
+	    </form> 	
+  	</div>
+
+     
+  <% }); %>
+  
+  
+
+  
 
  </body>
 
