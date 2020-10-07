@@ -220,7 +220,7 @@ app.get('/shop', async function(req,res){
 
   snapshot.forEach(doc => {
 
-    console.log('DOCID:', doc.id);
+ 
     
     let product = {};
     
@@ -240,6 +240,8 @@ app.get('/shop', async function(req,res){
     data.push(product);
     
   });
+
+  console.log('PRODUCT DATA:', data)
 
   //console.log('DATA:', data); 
   res.render('shop.ejs', {data:data});
