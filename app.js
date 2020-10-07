@@ -225,6 +225,8 @@ app.get('/shop', async function(req,res){
     let product = {};
     
     product.doc_id = doc.id;
+
+    console.log('PRODID:', product.doc_id);
     product = doc.data();
     
     
