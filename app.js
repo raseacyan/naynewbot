@@ -167,13 +167,8 @@ app.get('/admin/products', async(req,res) =>{
 });
 
 app.get('/admin/addproduct', async function(req,res){
- 
-  
-
-  res.render('addproduct.ejs');
-  
+  res.render('addproduct.ejs');  
 });
-
 
 app.post('/admin/saveproduct',upload.single('file'),function(req,res){
        
@@ -209,6 +204,11 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
         });
       }   
            
+});
+
+
+app.get('/shop', async function(req,res){
+  res.render('shop.ejs');  
 });
 
 app.get('/admin/updateappointment/:doc_id', async function(req,res){
