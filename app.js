@@ -219,6 +219,8 @@ app.get('/shop', async function(req,res){
   let data = []; 
 
   snapshot.forEach(doc => {
+
+    console.log('DOCID:', doc.id);
     
     let product = {};
     
@@ -230,7 +232,7 @@ app.get('/shop', async function(req,res){
     d = d.toString();
     product.created_on = d;
 
-    console.log('PRODUCT:', product.doc_id);
+   
     
 
     data.push(product);
