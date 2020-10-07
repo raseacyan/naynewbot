@@ -230,7 +230,7 @@ app.get('/shop', async function(req,res){
     d = d.toString();
     product.created_on = d;
 
-    console.log('PRODUCT:', product);
+    console.log('PRODUCT:', product.doc_id);
     
 
     data.push(product);
