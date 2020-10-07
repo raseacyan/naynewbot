@@ -26,13 +26,13 @@
 
   	<div class="product">
 	  	<img src="https://www.seriouseats.com/recipes/images/20110221-127355-dinner-tonight-beer-battered-fish.jpg" />
-	  	<h3><%= product.name %</h3>
+	  	<h3><%= product.name %></h3>
 	  	<p><%= product.description %><p>
 	    <p>price: <%= product.price %></p>
 
 
 	    <form action="../cart" method="post">
-	    <input type="hidden" name="item_id" value="product.id"/>
+	    <input type="hidden" name="item_id" value="<%= product.id %>"/>
 	    <input type="hidden" name="item_name" value="<%= product.name %>"/>
 	    <input type="hidden" name="item_price" value="<%= product.price %>"/>
 	    quantity: <input type="number" name="item_qty" min="1" value="1"/> 
