@@ -229,13 +229,15 @@ app.get('/shop', async function(req,res){
     let d = new Date(doc.data().created_on._seconds);
     d = d.toString();
     product.created_on = d;
+
+    console.log('PRODUCT:', product);
     
 
     data.push(product);
     
   });
 
-  console.log('DATA:', data); 
+  //console.log('DATA:', data); 
   res.render('shop.ejs', {data:data});
 
 });
