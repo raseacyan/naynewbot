@@ -392,7 +392,7 @@ function handleQuickReply(sender_psid, received_message) {
           botQuestions(current_question, sender_psid);
         break;
       case "shop":
-          showShop(sender_psid);
+          shopMenu(sender_psid);
         break; 
       case "confirm-register":
             saveRegistration(userInputs[user_id], sender_psid);
@@ -780,6 +780,33 @@ const saveRegistration = (arg, sender_psid) => {
   }).catch((err)=>{
      console.log('Error', err);
   });
+}
+
+
+const shopMenu =(sender_psid) => {
+  let response = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [{
+            "title": "Are you OK?",
+            "image_url":"https://img.favpng.com/8/22/6/toy-shop-retail-toys-r-us-clip-art-png-favpng-Q5kvdVUxgvDQT9M9vmsHzByQY.jpg",                       
+            "buttons": [              
+              {
+                "type": "web_url",
+                "title": "webview",
+                "url":APP_URL+"shop/",
+                 "webview_height_ratio": "full",
+                "messenger_extensions": true,          
+              },
+              
+            ],
+          }]
+        }
+      }
+    }  
+  callSend(sender_psid, response);
 }
 
 
