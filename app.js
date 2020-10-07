@@ -206,9 +206,38 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
            
 });
 
-
+//route url
 app.get('/shop', async function(req,res){
-  res.render('shop.ejs');  
+
+  const productsRef = db.collection('products').orderBy('created_on', 'desc');
+  const snapshot = await productsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  } 
+
+  let data = []; 
+
+  snapshot.forEach(doc => {
+    
+    let product = {};
+    
+    product.doc_id = doc.id;
+    product = doc.data();
+    
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    product.created_on = d;
+    
+
+    data.push(product);
+    
+  });
+
+  console.log('DATA:', data); 
+  res.render('shop.ejs', {data:data});
+
 });
 
 app.get('/admin/updateappointment/:doc_id', async function(req,res){
