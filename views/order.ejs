@@ -12,16 +12,28 @@
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 		<textarea  name="address" rows="4" cols="50" required><%= user.address %></textarea><br/>
 
-		<textarea  name="items" rows="4" cols="50" disabled><% cart.forEach(function(item){ %><%= item.name %> * <%= item.qty %>&#13;&#10;<% }); %>
-		</textarea><br/>
-		sub total: <input type="text" name="sub_total" value="<%= sub_total %>" disabled/><br/>
-		discount: <input type="text" name="discount" value="<%= discount %>" disabled/><br/>
-		TOTAL: <input type="text" name="total" value="<%= cart_total %>" disabled/><br/>	
+		<input  name="hidden">
+		<% cart.forEach(function(item){ %><%= item.name %> * <%= item.qty %>,<% }); %>
+		</input>
+
+		sub total: <input type="hidden" name="sub_total" value="<%= sub_total %>" />
+		discount: <input type="hidden" name="discount" value="<%= discount %>" />
+		TOTAL: <input type="hidden" name="total" value="<%= cart_total %>" />
 
 		<input type="radio" name="payment_type" value="cod" required/> Cash on Delivery <br/>
 		
 		<input type="submit" name="submit" value="Order"/>
 	</form>
+	<h3>Items</h3>
+	<ul>
+		<% cart.forEach(function(item){ %>
+		<li><%= item.name %> * <%= item.qty %></li>
+	</ul>
+	<% }); %>
+	<p><strong>Sub Total:</strong><%= sub_total %><p>
+	<p><strong>Discount:</strong><%= discount %><p>
+	<p><strong>Total:</strong><%= cart_total %><p>
+
 
 	
 
