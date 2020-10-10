@@ -253,6 +253,8 @@ app.post('/cart', function(req, res){
     item.qty = parseInt(req.body.item_qty);
     item.total = item.price * item.qty;
 
+    console.log('ITEM TO CART:', item);
+
 
     const itemInCart = (element) => element.id == item.id;
     let item_index = sess.cart.findIndex(itemInCart); 
@@ -263,6 +265,8 @@ app.post('/cart', function(req, res){
         sess.cart[item_index].qty = item.qty;
         sess.cart[item_index].total = item.total;
     }   
+
+    console.log('SESSION:', sess);
      
     res.redirect('../cart');   
 });
