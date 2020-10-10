@@ -396,6 +396,8 @@ function handleQuickReply(sender_psid, received_message) {
           shopMenu(sender_psid);
         break; 
       case "confirm-register":
+
+            console.log('FLAG:', userInputs[user_id]);
             saveRegistration(userInputs[user_id], sender_psid);
         break;              
       default:
