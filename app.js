@@ -346,7 +346,7 @@ app.post('/pointdiscount', function(req, res){
 
         if(sub_total =>  req.body.points){
            customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
-           dummy_user.points = 0; 
+           customer[user_id].points = 0; 
         }else{
            customer[user_id].cart_total = 0;
            customer[user_id].points = customer[user_id].cart_discount - sub_total;
