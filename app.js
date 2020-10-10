@@ -266,7 +266,7 @@ app.post('/cart', function(req, res){
         sess.cart[item_index].total = item.total;
     }   
 
-    console.log('SESSION:', sess);
+    console.log('POST SESSION:', sess);
      
     res.redirect('../cart');   
 });
@@ -274,6 +274,10 @@ app.post('/cart', function(req, res){
 
 app.get('/cart', function(req, res){
     sess = req.session;
+
+    console.log('GET SESSION:', sess);
+
+
     if(!sess.cart){
         sess.cart = [];
     }
