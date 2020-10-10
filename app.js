@@ -227,6 +227,8 @@ app.get('/shop', async function(req,res){
       customer[user_id].address = user.data().address;
       if(!customer[user_id].points){
         customer[user_id].points = user.data().points;
+      }else{
+        customer[user_id].points = 0;
       }
       
   } 
