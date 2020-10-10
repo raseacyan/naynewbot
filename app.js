@@ -350,8 +350,7 @@ app.post('/pointdiscount', function(req, res){
         }else{
            customer[user_id].cart_total = 0;
            customer[user_id].points = customer[user_id].cart_discount - sub_total;
-        }
-        
+        }        
 
         
         res.redirect('../cart');  
