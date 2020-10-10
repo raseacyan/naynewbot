@@ -314,13 +314,16 @@ app.get('/cart', function(req, res){
         let sub_total = 0;
         customer[user_id].cart.forEach((item) => sub_total += item.total);
 
-        if( !customer[user_id].use_point || customer[user_id].use_point == false){
-                    
-            customer[user_id].cart_total = sub_total;
-        }   
         if( !customer[user_id].cart_discount || customer[user_id].cart_discount == false){
             customer[user_id].cart_discount = 0;           
-        }      
+        }
+
+        if( !customer[user_id].use_point || customer[user_id].use_point == false){                    
+            customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
+        }   
+           
+
+        
 
 
         customer[user_id].use_point = false;
@@ -408,7 +411,7 @@ app.post('/order', function(req, res){
     db.collection('orders').add(data).then((success)=>{
         console.log('SAVED', success);
         //first_reg = false;
-        let text = "Thank you. You have been registered."+ "\u000A";      
+        let text = "Thank you. Your order has been confirmed."+ "\u000A";      
         let response = {"text": text};
         callSend(user_id, response);
       }).catch((err)=>{
