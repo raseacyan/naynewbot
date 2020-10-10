@@ -367,7 +367,7 @@ app.get('/order', function(req, res){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{   
         let sub_total = 0;
-        customer[user_id].cart.forEach((item) => sub_total += item.total);        
+        customer[user_id].cart.forEach((item) => sub_total += item.total);   
         
         res.render('order.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
     }
