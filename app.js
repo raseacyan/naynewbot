@@ -292,8 +292,7 @@ app.post('/cart', function(req, res){
 });
 
 
-app.get('/cart', function(req, res){
-    
+app.get('/cart', function(req, res){    
 
 
     if(!customer[user_id].cart){
@@ -316,8 +315,49 @@ app.get('/cart', function(req, res){
         customer[user_id].use_point = false;
 
         console.log('CART:', customer[user_id].cart);
-        
+        console.log('CUSTOMER:', customer[user_id]);
+
+
         res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
+    }
+});
+
+
+
+app.get('/emptycart', function(req, res){
+  
+    customer[user_id].cart = [];
+    customer[user_id].use_point = false;
+    customer[user_id].points = 400;
+    customer[user_id].cart_discount = 0;
+    res.redirect('../cart');    
+});
+
+
+app.post('/pointdiscount', function(req, res){
+  
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
+    }
+    if(customer[user_id].cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{ 
+        customer[user_id].use_point = true; 
+        customer[user_id].cart_discount =  req.body.points;
+        let sub_total = 0;
+        customer[user_id].cart.forEach((item) => sub_total += item.total); 
+
+        if(sub_total =>  req.body.points){
+           customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
+           dummy_user.points = 0; 
+        }else{
+           customer[user_id].cart_total = 0;
+           customer[user_id].points = customer[user_id].cart_discount - sub_total;
+        }
+        
+
+        
+        res.redirect('../cart');  
     }
 });
 
