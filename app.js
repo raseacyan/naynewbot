@@ -37,6 +37,7 @@ let user_id = '';
 let userInputs = [];
 let first_reg = false;
 let customer = [];
+let temp_points;
 
 /*
 var storage = multer.diskStorage({
@@ -224,11 +225,10 @@ app.get('/shop', async function(req,res){
   } else {
       customer[user_id].name = user.data().name; 
       customer[user_id].phone = user.data().phone; 
-      customer[user_id].address = user.data().address;    
+      customer[user_id].address = user.data().address; 
       
-      if(!customer[user_id].use_point){
-        customer[user_id].points = user.data().points; 
-      }     
+      customer[user_id].points = user.data().points; 
+       
   } 
 
 
@@ -295,7 +295,9 @@ app.post('/cart', function(req, res){
 });
 
 
-app.get('/cart', function(req, res){    
+app.get('/cart', function(req, res){ 
+
+    temp_points =  customer[user_id].points;  
 
 
     if(!customer[user_id].cart){
@@ -319,7 +321,7 @@ app.get('/cart', function(req, res){
        
         console.log('CUSTOMER:', customer[user_id]);
 
-        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount, points:temp_points});    
     }
 });
 
@@ -349,10 +351,10 @@ app.post('/pointdiscount', function(req, res){
 
         if(sub_total =>  req.body.points){
            customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
-           customer[user_id].points = 0; 
+           temp_points = 0; 
         }else{
            customer[user_id].cart_total = 0;
-           customer[user_id].points = customer[user_id].cart_discount - sub_total;
+           temp_points = customer[user_id].cart_discount - sub_total;
         }        
 
         
