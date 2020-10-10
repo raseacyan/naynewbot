@@ -210,7 +210,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
 
 //route url
 app.get('/shop', async function(req,res){
-  console.log('USERID:', user_id);
+
   customer[user_id].id = user_id;
 
   const userRef = db.collection('users').doc(user_id);
