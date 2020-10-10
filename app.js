@@ -764,6 +764,8 @@ const confirmRegister = (sender_psid) => {
 const saveRegistration = (arg, sender_psid) => {
   let data = arg;
 
+  console.log('FIRST DATA:', data);
+
   if(first_reg){
       let today = new Date();
       data.fid = sender_psid;
