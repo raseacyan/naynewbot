@@ -35,7 +35,7 @@ let sess;
 let current_question = '';
 let user_id = ''; 
 let userInputs = [];
-let gift_point = 0;
+let first_reg = false;
 
 /*
 var storage = multer.diskStorage({
@@ -702,9 +702,10 @@ const showMenu = async(sender_psid) => {
     const user = await userRef.get();
     if (!user.exists) {
         title = "Register";  
-        gift_point = 50; 
+        first_reg = true;      
     } else {
-      title = "Update Profile";       
+      title = "Update Profile";  
+      first_reg = false;      
     } 
 
 
@@ -769,8 +770,12 @@ const saveRegistration = (arg, sender_psid) => {
 
   data.fid = sender_psid;
   data.created_on = today;
-  data.point = gift_point;
+  
   data.status = "pending";
+
+  if(first_reg){
+    data.points = 50;
+  }
 
   console.log('USER DATA', data);
   
