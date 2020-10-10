@@ -388,7 +388,32 @@ app.get('/order', function(req, res){
 });
 
 app.post('/order', function(req, res){
-    res.json(req.body);
+    let today = new Date();
+
+
+    let data = {
+      name: req.body.name,
+      phone: req.body.phone,
+      address: req.body.address,
+      items: req.body.items,
+      sub_total: req.body.sub_total,
+      discount: req.body.discount,
+      total: req.body.total,
+      payment_type: req.body.payment_type,
+      created_on: today,
+      ref: generateRandom(6)
+    }
+
+
+    db.collection('orders').add(data).then((success)=>{
+        console.log('SAVED', success);
+        //first_reg = false;
+        let text = "Thank you. You have been registered."+ "\u000A";      
+        let response = {"text": text};
+        callSend(user_id, response);
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
 });
 
 

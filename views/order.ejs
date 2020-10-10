@@ -22,9 +22,9 @@
 	
 	
 	
-	<p><strong>Sub Total:</strong><%= sub_total %><p>
-	<p><strong>Discount:</strong><%= discount %><p>
-	<p><strong>Total:</strong><%= cart_total %><p>
+	<p><strong>Sub Total:</strong> <%= sub_total %><p>
+	<p><strong>Discount:</strong> - <%= discount %><p>
+	<p><strong>Total:</strong> <%= cart_total %><p>
 
 	<form action="../order" method="post">	
 	    <input type="text" name="name" value="<%= user.name %>" required/>	<br/>
