@@ -313,10 +313,8 @@ app.get('/cart', function(req, res){
 
 
         customer[user_id].use_point = false;
-
-        console.log('CART:', customer[user_id].cart);
+       
         console.log('CUSTOMER:', customer[user_id]);
-
 
         res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
     }
@@ -324,11 +322,10 @@ app.get('/cart', function(req, res){
 
 
 
-app.get('/emptycart', function(req, res){
-  
+app.get('/emptycart', function(req, res){  
     customer[user_id].cart = [];
     customer[user_id].use_point = false;
-    customer[user_id].points = 400;
+    //customer[user_id].points = 400;
     customer[user_id].cart_discount = 0;
     res.redirect('../cart');    
 });
