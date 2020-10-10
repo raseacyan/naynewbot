@@ -224,13 +224,11 @@ app.get('/shop', async function(req,res){
   } else {
       customer[user_id].name = user.data().name; 
       customer[user_id].phone = user.data().phone; 
-      customer[user_id].address = user.data().address;
-      if(!customer[user_id].points){
-        customer[user_id].points = user.data().points;
-      }else{
-        customer[user_id].points = 0;
-      }
+      customer[user_id].address = user.data().address;    
       
+      if(customer[user_id].use_point){
+        customer[user_id].points = user.data().points; 
+      }     
   } 
 
 
