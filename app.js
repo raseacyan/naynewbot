@@ -222,10 +222,10 @@ app.get('/shop', async function(req,res){
     customer[user_id].point = 0;
          
   } else {
-      customer[user_id].name = user.doc().name; 
-      customer[user_id].phone = user.doc().phone; 
-      customer[user_id].address = user.doc().address;
-      customer[user_id].point = user.doc().point;
+      customer[user_id].name = user.data().name; 
+      customer[user_id].phone = user.data().phone; 
+      customer[user_id].address = user.data().address;
+      customer[user_id].point = user.data().point;
   } 
 
 
