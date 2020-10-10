@@ -31,9 +31,9 @@
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 		<textarea  name="address" rows="4" cols="50" required><%= user.address %></textarea><br/>
 
-		<input  type="hidden" name="items">
-		<% cart.forEach(function(item){ %><%= item.name %> * <%= item.qty %>,<% }); %>
-		</input>
+		<input  type="hidden" name="items" value="<%= items %>">
+		
+	
 
 		<input type="hidden" name="sub_total" value="<%= sub_total %>" />
 		<input type="hidden" name="discount" value="<%= discount %>" />
