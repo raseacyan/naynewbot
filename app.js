@@ -36,6 +36,7 @@ let current_question = '';
 let user_id = ''; 
 let userInputs = [];
 let first_reg = false;
+let customer = {};
 
 /*
 var storage = multer.diskStorage({
@@ -88,7 +89,7 @@ app.post('/webhook', (req, res) => {
   // Parse the request body from the POST
   let body = req.body;
 
-  sess = req.session;
+
 
   
 
@@ -209,6 +210,8 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
 //route url
 app.get('/shop', async function(req,res){
 
+  customer.id = user_id;
+
   const productsRef = db.collection('products').orderBy('created_on', 'desc');
   const snapshot = await productsRef.get();
 
@@ -241,9 +244,9 @@ app.get('/shop', async function(req,res){
 
 
 app.post('/cart', function(req, res){
-    sess = req.session;
-    if(!sess.cart){
-        sess.cart = [];
+    
+    if(!customer.cart){
+        customer.cart = [];
     }
     
     let item = {};
@@ -257,49 +260,47 @@ app.post('/cart', function(req, res){
 
 
     const itemInCart = (element) => element.id == item.id;
-    let item_index = sess.cart.findIndex(itemInCart); 
+    let item_index = customer.cart.findIndex(itemInCart); 
 
     if(item_index < 0){
-        sess.cart.push(item);
+        customer.cart.push(item);
     }else{
-        sess.cart[item_index].qty = item.qty;
-        sess.cart[item_index].total = item.total;
+        customer.cart[item_index].qty = item.qty;
+        customer.cart[item_index].total = item.total;
     }   
 
-    console.log('POST SESSION:', sess);
+   
      
     res.redirect('../cart');   
 });
 
 
 app.get('/cart', function(req, res){
-    sess = req.session;
-
-    console.log('GET SESSION:', sess);
+    
 
 
-    if(!sess.cart){
-        sess.cart = [];
+    if(!customer.cart){
+        customer.cart = [];
     }
-    if(sess.cart.length < 1){
+    if(customers.cart.length < 1){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{   
         let sub_total = 0;
-        sess.cart.forEach((item) => sub_total += item.total);
+        customer.cart.forEach((item) => sub_total += item.total);
 
-        if( !sess.use_point || sess.use_point == false){
-         
-            sess.cart_total = sub_total;
+        if( !customer.use_point || customer.use_point == false){         
+            customer.cart_total = sub_total;
         }   
-        if( !sess.cart_discount || sess.cart_discountt == false){
-            sess.cart_discount = 0;
-           
+        if( !customer.cart_discount || customer.cart_discountt == false){
+            customer.cart_discount = 0;           
         }      
-        sess.use_point = false;
 
-        console.log('CART', sess);
         
-        res.render('cart.ejs', {cart:sess.cart, sub_total:sub_total, user:dummy_user, cart_total:sess.cart_total, discount:sess.cart_discount});    
+        customer.use_point = false;
+
+        console.log('CART:', customer.cart);
+        
+        res.render('cart.ejs', {cart:customer.cart, sub_total:sub_total, user:dummy_user, cart_total:customer.cart_total, discount:customer.cart_discount});    
     }
 });
 
@@ -315,7 +316,7 @@ app.get('/webview/:sender_id',function(req,res){
 
 
 app.post('/webview',upload.single('file'),function(req,res){
-       sess = req.session; 
+      
       let name  = req.body.name;
       let email = req.body.email;
       let img_url = "";
