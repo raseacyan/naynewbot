@@ -213,6 +213,22 @@ app.get('/shop', async function(req,res){
 
   customer[user_id].id = user_id;
 
+  const userRef = db.collection('users').doc(sender_psid);
+  const user = await userRef.get();
+  if (!user.exists) {
+    customer[user_id].name = ""; 
+    customer[user_id].phone = "";
+    customer[user_id].address = "";
+    customer[user_id].point = 0;
+         
+  } else {
+      customer[user_id].name = user.doc().name; 
+      customer[user_id].phone = user.doc().phone; 
+      customer[user_id].address = user.doc().address;
+      customer[user_id].point = user.doc().point;
+  } 
+
+
   const productsRef = db.collection('products').orderBy('created_on', 'desc');
   const snapshot = await productsRef.get();
 
@@ -301,7 +317,7 @@ app.get('/cart', function(req, res){
 
         console.log('CART:', customer[user_id].cart);
         
-        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:dummy_user, cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
     }
 });
 
