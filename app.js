@@ -225,7 +225,10 @@ app.get('/shop', async function(req,res){
       customer[user_id].name = user.data().name; 
       customer[user_id].phone = user.data().phone; 
       customer[user_id].address = user.data().address;
-      customer[user_id].points = user.data().points;
+      if(!customer[user_id].points){
+        customer[user_id].points = user.data().points;
+      }
+      
   } 
 
 
