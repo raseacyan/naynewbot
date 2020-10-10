@@ -7,6 +7,16 @@
 	<h1>Order</h1>
 	<p><a href="../cart">Cart</a></p>
 
+	<h3>Items</h3>
+	<ul>
+		<% cart.forEach(function(item){ %>
+		<li><%= item.name %> * <%= item.qty %></li>
+	</ul>
+	<% }); %>
+	<p><strong>Sub Total:</strong><%= sub_total %><p>
+	<p><strong>Discount:</strong><%= discount %><p>
+	<p><strong>Total:</strong><%= cart_total %><p>
+
 	<form action="../order" method="post">	
 	    <input type="text" name="name" value="<%= user.name %>" required/>	<br/>
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
@@ -24,15 +34,7 @@
 		
 		<input type="submit" name="submit" value="Order"/>
 	</form>
-	<h3>Items</h3>
-	<ul>
-		<% cart.forEach(function(item){ %>
-		<li><%= item.name %> * <%= item.qty %></li>
-	</ul>
-	<% }); %>
-	<p><strong>Sub Total:</strong><%= sub_total %><p>
-	<p><strong>Discount:</strong><%= discount %><p>
-	<p><strong>Total:</strong><%= cart_total %><p>
+	
 
 
 	
