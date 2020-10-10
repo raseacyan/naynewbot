@@ -781,6 +781,7 @@ const saveRegistration = (arg, sender_psid) => {
   
   db.collection('users').doc(sender_psid).set(data).then((success)=>{
     console.log('SAVED', success);
+    first_reg = false;
     let text = "Thank you. You have been registered."+ "\u000A";      
     let response = {"text": text};
     callSend(sender_psid, response);
