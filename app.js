@@ -764,33 +764,49 @@ const confirmRegister = (sender_psid) => {
 const saveRegistration = (arg, sender_psid) => {
   let data = arg;
 
-  console.log();
-
-  let today = new Date();
-
-  data.fid = sender_psid;
-  data.created_on = today;
-  
-  data.status = "pending";
-
-  console.log('FIRST REG:', first_reg);
-
   if(first_reg){
-    data.points = 50;
+      let today = new Date();
+      data.fid = sender_psid;
+      data.created_on = today;
+      data.points = 50;
+      data.status = "pending";
+
+      console.log('USER DATA', data);
+  
+      db.collection('users').doc(sender_psid).set(data).then((success)=>{
+        console.log('SAVED', success);
+        //first_reg = false;
+        let text = "Thank you. You have been registered."+ "\u000A";      
+        let response = {"text": text};
+        callSend(sender_psid, response);
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+
+  }else{
+      db.collection('users').doc(sender_psid).update(data).then((success)=>{
+      console.log('SAVED', success);
+      //first_reg = false;
+      let text = "Thank you. You have been registered."+ "\u000A";      
+      let response = {"text": text};
+      callSend(sender_psid, response);
+      }).catch((err)=>{
+         console.log('Error', err);
+      });
+
   }
 
-  console.log('USER DATA', data);
   
-  db.collection('users').doc(sender_psid).set(data).then((success)=>{
-    console.log('SAVED', success);
-    //first_reg = false;
-    let text = "Thank you. You have been registered."+ "\u000A";      
-    let response = {"text": text};
-    callSend(sender_psid, response);
-  }).catch((err)=>{
-     console.log('Error', err);
-  });
+
+  
+   
+
+  
+
+
 }
+
+
 
 
 const shopMenu =(sender_psid) => {
