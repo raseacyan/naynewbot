@@ -8,11 +8,20 @@
 	<p><a href="../cart">Cart</a></p>
 
 	<h3>Items</h3>
-	<ul>
+	<table>
 		<% cart.forEach(function(item){ %>
-		<li><%= item.name %> * <%= item.qty %></li>
-	</ul>
-	<% }); %>
+		<tr>
+			<td>
+				<%= item.name %> * <%= item.qty %>
+			</td>
+		</tr>
+		<% }); %>
+	</table>
+	
+		
+	
+	
+	
 	<p><strong>Sub Total:</strong><%= sub_total %><p>
 	<p><strong>Discount:</strong><%= discount %><p>
 	<p><strong>Total:</strong><%= cart_total %><p>
@@ -22,13 +31,15 @@
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 		<textarea  name="address" rows="4" cols="50" required><%= user.address %></textarea><br/>
 
-		<input  name="hidden">
+		<input  name="hidden" name="items">
 		<% cart.forEach(function(item){ %><%= item.name %> * <%= item.qty %>,<% }); %>
 		</input>
 
-		sub total: <input type="hidden" name="sub_total" value="<%= sub_total %>" />
-		discount: <input type="hidden" name="discount" value="<%= discount %>" />
-		TOTAL: <input type="hidden" name="total" value="<%= cart_total %>" />
+		<input type="hidden" name="sub_total" value="<%= sub_total %>" />
+		<input type="hidden" name="discount" value="<%= discount %>" />
+		<input type="hidden" name="total" value="<%= cart_total %>" />
+
+
 
 		<input type="radio" name="payment_type" value="cod" required/> Cash on Delivery <br/>
 		
