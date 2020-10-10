@@ -312,13 +312,10 @@ app.get('/webview/:sender_id',function(req,res){
     res.render('webview.ejs',{title:"Hello!! from WebView", sender_id:sender_id});
 });
 
-app.get('/webview2',function(req,res){
-    
-    res.render('webviews2.ejs');
-});
+
 
 app.post('/webview',upload.single('file'),function(req,res){
-       
+       sess = req.session; 
       let name  = req.body.name;
       let email = req.body.email;
       let img_url = "";
