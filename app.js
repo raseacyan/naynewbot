@@ -764,7 +764,7 @@ const confirmRegister = (sender_psid) => {
 const saveRegistration = (arg, sender_psid) => {
   let data = "";
   data = arg;
-
+  console.log('ARG:', arg);
   console.log('FIRST DATA:', data);
 
   if(first_reg){
