@@ -297,7 +297,12 @@ app.post('/cart', function(req, res){
 
 app.get('/cart', function(req, res){ 
 
-     
+    if(!customer[user_id].cart_discount){
+      temp_points = customer[user_id].points;      
+    }else{
+      temp_points = customer[user_id].points - customer[user_id].cart_discount;
+    }
+    
 
 
     if(!customer[user_id].cart){
@@ -310,10 +315,10 @@ app.get('/cart', function(req, res){
         customer[user_id].cart.forEach((item) => sub_total += item.total);
 
         if( !customer[user_id].use_point || customer[user_id].use_point == false){
-            temp_points =  customer[user_id].points;          
+                    
             customer[user_id].cart_total = sub_total;
         }   
-        if( !customer[user_id].cart_discount || customer[user_id].cart_discountt == false){
+        if( !customer[user_id].cart_discount || customer[user_id].cart_discount == false){
             customer[user_id].cart_discount = 0;           
         }      
 
