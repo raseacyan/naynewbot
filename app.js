@@ -771,7 +771,7 @@ const saveRegistration = (arg, sender_psid) => {
       data.points = 50;
       data.status = "pending";
 
-      console.log('USER DATA', data);
+      console.log('First PROFILE:', data);
   
       db.collection('users').doc(sender_psid).set(data).then((success)=>{
         console.log('SAVED', success);
@@ -784,6 +784,7 @@ const saveRegistration = (arg, sender_psid) => {
       });
 
   }else{
+      console.log('UPDATE PROFILE:', data);
       db.collection('users').doc(sender_psid).update(data).then((success)=>{
       console.log('SAVED', success);
       //first_reg = false;
