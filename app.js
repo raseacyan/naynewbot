@@ -162,8 +162,7 @@ app.get('/admin/products', async(req,res) =>{
     data.push(product);
     
   });
-
-  console.log('DATA:', data); 
+  
   res.render('products.ejs', {data:data});
 });
 
@@ -233,61 +232,70 @@ app.get('/shop', async function(req,res){
 
     data.push(product);
     
-  });
-  
+  });  
 
   //console.log('DATA:', data); 
   res.render('shop.ejs', {data:data});
 
 });
 
-app.get('/admin/updateappointment/:doc_id', async function(req,res){
-  let doc_id = req.params.doc_id; 
-  
-  const appoinmentRef = db.collection('appointments').doc(doc_id);
-  const doc = await appoinmentRef.get();
-  if (!doc.exists) {
-    console.log('No such document!');
-  } else {
-    console.log('Document data:', doc.data());
-    let data = doc.data();
-    data.doc_id = doc.id;
 
-    console.log('Document data:', data);
-    res.render('editappointment.ejs', {data:data});
-  } 
+app.post('/cart', function(req, res){
+    sess = req.session;
+    if(!sess.cart){
+        sess.cart = [];
+    }
+    
+    let item = {};
+    item.id = req.body.item_id;
+    item.name = req.body.item_name;
+    item.price = parseInt(req.body.item_price);
+    item.qty = parseInt(req.body.item_qty);
+    item.total = item.price * item.qty;
 
+
+    const itemInCart = (element) => element.id == item.id;
+    let item_index = sess.cart.findIndex(itemInCart); 
+
+    if(item_index < 0){
+        sess.cart.push(item);
+    }else{
+        sess.cart[item_index].qty = item.qty;
+        sess.cart[item_index].total = item.total;
+    }   
+     
+    res.redirect('../cart');   
 });
 
 
-app.post('/admin/updateappointment', function(req,res){
-  console.log('REQ:', req.body); 
+app.get('/cart', function(req, res){
+    sess = req.session;
+    if(!sess.cart){
+        sess.cart = [];
+    }
+    if(sess.cart.length < 1){
+        res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
+    }else{   
+        let sub_total = 0;
+        sess.cart.forEach((item) => sub_total += item.total);
 
-  
+        if( !sess.use_point || sess.use_point == false){
+         
+            sess.cart_total = sub_total;
+        }   
+        if( !sess.cart_discount || sess.cart_discountt == false){
+            sess.cart_discount = 0;
+           
+        }      
+        sess.use_point = false;
 
-  let data = {
-    name:req.body.name,
-    phone:req.body.phone,
-    email:req.body.email,
-    gender:req.body.gender,
-    doctor:req.body.doctor,
-    department:req.body.department,
-    visit:req.body.visit,
-    date:req.body.date,
-    time:req.body.time,
-    message:req.body.message,
-    status:req.body.status,
-    doc_id:req.body.doc_id,
-    ref:req.body.ref,
-    comment:req.body.comment
-  }
-
-  db.collection('appointments').doc(req.body.doc_id)
-  .update(data).then(()=>{
-      res.redirect('/admin/appointments');
-  }).catch((err)=>console.log('ERROR:', error)); 
- 
+        console.log('CART', sess);
+        
+        res.render('cart.ejs', {cart:sess.cart, sub_total:sub_total, user:dummy_user, cart_total:sess.cart_total, discount:sess.cart_discount});    
+    }
 });
+
+
 
 
 //webview test
