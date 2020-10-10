@@ -36,7 +36,7 @@ let current_question = '';
 let user_id = ''; 
 let userInputs = [];
 let first_reg = false;
-let customer = {};
+let customer = [];
 
 /*
 var storage = multer.diskStorage({
@@ -104,6 +104,7 @@ app.post('/webhook', (req, res) => {
 
       if(!userInputs[user_id]){
         userInputs[user_id] = {};
+        customer[user_id] = {};
       } 
                
 
@@ -210,7 +211,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
 //route url
 app.get('/shop', async function(req,res){
 
-  customer.id = user_id;
+  customer[user_id].id = user_id;
 
   const productsRef = db.collection('products').orderBy('created_on', 'desc');
   const snapshot = await productsRef.get();
@@ -245,8 +246,8 @@ app.get('/shop', async function(req,res){
 
 app.post('/cart', function(req, res){
     
-    if(!customer.cart){
-        customer.cart = [];
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
     }
     
     let item = {};
@@ -260,13 +261,13 @@ app.post('/cart', function(req, res){
 
 
     const itemInCart = (element) => element.id == item.id;
-    let item_index = customer.cart.findIndex(itemInCart); 
+    let item_index = customer[user_id].cart.findIndex(itemInCart); 
 
     if(item_index < 0){
-        customer.cart.push(item);
+        customer[user_id].cart.push(item);
     }else{
-        customer.cart[item_index].qty = item.qty;
-        customer.cart[item_index].total = item.total;
+        customer[user_id].cart[item_index].qty = item.qty;
+        customer[user_id].cart[item_index].total = item.total;
     }   
 
    
@@ -279,28 +280,28 @@ app.get('/cart', function(req, res){
     
 
 
-    if(!customer.cart){
-        customer.cart = [];
+    if(!customer[user_id].cart){
+        customer[user_id].cart = [];
     }
-    if(customers.cart.length < 1){
+    if(customer[user_id].cart.length < 1){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{   
         let sub_total = 0;
-        customer.cart.forEach((item) => sub_total += item.total);
+        customer[user_id].cart.forEach((item) => sub_total += item.total);
 
-        if( !customer.use_point || customer.use_point == false){         
-            customer.cart_total = sub_total;
+        if( !customer[user_id].use_point || customer[user_id].use_point == false){         
+            customer[user_id].cart_total = sub_total;
         }   
-        if( !customer.cart_discount || customer.cart_discountt == false){
-            customer.cart_discount = 0;           
+        if( !customer[user_id].cart_discount || customer[user_id].cart_discountt == false){
+            customer[user_id].cart_discount = 0;           
         }      
 
-        
-        customer.use_point = false;
 
-        console.log('CART:', customer.cart);
+        customer[user_id].use_point = false;
+
+        console.log('CART:', customer[user_id].cart);
         
-        res.render('cart.ejs', {cart:customer.cart, sub_total:sub_total, user:dummy_user, cart_total:customer.cart_total, discount:customer.cart_discount});    
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:dummy_user, cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount});    
     }
 });
 
