@@ -397,7 +397,7 @@ function handleQuickReply(sender_psid, received_message) {
         break; 
       case "confirm-register":
 
-            console.log('FLAG:', userInputs[user_id]);
+         
             saveRegistration(userInputs[user_id], sender_psid);
         break;              
       default:
@@ -703,8 +703,8 @@ const showMenu = async(sender_psid) => {
   const userRef = db.collection('users').doc(sender_psid);
     const user = await userRef.get();
     if (!user.exists) {
-        title = "Register";  
-        first_reg = true;      
+      title = "Register";  
+      first_reg = true;      
     } else {
       title = "Update Profile";  
       first_reg = false;      
@@ -764,10 +764,8 @@ const confirmRegister = (sender_psid) => {
 }
 
 const saveRegistration = (arg, sender_psid) => {
-  let data = "";
-  data = arg;
-  console.log('ARG:', arg);
-  console.log('FIRST DATA:', data);
+
+  let data = arg;  
 
   if(first_reg){
       let today = new Date();
@@ -775,8 +773,7 @@ const saveRegistration = (arg, sender_psid) => {
       data.created_on = today;
       data.points = 50;
       data.status = "pending";
-
-      console.log('First PROFILE:', data);
+     
   
       db.collection('users').doc(sender_psid).set(data).then((success)=>{
         console.log('SAVED', success);
@@ -789,8 +786,8 @@ const saveRegistration = (arg, sender_psid) => {
       });
 
   }else{
-      console.log('UPDATE PROFILE:', data);
-      db.collection('users').doc(sender_psid).update(data).then((success)=>{
+      let update_data = {name:data.name, phone:data.phone, address.data.address}
+      db.collection('users').doc(sender_psid).update(update_data).then((success)=>{
       console.log('SAVED', success);
       //first_reg = false;
       let text = "Thank you. You have been registered."+ "\u000A";      
