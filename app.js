@@ -395,9 +395,7 @@ function handleQuickReply(sender_psid, received_message) {
       case "shop":
           shopMenu(sender_psid);
         break; 
-      case "confirm-register":
-
-         
+      case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
         break;              
       default:
@@ -786,7 +784,7 @@ const saveRegistration = (arg, sender_psid) => {
       });
 
   }else{
-      let update_data = {name:data.name, phone:data.phone, address.data.address}
+      let update_data = {name:data.name, phone:data.phone, address:data.address};
       db.collection('users').doc(sender_psid).update(update_data).then((success)=>{
       console.log('SAVED', success);
       //first_reg = false;
