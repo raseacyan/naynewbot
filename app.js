@@ -40,7 +40,6 @@ let customer = [];
 
 
 let temp_points = 0;
-let sub_total = 0;
 let cart_total = 0;
 let cart_discount = 0;
 
@@ -371,7 +370,7 @@ app.post('/cart', function(req, res){
 
 app.get('/cart', function(req, res){     
     temp_points = customer[user_id].points; 
-    sub_total = 0;
+    let sub_total = 0;
     cart_total = 0;
     cart_discount = 0;
 
@@ -406,7 +405,7 @@ app.get('/emptycart', function(req, res){
 app.post('/pointdiscount', function(req, res){
 
     //temp_points = customer[user_id].points; 
-    //sub_total = 0;
+    let sub_total = 0;
     //cart_total = 0;
     //cart_discount = 0;
   
@@ -419,6 +418,11 @@ app.post('/pointdiscount', function(req, res){
         customer[user_id].use_point = true;        
 
         customer[user_id].cart.forEach((item) => sub_total += item.total); 
+
+        console.log('BEFORE');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
        
 
         if(sub_total >=  parseInt(req.body.points)){
@@ -433,6 +437,10 @@ app.post('/pointdiscount', function(req, res){
            cart_discount = sub_total;           
         }        
 
+        console.log('AFTER');
+        console.log('sub total:'+sub_total);
+        console.log('cart total:'+cart_total);
+        console.log('cart discount:'+cart_discount);
         
         res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
     }
