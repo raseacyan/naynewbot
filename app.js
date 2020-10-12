@@ -434,9 +434,11 @@ app.post('/pointdiscount', function(req, res){
         customer[user_id].cart.forEach((item) => sub_total += item.total); 
 
         if(sub_total =>  req.body.points){
+           console.log('Point is smaller than subtotal');
            customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
            temp_points = 0; 
         }else{
+           console.log('Point is greater than subtotal');
            customer[user_id].cart_total = 0;
            temp_points = customer[user_id].cart_discount - sub_total;
         }        
