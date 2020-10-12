@@ -205,9 +205,39 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
         }).catch((error) => {
           console.error(error);
         });
-      }   
-           
+      }             
 });
+
+app.get('/admin/orders', async function(req,res){
+
+  const ordersRef = db.collection('orders').orderBy('created_on', 'desc');
+  const snapshot = await ordersRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  } 
+
+  let data = []; 
+
+  snapshot.forEach(doc => {
+    let order = {};
+    
+    order = doc.data();
+    order.doc_id = doc.id;
+    
+    let d = new Date(doc.data().created_on._seconds);
+    d = d.toString();
+    order.created_on = d;
+    
+
+    data.push(product);
+    
+  });
+
+
+  res.render('order_records.ejs', {data:data});  
+});
+
 
 //route url
 app.get('/shop', async function(req,res){
@@ -680,7 +710,7 @@ const handlePostback = (sender_psid, received_postback) => {
 
 const generateRandom = (length) => {
    var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
    var charactersLength = characters.length;
    for ( var i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));

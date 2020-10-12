@@ -50,7 +50,7 @@
 	<p><strong>Discount:</strong> - <%= discount %><p>
 	<p><strong>Total:</strong> <%= cart_total %><p>
 
-	<form action="../order" method="post">	
+	<form id="form" action="../order" method="post">	
 	    <input type="text" name="name" value="<%= user.name %>" required/>	<br/>
 		<input type="text" name="phone" value="<%= user.phone %>" required/>	<br/>
 		<textarea  name="address" rows="4" cols="50" required><%= user.address %></textarea><br/>
