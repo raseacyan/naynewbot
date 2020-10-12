@@ -490,7 +490,7 @@ app.post('/order', function(req, res){
       ref: generateRandom(6),
       created_on: today,
       status: "pending",
-      comment:""      
+      comment:"",      
     }
 
 
