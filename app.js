@@ -369,12 +369,7 @@ app.post('/cart', function(req, res){
 });
 
 
-app.get('/cart', function(req, res){ 
-
-    
-
-   
-    
+app.get('/cart', function(req, res){     
 
 
     if(!customer[user_id].cart){
@@ -392,9 +387,7 @@ app.get('/cart', function(req, res){
         console.log('(1) temp point is '+ temp_points);     
         }else{
           temp_points = customer[user_id].cart_discount - sub_total;
-          console.log('(2) cart discount: '+ customer[user_id].cart_discount);
-          console.log('(2) sub total: '+ sub_total);
-          console.log('(2) temp point: '+ temp_points);
+          temp_points = (temp_points < 0)? 0 : temp_points;          
         }
 
         if( !customer[user_id].cart_discount || customer[user_id].cart_discount == false){
