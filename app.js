@@ -257,7 +257,7 @@ app.get('/admin/update_order/:doc_id', async function(req,res){
 });
 
 
-app.put('/admin/update_order', function(req,res){
+app.post('/admin/update_order', function(req,res){
    
 
   let data = {
