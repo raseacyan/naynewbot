@@ -239,6 +239,24 @@ app.get('/admin/orders', async(req,res)=>{
 });
 
 
+app.get('/admin/update_order/:doc_id', async function(req,res){
+  let doc_id = req.params.doc_id; 
+  
+  const orderRef = db.collection('appointments').doc(doc_id);
+  const doc = await orderRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+    
+    res.render('update_order.ejs', {data:data});
+  } 
+
+});
+
+
 //route url
 app.get('/shop', async function(req,res){
 
