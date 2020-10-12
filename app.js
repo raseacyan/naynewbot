@@ -37,8 +37,12 @@ let user_id = '';
 let userInputs = [];
 let first_reg = false;
 let customer = [];
+
+
 let temp_points = 0;
-let sub_total = 0
+let sub_total = 0;
+let cart_total = 0;
+let cart_discount = 0;
 
 /*
 var storage = multer.diskStorage({
@@ -348,9 +352,7 @@ app.post('/cart', function(req, res){
     item.name = req.body.item_name;
     item.price = parseInt(req.body.item_price);
     item.qty = parseInt(req.body.item_qty);
-    item.total = item.price * item.qty;
-
-    console.log('ITEM TO CART:', item);
+    item.total = item.price * item.qty; 
 
 
     const itemInCart = (element) => element.id == item.id;
@@ -361,48 +363,32 @@ app.post('/cart', function(req, res){
     }else{
         customer[user_id].cart[item_index].qty = item.qty;
         customer[user_id].cart[item_index].total = item.total;
-    }   
-
-   
+    }      
      
     res.redirect('../cart');   
 });
 
 
 app.get('/cart', function(req, res){     
-
+    temp_points = customer[user_id].points; 
+    sub_total = 0;
+    cart_total = 0;
+    cart_discount = 0;
 
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
     }
     if(customer[user_id].cart.length < 1){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
-    }else{   
-        let sub_total = 0;
-        customer[user_id].cart.forEach((item) => sub_total += item.total);
+    }else{ 
 
+        customer[user_id].cart.forEach((item) => sub_total += item.total);        
 
-        if(!customer[user_id].cart_discount){
-        temp_points = customer[user_id].points; 
-        console.log('(1) temp point is '+ temp_points);     
-        }else{
-          temp_points = customer[user_id].cart_discount - sub_total;
-          temp_points = (temp_points < 0)? 0 : temp_points;          
-        }
-
-        if( !customer[user_id].cart_discount || customer[user_id].cart_discount == false){
-            customer[user_id].cart_discount = 0;           
-        }
-
-        if( !customer[user_id].use_point || customer[user_id].use_point == false){                    
-            customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
-        }     
-
+        cart_total = sub_total - cart_discount;       
 
         customer[user_id].use_point = false;
 
-
-        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:customer[user_id].cart_total, discount:customer[user_id].cart_discount, points:temp_points});    
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});    
     }
 });
 
