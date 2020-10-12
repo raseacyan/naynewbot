@@ -400,6 +400,8 @@ app.get('/cart', function(req, res){
 
 
         customer[user_id].use_point = false;
+
+        console.log('TEMP POINTS:', temp_points);
        
         console.log('CUSTOMER:', customer[user_id]);
 
