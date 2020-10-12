@@ -423,6 +423,7 @@ app.post('/pointdiscount', function(req, res){
         console.log('sub total:'+sub_total);
         console.log('cart total:'+cart_total);
         console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
        
 
         if(sub_total >=  parseInt(req.body.points)){
@@ -441,6 +442,7 @@ app.post('/pointdiscount', function(req, res){
         console.log('sub total:'+sub_total);
         console.log('cart total:'+cart_total);
         console.log('cart discount:'+cart_discount);
+        console.log('temp points:'+ temp_points);
         
         res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
     }
