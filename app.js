@@ -434,7 +434,7 @@ app.post('/pointdiscount', function(req, res){
         }else{
            console.log('Point is greater than subtotal');
            cart_total = 0;
-           temp_points = sub_total - temp_points;
+           temp_points -= temp_points;
            cart_discount = sub_total;           
         }        
 
