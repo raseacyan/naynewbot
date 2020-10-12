@@ -371,12 +371,14 @@ app.post('/cart', function(req, res){
 app.get('/cart', function(req, res){ 
 
     if(!customer[user_id].cart_discount){
-      temp_points = customer[user_id].points;      
+      temp_points = customer[user_id].points; 
+      console.log('(1) temp point is '+ temp_points);     
     }else{
       temp_points = customer[user_id].points - customer[user_id].cart_discount;
+       console.log('(2) temp point is '+ temp_points);
     }
 
-    console.log('(1) temp point is '+ temp_points);
+   
     
 
 
@@ -445,7 +447,7 @@ app.post('/pointdiscount', function(req, res){
            console.log('Point is greater than subtotal');
            customer[user_id].cart_total = 0;
            temp_points = customer[user_id].cart_discount - sub_total;
-           console.log('(2) temp point is '+ temp_points);
+           console.log('(3) temp point is '+ temp_points);
         }        
 
         
