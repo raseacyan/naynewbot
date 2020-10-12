@@ -403,8 +403,10 @@ app.post('/order', function(req, res){
       discount: req.body.discount,
       total: req.body.total,
       payment_type: req.body.payment_type,
+      ref: generateRandom(6),
       created_on: today,
-      ref: generateRandom(6)
+      status: "pending",
+      comment:""      
     }
 
 
