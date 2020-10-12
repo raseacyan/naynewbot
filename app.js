@@ -399,9 +399,9 @@ app.post('/order', function(req, res){
       phone: req.body.phone,
       address: req.body.address,
       items: req.body.items,
-      sub_total: req.body.sub_total,
-      discount: req.body.discount,
-      total: req.body.total,
+      sub_total: parseInt(req.body.sub_total),
+      discount: parseInt(req.body.discount),
+      total: parseInt(req.body.total),
       payment_type: req.body.payment_type,
       ref: generateRandom(6),
       created_on: today,
@@ -410,10 +410,14 @@ app.post('/order', function(req, res){
     }
 
 
+
+
     db.collection('orders').add(data).then((success)=>{
         console.log('SAVED', success);
+        console.log('TEMP POINTS:', temp_points);
+        console.log('CUSTOMER: ', customer[user_id]);
         //first_reg = false;
-        let text = "Thank you. Your order has been confirmed."+ "\u000A";      
+        let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
         let response = {"text": text};
         callSend(user_id, response);
       }).catch((err)=>{
