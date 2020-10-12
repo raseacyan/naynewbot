@@ -274,9 +274,9 @@ app.put('/admin/update_order', function(req,res){
     comment:req.body.comment,
   }
 
-  db.collection('appointments').doc(req.body.doc_id)
+  db.collection('orders').doc(req.body.doc_id)
   .update(data).then(()=>{
-      res.redirect('/admin/appointments');
+      res.redirect('/admin/orders');
   }).catch((err)=>console.log('ERROR:', error)); 
  
 });
