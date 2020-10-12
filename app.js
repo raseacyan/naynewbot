@@ -208,7 +208,7 @@ app.post('/admin/saveproduct',upload.single('file'),function(req,res){
       }             
 });
 
-app.get('/admin/orders', async function(req,res){
+app.get('/admin/orders', async(req,res)=>{
 
   const ordersRef = db.collection('orders').orderBy('created_on', 'desc');
   const snapshot = await ordersRef.get();
@@ -230,7 +230,7 @@ app.get('/admin/orders', async function(req,res){
     order.created_on = d;
     
 
-    data.push(product);
+    data.push(order);
     
   });
 
