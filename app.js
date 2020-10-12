@@ -398,12 +398,17 @@ app.get('/emptycart', function(req, res){
     customer[user_id].cart = [];
     customer[user_id].use_point = false;
     //customer[user_id].points = 400;
-    customer[user_id].cart_discount = 0;
+    cart_discount = 0;
     res.redirect('../cart');    
 });
 
 
 app.post('/pointdiscount', function(req, res){
+
+    //temp_points = customer[user_id].points; 
+    //sub_total = 0;
+    //cart_total = 0;
+    //cart_discount = 0;
   
     if(!customer[user_id].cart){
         customer[user_id].cart = [];
@@ -411,28 +416,25 @@ app.post('/pointdiscount', function(req, res){
     if(customer[user_id].cart.length < 1){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{ 
-        customer[user_id].use_point = true;         
-        let sub_total = 0;
-        customer[user_id].cart.forEach((item) => sub_total += item.total); 
+        customer[user_id].use_point = true;        
 
-        console.log('sub total is ' + sub_total + " and cart discount is " + customer[user_id].cart_discount);
+        customer[user_id].cart.forEach((item) => sub_total += item.total); 
+       
 
         if(sub_total >=  parseInt(req.body.points)){
            console.log('Point is smaller than subtotal');
-           customer[user_id].cart_total = sub_total - customer[user_id].cart_discount;
+           cart_total = sub_total - cart_discount;
            temp_points = 0; 
-           customer[user_id].cart_discount =  parseInt(req.body.points);
+           cart_discount =  parseInt(req.body.points);
         }else{
            console.log('Point is greater than subtotal');
-           customer[user_id].cart_total = 0;
-           temp_points = customer[user_id].cart_discount - sub_total;
-           customer[user_id].cart_discount = sub_total;
-
-           console.log('(3) temp point is '+ temp_points);
+           cart_total = 0;
+           temp_points = cart_discount - sub_total;
+           cart_discount = sub_total;           
         }        
 
         
-        res.redirect('../cart');  
+        res.render('cart.ejs', {cart:customer[user_id].cart, sub_total:sub_total, user:customer[user_id], cart_total:cart_total, discount:cart_discount, points:temp_points});      
     }
 });
 
