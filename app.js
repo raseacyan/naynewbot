@@ -429,7 +429,7 @@ app.post('/pointdiscount', function(req, res){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{ 
         customer[user_id].use_point = true; 
-        customer[user_id].cart_discount =  req.body.points;
+        customer[user_id].cart_discount =  parseInt(req.body.points);
         let sub_total = 0;
         customer[user_id].cart.forEach((item) => sub_total += item.total); 
 
