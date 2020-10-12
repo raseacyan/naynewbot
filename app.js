@@ -37,7 +37,8 @@ let user_id = '';
 let userInputs = [];
 let first_reg = false;
 let customer = [];
-let temp_points;
+let temp_points = 0;
+let sub_total = 0
 
 /*
 var storage = multer.diskStorage({
@@ -374,8 +375,8 @@ app.get('/cart', function(req, res){
       temp_points = customer[user_id].points; 
       console.log('(1) temp point is '+ temp_points);     
     }else{
-      temp_points = customer[user_id].points - customer[user_id].cart_discount;
-       console.log('(2) temp point is '+ temp_points);
+      temp_points = customer[user_id].cart_discount - sub_total;
+      console.log('(2) temp point is '+ temp_points);
     }
 
    
@@ -464,7 +465,7 @@ app.get('/order', function(req, res){
     if(customer[user_id].cart.length < 1){
         res.send('your cart is empty. back to shop <a href="../shop">shop</a>');
     }else{   
-        let sub_total = 0;
+        sub_total = 0;
         customer[user_id].cart.forEach((item) => sub_total += item.total);   
 
         let item_list = "";
