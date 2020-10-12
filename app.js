@@ -257,6 +257,31 @@ app.get('/admin/update_order/:doc_id', async function(req,res){
 });
 
 
+app.put('/admin/update_order', function(req,res){
+   
+
+  let data = {
+    ref:req.body.ref,
+    name:req.body.name,
+    phone:req.body.phone,
+    address:req.body.address,
+    items:req.body.items,
+    sub_total:req.body.sub_total,
+    discount:req.body.discount,
+    total:req.body.total,
+    payment_type:req.body.payment_type,
+    status:req.body.status,
+    comment:req.body.comment,
+  }
+
+  db.collection('appointments').doc(req.body.doc_id)
+  .update(data).then(()=>{
+      res.redirect('/admin/appointments');
+  }).catch((err)=>console.log('ERROR:', error)); 
+ 
+});
+
+
 //route url
 app.get('/shop', async function(req,res){
 
