@@ -27,7 +27,8 @@ app.use(session({secret: 'effystonem'}));
 const bot_questions = {
   "q1": "please enter you name",
   "q2": "please enter your phone number",
-  "q3": "please enter your address"  
+  "q3": "please enter your address",
+  "q4": "please enter your order reference number" 
 }
 
 let sess;
@@ -625,12 +626,17 @@ function handleQuickReply(sender_psid, received_message) {
           current_question = "q1";
           botQuestions(current_question, sender_psid);
         break;
+      case "check-order":         
+          current_question = "q4";
+          botQuestions(current_question, sender_psid);
+        break; 
       case "shop":
           shopMenu(sender_psid);
         break; 
       case "confirm-register":         
             saveRegistration(userInputs[user_id], sender_psid);
-        break;              
+        break;  
+                 
       default:
           defaultReply(sender_psid);
   }  
@@ -661,6 +667,10 @@ const handleMessage = (sender_psid, received_message) => {
      userInputs[user_id].address = received_message.text;     
      current_question = '';     
      confirmRegister(sender_psid);
+  }else if(current_question == 'q4'){
+     let order_ref = received_message.text;     
+     current_question = '';     
+     showOrder(sender_psid, order_ref);
   }
   else {
       
@@ -814,95 +824,7 @@ function webviewTest(sender_psid){
   callSendAPI(sender_psid, response);
 }
 
-/**************
-start hospital
-**************/
-const hospitalAppointment = (sender_psid) => {
-   let response1 = {"text": "Welcome to ABC Hospital"};
-   let response2 = {
-    "text": "Please select department",
-    "quick_replies":[
-            {
-              "content_type":"text",
-              "title":"General Surgery",
-              "payload":"department:General Surgery",              
-            },{
-              "content_type":"text",
-              "title":"ENT",
-              "payload":"department:ENT",             
-            },{
-              "content_type":"text",
-              "title":"Dermatology",
-              "payload":"department:Dermatology", 
-            }
 
-    ]
-  };
-
-  callSend(sender_psid, response1).then(()=>{
-    return callSend(sender_psid, response2);
-  });
-}
-
-
-const showDoctor = (sender_psid) => {
-    let response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "James Smith",
-            "subtitle": "General Surgeon",
-            "image_url":"https://image.freepik.com/free-vector/doctor-icon-avatar-white_136162-58.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "James Smith",
-                  "payload": "Doctor:James Smith",
-                },               
-              ],
-          },{
-            "title": "Kenneth Martinez",
-            "subtitle": "General Surgeon",
-            "image_url":"https://image.freepik.com/free-vector/doctor-icon-avatar-white_136162-58.jpg",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Kenneth Martinez",
-                  "payload": "Doctor:Kenneth Martinez",
-                },               
-              ],
-          },{
-            "title": "Barbara Young",
-            "subtitle": "General Surgeon",
-            "image_url":"https://cdn.iconscout.com/icon/free/png-512/doctor-567-1118047.png",                       
-            "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Barbara Young",
-                  "payload": "Doctor:Barbara Young",
-                },               
-              ],
-          }
-
-          ]
-        }
-      }
-    }
-
-  
-  callSend(sender_psid, response);
-
-}
-
-
-
-
-
-/**************
-end hospital
-**************/
 
 
 /**************
@@ -953,16 +875,18 @@ const showMenu = async(sender_psid) => {
               "content_type":"text",
               "title":"Shop",
               "payload":"shop",             
+            },
+            {
+              "content_type":"text",
+              "title":"My Order",
+              "payload":"check-order",             
             }
+
     ]
   };
   callSend(sender_psid, response);
 }
 
-const showRegister =(sender_psid) => {
-  let response = {"text": "You sent text message"};
-  callSend(sender_psid, response);
-}
 
 
 const confirmRegister = (sender_psid) => {
@@ -1029,14 +953,33 @@ const saveRegistration = (arg, sender_psid) => {
       });
 
   }
+}
 
-  
+const showOrder =(sender_psid, order_ref) => {
 
-  
-   
+    const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1).orderBy('created_on', 'desc');
+    const snapshot = await ordersRef.get();
 
-  
+    if (snapshot.empty) {
+      let response = { "text": "Incorrect order number" };
+      callSend(sender_psid, response);
+    } 
 
+    let order = {}
+
+    snapshot.forEach(doc => {
+      
+      order.ref = doc.data().ref;
+      order.status = doc.data().status;
+      order.comment = doc.data().comment;  
+     });
+
+
+    let response1 = { "text": `Your order ${order.ref} is ${order.status}.` };
+    let response2 = { "text": `Seller message: ${order.comment}.` };
+      callSend(sender_psid, response1).then(()=>{
+        return callSend(sender_psid, response2);
+      });
 
 }
 
