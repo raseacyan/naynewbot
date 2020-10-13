@@ -680,9 +680,7 @@ const handleMessage = (sender_psid, received_message) => {
 
       switch(user_message) { 
 
-      case "hospital":
-          hospitalAppointment(sender_psid);
-        break; 
+      
       case "start":{
           startGreeting(sender_psid);
         break;
@@ -839,6 +837,10 @@ const botQuestions = (current_question, sender_psid) => {
     callSend(sender_psid, response);
   }else if(current_question == 'q3'){
     let response = {"text": bot_questions.q3};
+    callSend(sender_psid, response);
+  }
+  else if(current_question == 'q4'){
+    let response = {"text": bot_questions.q4};
     callSend(sender_psid, response);
   }
 }
