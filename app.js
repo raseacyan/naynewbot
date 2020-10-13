@@ -152,9 +152,8 @@ app.get('/admin/products', async(req,res) =>{
 
   if (snapshot.empty) {
     res.send('no data');
-  } 
-
-  let data = []; 
+  }else{
+    let data = []; 
 
   snapshot.forEach(doc => {
     let product = {};
@@ -172,6 +171,10 @@ app.get('/admin/products', async(req,res) =>{
   });
   
   res.render('products.ejs', {data:data});
+
+  }
+
+  
 });
 
 app.get('/admin/addproduct', async function(req,res){
