@@ -323,28 +323,32 @@ app.get('/shop', async function(req,res){
 
   if (snapshot.empty) {
     res.send('no data');
-  } 
+  }else{
+      let data = []; 
 
-  let data = []; 
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
 
-  snapshot.forEach(doc => { 
-    
-    let product = {}; 
+        product = doc.data();
+        
+        product.id = doc.id; 
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;   
 
-    product = doc.data();
-    
-    product.id = doc.id; 
-    
-    let d = new Date(doc.data().created_on._seconds);
-    d = d.toString();
-    product.created_on = d;   
+        data.push(product);
+        
+      });  
 
-    data.push(product);
-    
-  });  
+      //console.log('DATA:', data); 
+      res.render('shop.ejs', {data:data});
 
-  //console.log('DATA:', data); 
-  res.render('shop.ejs', {data:data});
+
+  }
+
+  
 
 });
 
