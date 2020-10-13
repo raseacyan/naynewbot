@@ -668,7 +668,9 @@ const handleMessage = (sender_psid, received_message) => {
      current_question = '';     
      confirmRegister(sender_psid);
   }else if(current_question == 'q4'){
-     let order_ref = received_message.text;     
+     let order_ref = received_message.text; 
+
+     console.log('order_ref: ', order_ref);    
      current_question = '';     
      showOrder(sender_psid, order_ref);
   }
