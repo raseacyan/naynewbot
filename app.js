@@ -220,9 +220,9 @@ app.get('/admin/orders', async(req,res)=>{
 
   if (snapshot.empty) {
     res.send('no data');
-  } 
+  } else{
 
-  let data = []; 
+      let data = []; 
 
   snapshot.forEach(doc => {
     let order = {};
@@ -240,7 +240,12 @@ app.get('/admin/orders', async(req,res)=>{
   });
 
 
-  res.render('order_records.ejs', {data:data});  
+  res.render('order_records.ejs', {data:data});
+
+
+  }
+
+    
 });
 
 
