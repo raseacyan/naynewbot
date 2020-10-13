@@ -955,7 +955,7 @@ const saveRegistration = (arg, sender_psid) => {
   }
 }
 
-const showOrder =(sender_psid, order_ref) => {
+const showOrder = async(sender_psid, order_ref) => {
 
     const ordersRef = db.collection('orders').where("ref", "==", order_ref).limit(1).orderBy('created_on', 'desc');
     const snapshot = await ordersRef.get();
