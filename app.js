@@ -851,8 +851,7 @@ const startGreeting =(sender_psid) => {
   let response = {"text": "Welcome to NAY shop."};
   callSend(sender_psid, response).then(()=>{
     showMenu(sender_psid);
-  });
-  
+  });  
 }
 
 const showMenu = async(sender_psid) => {
@@ -977,7 +976,9 @@ const showOrder = async(sender_psid, order_ref) => {
 
     if (snapshot.empty) {
       let response = { "text": "Incorrect order number" };
-      callSend(sender_psid, response);
+      callSend(sender_psid, response).then(()=>{
+        return startGreeting(sender_psid);
+      });
     }else{
           let order = {}
 
