@@ -497,13 +497,26 @@ app.post('/order', function(req, res){
 
 
     db.collection('orders').add(data).then((success)=>{
-        console.log('SAVED', success);
+        
         console.log('TEMP POINTS:', temp_points);
         console.log('CUSTOMER: ', customer[user_id]);
-        //first_reg = false;
-        let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
-        let response = {"text": text};
-        callSend(user_id, response);
+
+        //get 10% from sub total and add to remaining points;
+        let newpoints = temp_points + data.sub_total * 0.1;  
+
+        let update_data = {points: newpoints };
+
+        console.log('update_data: ', update_data);
+
+        db.collection('users').doc(user_id).update(update_data).then((success)=>{
+              console.log('POINT UPDATE:');
+              let text = "Thank you. Your order has been confirmed. Your order reference number is "+data.ref;      
+              let response = {"text": text};
+              callSend(user_id, response);       
+          
+          }).catch((err)=>{
+             console.log('Error', err);
+          });   
       }).catch((err)=>{
          console.log('Error', err);
       });
