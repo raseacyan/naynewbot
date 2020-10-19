@@ -264,38 +264,32 @@ app.get('/groups', async (req,res) => {
 
 
       db.collection('groupregistered').get().then( (querySnapshot)=> {
-        querySnapshot.forEach(function(doc) {
+        querySnapshot.forEach((doc) => {
             group.num_registered = num_registered;   
 
             console.log('NUM REG:', num_registered);                  
 
-        });       
+        });
+
+        groups.push(group);  
+
+        console.log('GROUPS:', groups);
+
+
+        let current_student = {
+          id : sess.student_id,
+          name : sess.student_name
+          } 
+
+        res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
 
       }).catch(function(error) {
           console.log("Error getting documents: ", error);
-      });  
-       
-      
-      
-
-      groups.push(group);
-      
+      }); 
+     
     }); 
 
-    console.log('GROUPS:', groups);
-
-
-    let current_student = {
-      id : sess.student_id,
-      name : sess.student_name
-      } 
-
-    res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});   
-
-
-  }
-
-  
+  }  
     
 });
 
