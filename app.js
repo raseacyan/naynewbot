@@ -170,7 +170,7 @@ app.post('/join',function(req,res){
 });
 
 
-app.get('/hall',function(req,res){   
+app.get('/hall', async (req,res) => {   
 
   const studentsRef = db.collection('students').orderBy('created_on', 'desc');
   const snapshot = await studentsRef.get();
@@ -192,12 +192,9 @@ app.get('/hall',function(req,res){
 
       students.push(student);
       
-    });
-    
+    });    
     res.render('mcc/hall.ejs', {students:students});
-
   }
-
     
 });
 
