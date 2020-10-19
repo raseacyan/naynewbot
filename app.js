@@ -267,7 +267,7 @@ app.get('/groups', async (req,res) => {
 
       snapshot2.forEach((doc) =>{
           num_registered += num_registered;
-      })
+      });
       group.num_registered = num_registered;
 
       groups.push(group); 
@@ -275,11 +275,11 @@ app.get('/groups', async (req,res) => {
       let current_student = {
             id : sess.student_id,
             name : sess.student_name
-            } 
+      } 
 
-          res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
+      res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
 
-    }  
+    }); 
 
   }
     
