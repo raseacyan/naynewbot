@@ -149,7 +149,13 @@ app.get('/',function(req,res){
 
 app.get('/login',function(req,res){    
     sess = req.session;
-    res.render('login.ejs');
+
+    if(sess.login){
+       res.send('You are already login. <a href="logout">logout</a>');
+    }else{
+      res.render('login.ejs');
+    } 
+    
 });
 
 
@@ -181,8 +187,12 @@ app.get('/publicpage',function(req,res){
 
 app.get('/privatepage',function(req,res){ 
     sess = req.session;
-    console.log('SESS:', sess);       
-    res.render('privatepage.ejs');
+    console.log('SESS:', sess); 
+    if(sess.login){
+       res.render('privatepage.ejs');
+    }else{
+      res.send('you are not authorized to view this page');
+    }   
 });
 
 app.get('/admin/products', async(req,res) =>{   
