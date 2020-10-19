@@ -176,11 +176,13 @@ app.post('/join', async (req,res) => {
         });
     }else{
       
-
+      console.log('found');
       snapshot.forEach(doc => {         
           sess.student_id = doc.id;
           sess.student_name = doc.data().name;       
       });
+
+      console.log('SESS:', sess);
 
       res.redirect('hall');
     }           
