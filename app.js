@@ -266,7 +266,7 @@ app.get('/groups', async (req,res) => {
       const snapshot2 = await groupRegRef.get();
 
       if (snapshot.empty) {
-          res.send('no groups');
+          num_registered = 1;
       }else{
           snapshot2.forEach((doc) =>{
           num_registered += num_registered;
