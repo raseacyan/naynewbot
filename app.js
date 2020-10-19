@@ -296,6 +296,8 @@ app.get('/groups', async (req,res) => {
             name : sess.student_name
       }
 
+    console.log('OOOPs:', groups); 
+
     res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
     
   }
