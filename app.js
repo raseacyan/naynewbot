@@ -259,36 +259,10 @@ app.get('/groups', async (req,res) => {
       
       let d = new Date(doc.data().created_on._seconds);
       d = d.toString();
-      group.created_on = d;      
-
-        
-
-
-      //start
-        let num_registered = 1;
-
-      const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
-      const snapshot2 = await groupRegRef.get();
-
-      if (snapshot.empty) {
-          num_registered = 1;
-      }else{
-          snapshot2.forEach((doc) =>{
-          num_registered += num_registered;
-          console.log('num_registered:', num_registered);
-          });
-
-      }
-
-      
-      group.num_registered = num_registered;
-
-      //end
+      group.created_on = d;    
 
       groups.push(group); 
-      console.log('GROUPs:', groups); 
-
-
+       
     }); 
 
     let current_student = {
@@ -296,13 +270,15 @@ app.get('/groups', async (req,res) => {
             name : sess.student_name
       }
 
-    console.log('OOOPs:', groups); 
+      console.log('GROUPs:', groups);     
 
     res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
     
   }
     
 });
+
+
 
 
 
@@ -340,7 +316,7 @@ app.post('/joingroup',function(req,res){
 
     data.created_on = new Date();
 
-    db.collection('groupregistered').add(data).then((success)=>{
+    db.collection('groups').doc(data.group_id).collection().add(data).then((success)=>{
         res.redirect('hall');          
     }).catch((err)=>{
         console.log('Error', err);
