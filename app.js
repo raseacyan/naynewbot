@@ -267,10 +267,12 @@ app.get('/groups', async (req,res) => {
 
       snapshot2.forEach((doc) =>{
           num_registered += num_registered;
+          console.log('num_registered:', num_registered);
       });
       group.num_registered = num_registered;
 
       groups.push(group); 
+      console.log('GROUPs:', groups);
 
       let current_student = {
             id : sess.student_id,
