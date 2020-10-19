@@ -228,7 +228,7 @@ app.get('/hall', async (req,res) => {
         name : sess.student_name
       } 
 
-    res.render('mcc/hall.ejs', {students:students, current_student:current_student, groups:groups});  
+    res.render('mcc/hall.ejs', {students:students, current_student:current_student});  
   } 
     
 });
