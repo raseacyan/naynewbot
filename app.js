@@ -250,7 +250,7 @@ app.get('/groups', async (req,res) => {
   }else{
      
     let groups = [];
-    snapshot.forEach(doc => {
+    snapshot.forEach(async(doc) => {
       let group = {};
       
       group = doc.data();
