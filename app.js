@@ -265,7 +265,9 @@ app.get('/groups', async (req,res) => {
 
       db.collection('groupregistered').get().then( (querySnapshot)=> {
         querySnapshot.forEach(function(doc) {
-            group.num_registered = num_registered;                     
+            group.num_registered = num_registered;   
+
+            console.log('NUM REG:', num_registered);                  
 
         });       
 
