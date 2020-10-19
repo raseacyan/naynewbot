@@ -263,7 +263,7 @@ app.get('/groups', async (req,res) => {
       let num_registered = 1;
 
       const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
-      const snapshot2 = groupRegRef.get();
+      const snapshot2 = await groupRegRef.get();
 
       snapshot2.forEach((doc) =>{
           num_registered += num_registered;
