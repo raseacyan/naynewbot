@@ -192,6 +192,8 @@ app.post('/join', async (req,res) => {
 app.get('/hall', async (req,res) => {  
 
   sess = req.session; 
+  let students = [];
+  let groups = [];
 
   if(!sess.student_id){
      res.redirect('mcc');
@@ -203,7 +205,7 @@ app.get('/hall', async (req,res) => {
   if (snapshot.empty) {
     res.send('no data');
   }else{
-    let students = []; 
+     
 
     snapshot.forEach(doc => {
       let student = {};
@@ -218,11 +220,6 @@ app.get('/hall', async (req,res) => {
       students.push(student);
       
     });   
-
-    
-
-
-    
   }
 
   const groupsRef = db.collection('groups').orderBy('created_on', 'desc');
@@ -231,7 +228,7 @@ app.get('/hall', async (req,res) => {
   if (snapshot2.empty) {
     res.send('no data');
   }else{
-    let groups = []; 
+     
 
     snapshot2.forEach(doc => {
       let group = {};
