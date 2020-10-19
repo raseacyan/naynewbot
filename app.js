@@ -286,10 +286,10 @@ app.get('/groups', async (req,res) => {
             name : sess.student_name
       } 
 
-      res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
+       
 
     }); 
-
+    res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
   }
     
 });
