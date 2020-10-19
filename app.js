@@ -261,27 +261,28 @@ app.get('/groups', async (req,res) => {
       group.created_on = d;
 
       let num_registered = 1;
+
+
       db.collection('groupregistered').get().then( (querySnapshot)=> {
         querySnapshot.forEach(function(doc) {
             group.num_registered = num_registered;                     
 
         });       
 
-    }).catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });  
+      }).catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });  
        
-      if (snapshot.empty) {
-        res.send('no data');
-      }else{
-        num_registered += num_registered;
-      }
-
+      
       
 
       groups.push(group);
       
     }); 
+
+    console.log('GROUPS:', groups);
+
+
     let current_student = {
       id : sess.student_id,
       name : sess.student_name
