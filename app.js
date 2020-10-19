@@ -151,9 +151,24 @@ app.get('/login',function(req,res){
     res.render('login.ejs');
 });
 
+
+app.get('/logout',function(req,res){ 
+    //sess = req.session;   
+    req.session.destroy(null);  
+    res.redirect('login.ejs');
+});
+
 app.post('/login',function(req,res){    
     sess = req.session;
-    res.send('todo later');
+
+    let username = req.body.username;
+    let password = req.body.password;
+
+    if(username == 'admin' && password == 'test123'){
+      sess.username = 'admin';
+      sess.login = true;
+      res.send('login successful');
+    }    
 });
 
 app.get('/publicpage',function(req,res){    
@@ -161,7 +176,9 @@ app.get('/publicpage',function(req,res){
 });
 
 
-app.get('/privatepage',function(req,res){    
+app.get('/privatepage',function(req,res){ 
+    sess = req.session;
+    console.log('SESS:', sess);       
     res.render('privatepage.ejs');
 });
 
