@@ -40,6 +40,8 @@ let first_reg = false;
 let customer = [];
 
 
+
+
 let temp_points = 0;
 let cart_total = 0;
 let cart_discount = 0;
@@ -143,6 +145,25 @@ app.get('/',function(req,res){
     res.send('your app is up and running');
 });
 
+
+app.get('/login',function(req,res){    
+    sess = req.session;
+    res.render('login.ejs');
+});
+
+app.post('/login',function(req,res){    
+    sess = req.session;
+    res.send('todo later');
+});
+
+app.get('/publicpage',function(req,res){    
+    res.render('publicpage.ejs');
+});
+
+
+app.get('/privatepage',function(req,res){    
+    res.render('privatepage.ejs');
+});
 
 app.get('/admin/products', async(req,res) =>{   
 
@@ -785,7 +806,9 @@ const handlePostback = (sender_psid, received_postback) => {
         break;
       case "no":
           showButtonReplyNo(sender_psid);
-        break;                      
+        break; 
+
+
       default:
           defaultReply(sender_psid);
     } 
