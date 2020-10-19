@@ -260,7 +260,7 @@ app.get('/groups', async (req,res) => {
       d = d.toString();
       group.created_on = d;
 
-      let num_registered = 1;
+      /*let num_registered = 1;
 
       const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
       const snapshot2 = await groupRegRef.get();
@@ -276,7 +276,7 @@ app.get('/groups', async (req,res) => {
       }
 
       
-      group.num_registered = num_registered;
+      group.num_registered = num_registered;*/
 
       groups.push(group); 
       console.log('GROUPs:', groups);
@@ -286,10 +286,12 @@ app.get('/groups', async (req,res) => {
             name : sess.student_name
       } 
 
+      res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
+
        
 
     }); 
-    res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
+    
   }
     
 });
