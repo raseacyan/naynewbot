@@ -169,7 +169,9 @@ app.post('/login',function(req,res){
       sess.username = 'admin';
       sess.login = true;
       res.send('login successful');
-    }    
+    }else{
+      res.send('login failed');
+    }   
 });
 
 app.get('/publicpage',function(req,res){    
