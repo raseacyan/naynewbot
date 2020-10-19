@@ -261,8 +261,7 @@ app.get('/groups', async (req,res) => {
       d = d.toString();
       group.created_on = d;      
 
-      groups.push(group); 
-      console.log('GROUPs:', groups);   
+        
 
 
       //start
@@ -285,6 +284,9 @@ app.get('/groups', async (req,res) => {
       group.num_registered = num_registered;
 
       //end
+
+      groups.push(group); 
+      console.log('GROUPs:', groups); 
 
 
     }); 
