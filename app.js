@@ -261,15 +261,23 @@ app.get('/groups', async (req,res) => {
       group.created_on = d;
 
       let num_registered = 1;
-      const groupRegRef = db.collection('groupregistered').orderBy('created_on', 'desc');
-      const snapshot2 = await groupRegRef.get();  
+      db.collection('groupregistered').get().then( (querySnapshot)=> {
+        querySnapshot.forEach(function(doc) {
+            group.num_registered = num_registered;                     
+
+        });       
+
+    }).catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });  
+       
       if (snapshot.empty) {
         res.send('no data');
       }else{
         num_registered += num_registered;
       }
 
-      group.num_registered = num_registered;
+      
 
       groups.push(group);
       
