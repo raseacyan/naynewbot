@@ -181,7 +181,7 @@ app.get('/hall', async (req,res) => {
     let students = []; 
 
     snapshot.forEach(doc => {
-      let students = {};
+      let student = {};
       
       student = doc.data();
       student.id = doc.id;
@@ -193,6 +193,8 @@ app.get('/hall', async (req,res) => {
       students.push(student);
       
     });    
+
+    
     res.render('mcc/hall.ejs', {students:students});
   }
     
