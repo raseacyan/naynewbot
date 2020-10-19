@@ -15,7 +15,20 @@
 <h3>Groups</h3>
 <ul>
 <% groups.forEach(function(group){ %>
-     <li><%= group.name  %> by <%= group.created_by  %></li>
+     <li><%= group.name  %> by <%= group.created_by  %>
+
+     	<%if(group.created_by_id != current_student.id){%>
+	        <form action="joingroup" method="post">
+	     		<input type="hidden" name="group_id" value="<%= group.id %>"/>
+	     		<input type="hidden" name="group_name" value="<%= group.name  %>"/>
+	     		<input type="hidden" name="student_id" value="<%= current_student.id  %>"/>
+	     		<input type="hidden" name="student_name" value="<%= current_student.name  %>"/>
+	     		<input type="submit" name="submit" value="Join"/>
+	     	</form>
+    	<%}%>   	
+     	
+
+     </li>
 <% }); %>
 </ul>
 <form action="creategroup" method="post">

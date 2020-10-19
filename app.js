@@ -301,6 +301,26 @@ app.post('/creategroup',function(req,res){
 });
 
 
+app.post('/joingroup',function(req,res){   
+
+
+    let data = {
+      group_id:req.body.group_id,
+      group_name:req.body.group_name,
+      student_id:req.body.student_id,
+      student_name:req.body.student_name,
+    }  
+
+    data.created_on = new Date();
+
+    db.collection('groupregistered').add(data).then((success)=>{
+        res.redirect('hall');          
+    }).catch((err)=>{
+        console.log('Error', err);
+    });       
+});
+
+
 
 
 
