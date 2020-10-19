@@ -15,7 +15,7 @@
 <h3>Groups</h3>
 <ul>
 <% groups.forEach(function(group){ %>
-     <li><%= group.name  %> by <%= group.created_by  %>
+     <li><%= group.name  %> by <%= group.created_by  %> <%= group.num_registered %>/<%= group.type %>
 
      	<%if(group.created_by_id != current_student.id){%>
 	        <form action="joingroup" method="post">

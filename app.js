@@ -246,7 +246,7 @@ app.get('/groups', async (req,res) => {
   const snapshot = await groupsRef.get();
 
   if (snapshot.empty) {
-    res.send('no data');
+    res.send('no groups');
   }else{
      
     let groups = [];
@@ -258,7 +258,18 @@ app.get('/groups', async (req,res) => {
       
       let d = new Date(doc.data().created_on._seconds);
       d = d.toString();
-      group.created_on = d;   
+      group.created_on = d;
+
+      let num_registered = 1;
+      const groupRegRef = db.collection('groupregistered').orderBy('created_on', 'desc');
+      const snapshot2 = await groupRegRef.get();  
+      if (snapshot.empty) {
+        res.send('no data');
+      }else{
+        num_registered += num_registered;
+      }
+
+      group.num_registered = num_registered;
 
       groups.push(group);
       
