@@ -316,7 +316,7 @@ app.post('/joingroup',function(req,res){
 
     data.created_on = new Date();
 
-    db.collection('groups').doc(data.group_id).collection().add(data).then((success)=>{
+    db.collection('groups').doc(data.group_id).collection('registers').add(data).then((success)=>{
         res.redirect('hall');          
     }).catch((err)=>{
         console.log('Error', err);
