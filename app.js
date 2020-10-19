@@ -273,19 +273,18 @@ app.get('/groups', async (req,res) => {
 
         groups.push(group);  
 
-        console.log('GROUPS:', groups);
+        console.log('GROUPS:', groups);         
 
+      }).catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });
 
-        let current_student = {
+      let current_student = {
           id : sess.student_id,
           name : sess.student_name
           } 
 
         res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
-
-      }).catch(function(error) {
-          console.log("Error getting documents: ", error);
-      }); 
      
     }); 
 
