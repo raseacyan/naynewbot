@@ -219,7 +219,7 @@ app.get('/hall', async (req,res) => {
       
     });   
 
-    current_student = {
+    let current_student = {
       id : sess.student_id,
       name : sess.student_name
     } 
