@@ -162,7 +162,7 @@ app.post('/join',function(req,res){
     }  
 
     db.collection('students').add(data).then((success)=>{
-        res.render('mcc.ejs');          
+        res.render('home.ejs');          
     }).catch((err)=>{
         console.log('Error', err);
     });       
