@@ -151,7 +151,7 @@ app.get('/',function(req,res){
 Start MCC test
 ****************/
 app.get('/mcc',function(req,res){       
-    res.render('mcc.ejs');   
+    res.render('mcc/home.ejs');   
 });
 
 app.post('/join',function(req,res){ 
@@ -162,7 +162,7 @@ app.post('/join',function(req,res){
     }  
 
     db.collection('students').add(data).then((success)=>{
-        res.render('mcc/home.ejs');          
+        res.render('mcc/hall.ejs');          
     }).catch((err)=>{
         console.log('Error', err);
     });       
