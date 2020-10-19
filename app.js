@@ -250,7 +250,8 @@ app.get('/groups', async (req,res) => {
   }else{
      
     let groups = [];
-    snapshot.forEach(async(doc) => {
+    
+    snapshot.forEach(doc => {
       let group = {};
       
       group = doc.data();
@@ -258,39 +259,17 @@ app.get('/groups', async (req,res) => {
       
       let d = new Date(doc.data().created_on._seconds);
       d = d.toString();
-      group.created_on = d;
-
-      /*let num_registered = 1;
-
-      const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
-      const snapshot2 = await groupRegRef.get();
-
-      if (snapshot.empty) {
-          num_registered = 1;
-      }else{
-          snapshot2.forEach((doc) =>{
-          num_registered += num_registered;
-          console.log('num_registered:', num_registered);
-          });
-
-      }
-
-      
-      group.num_registered = num_registered;*/
+      group.created_on = d;      
 
       groups.push(group); 
-      console.log('GROUPs:', groups);
-
-      let current_student = {
-            id : sess.student_id,
-            name : sess.student_name
-      } 
-
-
-
-       
+      console.log('GROUPs:', groups);      
 
     }); 
+
+    let current_student = {
+            id : sess.student_id,
+            name : sess.student_name
+      }
 
     res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
     
