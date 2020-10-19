@@ -157,7 +157,6 @@ app.get('/mcc', (req,res) => {
 app.post('/join', async (req,res) => { 
     sess = req.session;
 
-
     let data = {
       name:req.body.name,
       phone:req.body.phone
@@ -182,6 +181,8 @@ app.post('/join', async (req,res) => {
           sess.student_id = doc.id;
           sess.student_name = doc.data().name;       
       });
+
+      res.redirect('hall');
     }           
 });
 
