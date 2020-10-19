@@ -150,27 +150,49 @@ app.get('/',function(req,res){
 /****************
 Start MCC test
 ****************/
-app.get('/mcc',function(req,res){       
+app.get('/mcc', (req,res) => {       
     res.render('mcc/home.ejs');   
 });
 
-app.post('/join',function(req,res){ 
+app.post('/join', async (req,res) => { 
+    sess = req.session;
+
+
     let data = {
       name:req.body.name,
       phone:req.body.phone
     }  
 
-    data.created_on = new Date();
+    const studentsRef = db.collection('students').where("phone", "==", data.phone).limit(1);
+    const snapshot = await studentsRef.get();
 
-    db.collection('students').add(data).then((success)=>{
-        res.redirect('hall');          
-    }).catch((err)=>{
-        console.log('Error', err);
-    });       
+    if (snapshot.empty) {
+        //no previous user. ad to database
+        data.created_on = new Date();
+
+        db.collection('students').add(data).then((success)=>{
+            res.redirect('mcc');          
+        }).catch((err)=>{
+            console.log('Error', err);
+        });
+    }else{
+      
+
+      snapshot.forEach(doc => {         
+          sess.student_id = doc.id;
+          sess.student_name = doc.data().name;       
+      });
+    }           
 });
 
 
-app.get('/hall', async (req,res) => {   
+app.get('/hall', async (req,res) => {  
+
+  sess = req.session; 
+
+  if(!sess.student_id){
+     res.redirect('mcc');
+  }
 
   const studentsRef = db.collection('students').orderBy('created_on', 'desc');
   const snapshot = await studentsRef.get();
@@ -192,16 +214,25 @@ app.get('/hall', async (req,res) => {
 
       students.push(student);
       
-    });    
+    });   
+
+    current_student = {
+      id = sess.student_id,
+      name = sess.student_name
+    } 
 
 
-    res.render('mcc/hall.ejs', {students:students});
+    res.render('mcc/hall.ejs', {students:students, current_student:current_student});
   }
     
 });
 
 
 app.post('/creategroup',function(req,res){ 
+
+    
+
+
     let data = {
       name:req.body.name,
       type:req.body.type,
