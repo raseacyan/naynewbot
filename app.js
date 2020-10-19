@@ -279,14 +279,16 @@ app.get('/groups', async (req,res) => {
           console.log("Error getting documents: ", error);
       });
 
-      let current_student = {
+
+     
+    }); 
+
+    let current_student = {
           id : sess.student_id,
           name : sess.student_name
           } 
 
         res.render('mcc/groups.ejs', {groups:groups, current_student:current_student}); 
-     
-    }); 
 
   }  
     
