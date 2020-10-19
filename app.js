@@ -198,7 +198,7 @@ app.get('/hall', async (req,res) => {
   }
 
   const studentsRef = db.collection('students').orderBy('created_on', 'desc');
-  const snapshot = await studentsRef.get();
+  const snapshot = await studentsRef.get();  
 
   if (snapshot.empty) {
     res.send('no data');
@@ -219,14 +219,41 @@ app.get('/hall', async (req,res) => {
       
     });   
 
-    let current_student = {
-      id : sess.student_id,
-      name : sess.student_name
-    } 
+    
 
 
-    res.render('mcc/hall.ejs', {students:students, current_student:current_student});
+    
   }
+
+  const groupsRef = db.collection('groups').orderBy('created_on', 'desc');
+  const snapshot2 = await groupsRef.get();
+
+  if (snapshot2.empty) {
+    res.send('no data');
+  }else{
+    let groups = []; 
+
+    snapshot2.forEach(doc => {
+      let group = {};
+      
+      group = doc.data();
+      group.id = doc.id;
+      
+      let d = new Date(doc.data().created_on._seconds);
+      d = d.toString();
+      group.created_on = d;   
+
+      groups.push(group);
+      
+    });    
+  }
+
+  let current_student = {
+    id : sess.student_id,
+    name : sess.student_name
+  } 
+
+  res.render('mcc/hall.ejs', {students:students, current_student:current_student, groups:groups});
     
 });
 
