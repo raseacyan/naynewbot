@@ -265,10 +265,17 @@ app.get('/groups', async (req,res) => {
       const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
       const snapshot2 = await groupRegRef.get();
 
-      snapshot2.forEach((doc) =>{
+      if (snapshot.empty) {
+          res.send('no groups');
+      }else{
+          snapshot2.forEach((doc) =>{
           num_registered += num_registered;
           console.log('num_registered:', num_registered);
-      });
+          });
+
+      }
+
+      
       group.num_registered = num_registered;
 
       groups.push(group); 
