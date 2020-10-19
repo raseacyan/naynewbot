@@ -163,7 +163,7 @@ app.post('/join',function(req,res){
     data.created_on = new Date();
 
     db.collection('students').add(data).then((success)=>{
-        res.render('mcc/hall.ejs');          
+        res.redirect('hall');          
     }).catch((err)=>{
         console.log('Error', err);
     });       
@@ -194,11 +194,32 @@ app.get('/hall', async (req,res) => {
       
     });    
 
-    
+
     res.render('mcc/hall.ejs', {students:students});
   }
     
 });
+
+
+app.post('/creategroup',function(req,res){ 
+    let data = {
+      name:req.body.name,
+      type:req.body.type,
+      created_by:req.body.created_by,
+      created_by_id:req.body.created_by_id,
+    }  
+
+    data.created_on = new Date();
+
+    db.collection('groups').add(data).then((success)=>{
+        res.redirect('hall');          
+    }).catch((err)=>{
+        console.log('Error', err);
+    });       
+});
+
+
+
 
 
 /****************
