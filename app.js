@@ -255,9 +255,51 @@ app.get('/hall', async (req,res) => {
 });
 
 
-app.post('/creategroup',function(req,res){ 
+app.get('/groups', async (req,res) => {  
 
+  sess = req.session;
+
+  if(!sess.student_id){
+     res.redirect('mcc');
+  }  
+
+  const groupsRef = db.collection('groups').orderBy('created_on', 'desc');
+  const snapshot = await groupsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+     
+    let groups = [];
+    snapshot.forEach(doc => {
+      let group = {};
+      
+      group = doc.data();
+      group.id = doc.id;
+      
+      let d = new Date(doc.data().created_on._seconds);
+      d = d.toString();
+      group.created_on = d;   
+
+      groups.push(group);
+      
+    });    
+  }
+
+  let current_student = {
+    id : sess.student_id,
+    name : sess.student_name
+  } 
+
+  res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
     
+});
+
+
+
+
+
+app.post('/creategroup',function(req,res){   
 
 
     let data = {
