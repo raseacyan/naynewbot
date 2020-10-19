@@ -147,6 +147,32 @@ app.get('/',function(req,res){
 });
 
 
+/****************
+Start MCC test
+****************/
+app.get('/mcc',function(req,res){       
+    res.render('mcc.ejs');   
+});
+
+app.post('/join',function(req,res){ 
+
+    let data = {
+      name:req.body.name,
+      phone:req.body.phone
+    }  
+
+    db.collection('students').add(data).then((success)=>{
+        res.render('mcc.ejs');          
+    }).catch((err)=>{
+        console.log('Error', err);
+    });       
+});
+
+
+/****************
+End MCC test
+****************/
+
 app.get('/login',function(req,res){    
     sess = req.session;
 
