@@ -192,8 +192,8 @@ app.post('/join', async (req,res) => {
 app.get('/hall', async (req,res) => {  
 
   sess = req.session; 
-  let students = [];
-  let groups = [];
+ 
+
 
   if(!sess.student_id){
      res.redirect('mcc');
@@ -206,7 +206,7 @@ app.get('/hall', async (req,res) => {
     res.send('no data');
   }else{
      
-
+     let students = [];
     snapshot.forEach(doc => {
       let student = {};
       
@@ -218,39 +218,18 @@ app.get('/hall', async (req,res) => {
       student.created_on = d;   
 
       students.push(student);
+
+
       
-    });   
-  }
+    }); 
 
-  const groupsRef = db.collection('groups').orderBy('created_on', 'desc');
-  const snapshot2 = await groupsRef.get();
+    let current_student = {
+        id : sess.student_id,
+        name : sess.student_name
+      } 
 
-  if (snapshot2.empty) {
-    res.send('no data');
-  }else{
-     
-
-    snapshot2.forEach(doc => {
-      let group = {};
-      
-      group = doc.data();
-      group.id = doc.id;
-      
-      let d = new Date(doc.data().created_on._seconds);
-      d = d.toString();
-      group.created_on = d;   
-
-      groups.push(group);
-      
-    });    
-  }
-
-  let current_student = {
-    id : sess.student_id,
-    name : sess.student_name
+    res.render('mcc/hall.ejs', {students:students, current_student:current_student, groups:groups});  
   } 
-
-  res.render('mcc/hall.ejs', {students:students, current_student:current_student, groups:groups});
     
 });
 
