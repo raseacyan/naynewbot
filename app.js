@@ -251,7 +251,7 @@ app.get('/groups', async (req,res) => {
      
     let groups = [];
     
-    snapshot.forEach(doc => {
+    snapshot.forEach(async(doc) => {
       let group = {};
       
       group = doc.data();
@@ -262,7 +262,30 @@ app.get('/groups', async (req,res) => {
       group.created_on = d;      
 
       groups.push(group); 
-      console.log('GROUPs:', groups);      
+      console.log('GROUPs:', groups);   
+
+
+      //start
+        let num_registered = 1;
+
+      const groupRegRef = db.collection('groupregistered').where("group_id", "==", group.id);
+      const snapshot2 = await groupRegRef.get();
+
+      if (snapshot.empty) {
+          num_registered = 1;
+      }else{
+          snapshot2.forEach((doc) =>{
+          num_registered += num_registered;
+          console.log('num_registered:', num_registered);
+          });
+
+      }
+
+      
+      group.num_registered = num_registered;
+
+      //end
+
 
     }); 
 
