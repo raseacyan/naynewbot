@@ -155,17 +155,50 @@ app.get('/mcc',function(req,res){
 });
 
 app.post('/join',function(req,res){ 
-
     let data = {
       name:req.body.name,
       phone:req.body.phone
     }  
+
+    data.created_on = new Date();
 
     db.collection('students').add(data).then((success)=>{
         res.render('mcc/hall.ejs');          
     }).catch((err)=>{
         console.log('Error', err);
     });       
+});
+
+
+app.get('/hall',function(req,res){   
+
+  const studentsRef = db.collection('students').orderBy('created_on', 'desc');
+  const snapshot = await studentsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+    let students = []; 
+
+    snapshot.forEach(doc => {
+      let students = {};
+      
+      student = doc.data();
+      student.id = doc.id;
+      
+      let d = new Date(doc.data().created_on._seconds);
+      d = d.toString();
+      student.created_on = d;   
+
+      students.push(student);
+      
+    });
+    
+    res.render('mcc/hall.ejs', {students:students});
+
+  }
+
+    
 });
 
 
