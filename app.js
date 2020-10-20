@@ -292,7 +292,13 @@ app.get('/groups', async (req,res) => {
   const snapshot = await groupsRef.get();
 
   if (snapshot.empty) {
-    res.send('no groups');
+    let current_student = {
+            id : sess.student_id,
+            name : sess.student_name
+    }     
+
+    res.render('mcc/groups.ejs', {groups:0, current_student:current_student});
+
   }else{
      
     let groups = [];
@@ -314,9 +320,7 @@ app.get('/groups', async (req,res) => {
     let current_student = {
             id : sess.student_id,
             name : sess.student_name
-      }
-
-      console.log('GROUPs:', groups);     
+    }     
 
     res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
     
@@ -362,7 +366,7 @@ app.get('/group/:id', async (req,res) => {
     let current_student = {
             id : sess.student_id,
             name : sess.student_name
-      }
+    }
 
    
 

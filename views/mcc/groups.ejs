@@ -6,6 +6,12 @@
 <h1>Groups</h1>
 
 <a href="hall">hall</a>
+
+<%if(groups != 0){%>
+<p>No Groups</p>
+<%}%> 
+
+<%if(groups != 0){%>
 <ul>
 <% groups.forEach(function(group){ %>
      <li><%= group.name  %> by <%= group.created_by  %> 
@@ -15,6 +21,7 @@
      </li>
 <% }); %>
 </ul>
+<%}%> 
 
 
 <h3>Create New Group</h3>
