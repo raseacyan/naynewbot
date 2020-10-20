@@ -7,9 +7,10 @@
 
 
 
-<h3>group name</h3>
-<ul>
+<h3><%= entries[0].group_name  %> by <%= entries[0].student_name  %></h3>
 <h3>students<h3>
+<ul>
+
 <ul>
 <% entries.forEach(function(entry){ %>
      <li><%= entry.student_name  %></li>

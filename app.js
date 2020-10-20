@@ -305,27 +305,37 @@ app.get('/group/:id', async (req,res) => {
   }else{
      
     let entries = [];
+
+    let groupInfo = {
+      total_reg:0,
+      min_required_reg:0
+    };
     
     snapshot.forEach(async(doc) => {
-      let entry = {};
+      let entry = {};    
       
       entry = doc.data();
       entry.id = doc.id;
       
       let d = new Date(doc.data().created_on._seconds);
       d = d.toString();
-      entry.created_on = d;    
+      entry.created_on = d;   
 
-      entries.push(entry); 
+      entries.push(entry);
+
+      groupInfo.total_reg += 1;
+      groupInfo.min_required_reg = doc.data().type;       
        
     }); 
+
+    groupInfo.remaining_reg = groupInfo.min_required_reg - groupInfo.total_reg;
 
     let current_student = {
             id : sess.student_id,
             name : sess.student_name
-    }
+    }   
 
-   
+    console.log('groupInfo',groupInfo);
 
     res.render('mcc/group.ejs', {entries:entries, current_student:current_student});
     
