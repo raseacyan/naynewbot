@@ -15,9 +15,12 @@
 <ul>
 <% groups.forEach(function(group){ %>
      <li><%= group.name  %> by <%= group.created_by  %> 
-     	<a href="../group/<%= group.id %>">View</a>
+     	
      	<%if(group.created_by_id != current_student.id){%>
 	        <a href="../group/<%= group.id %>">Join</a>
+    	<%}%> 
+    	<%if(group.created_by_id == current_student.id){%>
+	        <a href="../group/<%= group.id %>">View</a>
     	<%}%> 
      </li>
 <% }); %>
