@@ -297,7 +297,7 @@ app.get('/group/:id', async (req,res) => {
      res.redirect('mcc');
   }  
 
-  const groupRegRef = db.collection('groupregisters').where("group_id", "==", id).orderBy('created_on', 'desc');
+  const groupRegRef = db.collection('groupregisters').where("group_id", "==", id);
   const snapshot = await groupRegRef.get();
 
   if (snapshot.empty) {
