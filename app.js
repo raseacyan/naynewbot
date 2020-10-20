@@ -280,6 +280,101 @@ app.get('/groups', async (req,res) => {
 
 
 
+app.get('/groups', async (req,res) => {  
+
+  sess = req.session;
+
+  if(!sess.student_id){
+     res.redirect('mcc');
+  }  
+
+  const groupsRef = db.collection('groups').orderBy('created_on', 'desc');
+  const snapshot = await groupsRef.get();
+
+  if (snapshot.empty) {
+    res.send('no groups');
+  }else{
+     
+    let groups = [];
+    
+    snapshot.forEach(async(doc) => {
+      let group = {};
+      
+      group = doc.data();
+      group.id = doc.id;
+      
+      let d = new Date(doc.data().created_on._seconds);
+      d = d.toString();
+      group.created_on = d;    
+
+      groups.push(group); 
+       
+    }); 
+
+    let current_student = {
+            id : sess.student_id,
+            name : sess.student_name
+      }
+
+      console.log('GROUPs:', groups);     
+
+    res.render('mcc/groups.ejs', {groups:groups, current_student:current_student});
+    
+  }
+    
+});
+
+
+
+app.get('/group/:id', async (req,res) => {  
+
+  sess = req.session;
+
+  let id = req.params.id;
+
+  if(!sess.student_id){
+     res.redirect('mcc');
+  }  
+
+  const groupRegRef = db.collection('groupregisters').where("group_id", "==", id);
+  const snapshot = await groupRegRef .get();
+
+  if (snapshot.empty) {
+    res.send('no groups');
+  }else{
+     
+    let entries = [];
+    
+    snapshot.forEach(async(doc) => {
+      let entry = {};
+      
+      entry = doc.data();
+      entry.id = doc.id;
+      
+      let d = new Date(doc.data().created_on._seconds);
+      d = d.toString();
+      entry.created_on = d;    
+
+      entries.push(entry); 
+       
+    }); 
+
+    let current_student = {
+            id : sess.student_id,
+            name : sess.student_name
+      }
+
+   
+
+    res.render('mcc/groups.ejs', {entries:entries, current_student:current_student});
+    
+  }
+    
+});
+
+
+
+
 
 
 
@@ -316,7 +411,7 @@ app.post('/joingroup',function(req,res){
 
     data.created_on = new Date();
 
-    db.collection('groups').doc(data.group_id).collection('registers').add(data).then((success)=>{
+    db.collection('groupregisters').add(data).then((success)=>{
         res.redirect('hall');          
     }).catch((err)=>{
         console.log('Error', err);
