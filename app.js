@@ -340,6 +340,14 @@ app.get('/group/:id', async (req,res) => {
 
     console.log('groupInfo', groupInfo);
 
+    const found = entries.find(element => element.student_id == current_student.id);
+
+    if(found){
+      current_student.joined = true;
+    }else{
+      current_student.joined = false;
+    }
+
     res.render('mcc/group.ejs', {entries:entries, current_student:current_student, group_info: groupInfo});
     
   }

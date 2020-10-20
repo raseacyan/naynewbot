@@ -7,9 +7,13 @@
 
 <a href="../groups">groups</a>
 
+
+
 <h3><%= group_info.group_name  %> by <%= entries[0].student_name  %></h3>
 <h4><%= group_info.total_reg  %> / <%= group_info.type  %>. Only <%= group_info.remaining_reg  %> more needed to get your discount</h4>
 
+
+<%if(!current_student.joined){%>
 
 <form action="../joingroup" method="post">
 <input type="hidden" name="group_id" value="<%= group_info.group_id %>"/>
@@ -17,10 +21,14 @@
 <input type="hidden" name="type" value="<%= group_info.type %>"/>
 <input type="hidden" name="student_id" value="<%= current_student.id  %>"/>
 <input type="hidden" name="student_name" value="<%= current_student.name  %>"/>
-
 <input type="submit" name="submit" value="Join"/>
-
 </form>
+
+<%}%>
+
+<%if(current_student.joined){%>
+<p>You have already joined this group</p>
+<%}%>
 
 
 <h3>students</h3>
