@@ -386,7 +386,7 @@ app.post('/creategroup',function(req,res){
     data.created_on = new Date();
 
     db.collection('groups').add(data).then((success)=>{     
-        console.log(success._path);   
+        console.log('KEY:' ,success._path.segment[0]);   
         res.redirect('groups');          
     }).catch((err)=>{
         console.log('Error', err);
