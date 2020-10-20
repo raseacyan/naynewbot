@@ -8,23 +8,15 @@
 <a href="hall">hall</a>
 <ul>
 <% groups.forEach(function(group){ %>
-     <li><%= group.name  %></li>
-<% }); %>
-</ul>
-
-<h3>Groups</h3>
-<ul>
-<% groups.forEach(function(group){ %>
      <li><%= group.name  %> by <%= group.created_by  %> 
-
      	<%if(group.created_by_id != current_student.id){%>
 	        <a href="group/<%= group.id %>">Join</a>
-    	<%}%>   	
-     	
-
+    	<%}%> 
      </li>
 <% }); %>
 </ul>
+
+
 <h3>Create New Group</h3>
 <form action="creategroup" method="post">
 name: <input type="text" name="name"/>
