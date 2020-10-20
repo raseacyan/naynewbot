@@ -327,7 +327,7 @@ app.get('/group/:id', async (req,res) => {
 
    
 
-    res.render('mcc/groups.ejs', {entries:entries, current_student:current_student});
+    res.render('mcc/group.ejs', {entries:entries, current_student:current_student});
     
   }
     
