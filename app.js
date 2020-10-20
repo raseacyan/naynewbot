@@ -297,8 +297,8 @@ app.get('/group/:id', async (req,res) => {
      res.redirect('mcc');
   }  
 
-  const groupRegRef = db.collection('groupregisters').where("group_id", "==", id);
-  const snapshot = await groupRegRef .get();
+  const groupRegRef = db.collection('groupregisters').where("group_id", "==", id).orderBy('created_on', 'desc');
+  const snapshot = await groupRegRef.get();
 
   if (snapshot.empty) {
     res.send('no groups');
@@ -384,7 +384,6 @@ app.post('/creategroup',function(req,res){
 
   
 app.post('/joingroup',function(req,res){   
-
 
     let data = {
       group_id:req.body.group_id,
