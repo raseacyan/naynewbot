@@ -324,7 +324,10 @@ app.get('/group/:id', async (req,res) => {
       entries.push(entry);
 
       groupInfo.total_reg += 1;
-      groupInfo.min_required_reg = doc.data().type;       
+      groupInfo.min_required_reg = doc.data().type;  
+      groupInfo.group_name = doc.data().group_name;
+      groupInfo.type = doc.data().type;
+      groupInfo.group_id = doc.data().group_id;    
        
     }); 
 
@@ -335,9 +338,9 @@ app.get('/group/:id', async (req,res) => {
             name : sess.student_name
     }   
 
-    console.log('groupInfo',groupInfo);
+    console.log('groupInfo', groupInfo);
 
-    res.render('mcc/group.ejs', {entries:entries, current_student:current_student});
+    res.render('mcc/group.ejs', {entries:entries, current_student:current_student, group_info: groupInfo});
     
   }
     

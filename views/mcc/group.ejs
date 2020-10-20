@@ -7,8 +7,8 @@
 
 
 
-<h3><%= entries[0].group_name  %> by <%= entries[0].student_name  %></h3>
-<h3>students<h3>
+<h3><%= group_info.group_name  %></h3>
+<h3>students</h3>
 <ul>
 
 <ul>
@@ -16,6 +16,14 @@
      <li><%= entry.student_name  %></li>
 <% }); %>
 </ul>
+
+<form action="joingroup" method="post">
+<input type="hidden" name="group_id" value="<%= group_info.id %>"/>
+<input type="hidden" name="name" value="<%= group_info.group_name  %>"/>
+<input type="hidden" name="student_name" value="<%= current_student.id  %>"/>
+<input type="hidden" name="student_name" value="<%= current_student.name  %>"/>
+
+</form>
 
 
 
