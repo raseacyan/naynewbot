@@ -390,6 +390,7 @@ app.post('/joingroup',function(req,res){
       group_name:req.body.group_name,
       student_id:req.body.student_id,
       student_name:req.body.student_name,
+      type: req.body.type,
     }  
 
     data.created_on = new Date();
