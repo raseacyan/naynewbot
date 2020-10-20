@@ -374,13 +374,7 @@ app.get('/group/:id', async (req,res) => {
 
 
 
-
-
-
-
-
 app.post('/creategroup',function(req,res){   
-
 
     let data = {
       name:req.body.name,
@@ -391,8 +385,9 @@ app.post('/creategroup',function(req,res){
 
     data.created_on = new Date();
 
-    db.collection('groups').add(data).then((success)=>{
-        res.redirect('hall');          
+    db.collection('groups').add(data).then((success)=>{     
+        console.log(success);   
+        res.redirect('groups');          
     }).catch((err)=>{
         console.log('Error', err);
     });       
@@ -412,7 +407,7 @@ app.post('/joingroup',function(req,res){
     data.created_on = new Date();
 
     db.collection('groupregisters').add(data).then((success)=>{
-        res.redirect('hall');          
+        res.redirect('groups');          
     }).catch((err)=>{
         console.log('Error', err);
     });       

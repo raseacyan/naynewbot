@@ -10,7 +10,7 @@
 <% groups.forEach(function(group){ %>
      <li><%= group.name  %> by <%= group.created_by  %> 
      	<%if(group.created_by_id != current_student.id){%>
-	        <a href="group/<%= group.id %>">Join</a>
+	        <a href="../group/<%= group.id %>">Join</a>
     	<%}%> 
      </li>
 <% }); %>
