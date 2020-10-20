@@ -378,7 +378,7 @@ app.post('/creategroup',function(req,res){
 
     let data = {
       name:req.body.name,
-      type:req.body.type,
+      type:parseInt(req.body.type),
       created_by:req.body.created_by,
       created_by_id:req.body.created_by_id,
     }  
@@ -386,14 +386,29 @@ app.post('/creategroup',function(req,res){
     data.created_on = new Date();
 
     db.collection('groups').add(data).then((success)=>{     
-        console.log('KEY:' ,success._path.segments[1]);   
-        res.redirect('groups');          
+        //console.log('KEY:' ,success._path.segments[1]);
+        let data2 = {
+          group_id:success._path.segments[1],
+          group_name:data.name,
+          student_id:data.created_by_id,
+          student_name:data.created_by,
+          type: data.type,
+        } 
+
+        data2.created_on = data.created_on;
+
+        db.collection('groupregisters').add(data2).then((success)=>{
+            res.redirect('groups');          
+        }).catch((err)=>{
+            console.log('Error', err);
+        });  
+                 
     }).catch((err)=>{
         console.log('Error', err);
     });       
 });
 
-
+  
 app.post('/joingroup',function(req,res){   
 
 
