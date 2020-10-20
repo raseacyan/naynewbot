@@ -302,6 +302,8 @@ app.get('/groups', async (req,res) => {
     res.render('mcc/groups.ejs', {groups:0, current_student:current_student});
 
   }else{
+
+    console.log('Has Groups'); 
      
     let groups = [];
     
