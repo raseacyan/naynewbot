@@ -41,12 +41,11 @@ let userInputs = [];
 let first_reg = false;
 let customer = [];
 
-
-
-
 let temp_points = 0;
 let cart_total = 0;
 let cart_discount = 0;
+
+
 
 /*
 var storage = multer.diskStorage({
@@ -330,12 +329,61 @@ app.post('/shop_register', async(req,res)=>{
       callSend(user_id, response);
     }else{
       console.log('reg error');
+    } 
+
+    
+    
+});
+
+
+app.get('/shop_sell',function(req,res){ 
+    res.render('phone/shop_sellphones.ejs', {uid:user_id});
+});
+
+
+//save data 
+app.post('/shop_sell',upload.single('image'),async(req,res)=>{   
+    let title = req.body.title;
+    let price = parseInt(req.body.price);
+    let description = req.body.description;    
+    let created_on = new Date();
+    let fbid = req.body.uid;
+    let shop_name = '';
+
+    const shopRef = db.collection('shops').where("fbid", "==",fbid);
+    const snapshot = await shopRef.get();
+
+    if (snapshot.empty) {
+      res.send('no shop');
+    }else{
+      snapshot.forEach(doc => {      
+        shop_name = doc.id;           
+      });
     }
 
-   
-
-    
-    
+    let file = req.file;
+    if (file) {
+      uploadImageToStorage(file).then((img_url) => {
+          db.collection('newphones').add({
+            fbid: fbid,
+            title: title,
+            price: price,
+            description: description,          
+            shop_name: shop_name,
+            image: img_url,
+            created_on: created_on
+            }).then(success => {   
+              console.log("DATA SAVED")
+              let text = "Thank you. You have added a post";      
+              let response = {"text": text};
+              callSend(user_id, response);     
+            }).catch(error => {
+              console.log(error);
+            }); 
+      }).catch((error) => {
+        console.error(error);
+      });
+    }      
 });
 
 
@@ -731,6 +779,21 @@ const shopActions = async(sender_psid) =>{
         callSend(sender_psid, response);      
     }else{
       // shop already registerd with the fbid  
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+
+        product = doc.data();
+        
+        product.id = doc.id; 
+        
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;   
+
+        data.push(product);
+        
+      }); 
 
       let response = {
             "attachment": {
