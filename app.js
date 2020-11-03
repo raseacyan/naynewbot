@@ -408,8 +408,8 @@ function handleQuickReply(sender_psid, received_message) {
       case "member":          
           memberActions(sender_psid);
         break;
-      case "sell-phone":          
-          sellPhone(sender_psid);
+      case "shop":          
+          shopActions(sender_psid);
         break;                
       default:
           defaultReply(sender_psid);
@@ -663,6 +663,97 @@ const memberActions = (sender_psid) =>{
         }
       }
     callSendAPI(sender_psid, response);
+}
+
+
+
+const shopActions = (sender_psid) =>{
+
+    const shopsRef = db.collection('orders').where("fbid", "==", user_id).limit(1);
+    const snapshot = await ordersRef.get();
+
+
+    if (snapshot.empty) {
+      //no shop registerd with the fbid 
+      let response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [{
+                  "title": "Register Your Shop",                  
+                  "buttons": [              
+                    {
+                      "type": "web_url",
+                      "title": "Register",
+                      "url":APP_URL+"shop_register/",
+                       "webview_height_ratio": "full",
+                      "messenger_extensions": true,          
+                    },
+                    
+                  ],
+                }]
+              }
+            }
+          }  
+        callSend(sender_psid, response);      
+    }else{
+      // shop already registerd with the fbid  
+
+      let response = {
+            "attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [
+                {
+                  "title": "Sell New Phone",                  
+                  "buttons": [              
+                    {
+                      "type": "web_url",
+                      "title": "sell phone",
+                      "url":APP_URL+"shop_sell/",
+                       "webview_height_ratio": "full",
+                      "messenger_extensions": true,          
+                    },
+                    
+                  ],
+                },
+                {
+                  "title": "View Orders",                  
+                  "buttons": [              
+                    {
+                      "type": "web_url",
+                      "title": "sell phone",
+                      "url":APP_URL+"shop_orders/",
+                       "webview_height_ratio": "full",
+                      "messenger_extensions": true,          
+                    },
+                    
+                  ],
+                },
+                {
+                  "title": "View Orders",                  
+                  "buttons": [              
+                    {
+                      "type": "web_url",
+                      "title": "sell phone",
+                      "url":APP_URL+"shop_phoneslist/",
+                       "webview_height_ratio": "full",
+                      "messenger_extensions": true,          
+                    },
+                    
+                  ],
+                }
+
+                ]
+              }
+            }
+          }  
+        callSend(sender_psid, response); 
+
+    }
+  
 }
 
 
