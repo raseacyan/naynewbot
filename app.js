@@ -779,21 +779,7 @@ const shopActions = async(sender_psid) =>{
         callSend(sender_psid, response);      
     }else{
       // shop already registerd with the fbid  
-      snapshot.forEach(doc => { 
-        
-        let product = {}; 
-
-        product = doc.data();
-        
-        product.id = doc.id; 
-        
-        let d = new Date(doc.data().created_on._seconds);
-        d = d.toString();
-        product.created_on = d;   
-
-        data.push(product);
-        
-      }); 
+      
 
       let response = {
             "attachment": {
