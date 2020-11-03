@@ -496,9 +496,9 @@ app.get('/shop_phoneslist', async(req,res)=>{
 
 
 
-app.get('/shop_orders/:user_id', async(req,res)=>{ 
+app.get('/shop_orders', async(req,res)=>{ 
 
-  let user_id = req.params.user_id;
+ 
   let shop_id = "";
 
   const userRef = db.collection('shops').where("fbid", "==", user_id).limit(1);
@@ -535,7 +535,7 @@ app.get('/shop_orders/:user_id', async(req,res)=>{
         res.render('phone/vieworders.ejs', {data:data, uid:user_id});
 
     }
-     
+
   }
    
 
@@ -984,7 +984,7 @@ const shopActions = async(sender_psid) =>{
                     {
                       "type": "web_url",
                       "title": "view orders",
-                      "url":APP_URL+"shop_orders/user_id",
+                      "url":APP_URL+"shop_orders/",
                        "webview_height_ratio": "full",
                       "messenger_extensions": true,          
                     },
