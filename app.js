@@ -112,6 +112,8 @@ app.post('/webhook', (req, res) => {
 
       sess.uid = sender_psid;
 
+      console.log('inside page object', sess.uid);
+
       if(!userInputs[user_id]){
         userInputs[user_id] = {};
         customer[user_id] = {};
