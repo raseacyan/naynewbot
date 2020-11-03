@@ -323,7 +323,7 @@ app.post('/shop_register', async(req,res)=>{
 
     console.log('test', addShop.exists);
 
-    if(addShop.exists){
+    if(addShop){
       let text = "Thank you. You have registered your shop";      
       let response = {"text": text};
       callSend(user_id, response);
