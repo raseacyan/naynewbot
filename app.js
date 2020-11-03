@@ -316,7 +316,7 @@ app.post('/shop_register', async(req,res)=>{
 
     let data = {
       name:req.body.name,
-      address:req.body.address
+      address:req.body.address,
       fbid: user_id
     }
 
