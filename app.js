@@ -312,6 +312,28 @@ app.get('/shop_register',function(req,res){
 });
 
 
+app.post('/shop_register', async(req,res)=>{ 
+
+    let data = {
+      name:req.body.name,
+      address:req.body.address
+    }
+
+    const addShop = await db.collection('shops').add(data);
+
+    addShop.then(()=>{
+      let text = "Thank you. You have registered your shop";      
+      let response = {"text": text};
+      callSend(user_id, response);
+    }).cathc((error)=>{
+      console.error('reg error:',error);
+    });
+
+    
+    
+});
+
+
 //end secondhandshop routes
 
 
