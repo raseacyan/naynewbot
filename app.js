@@ -211,7 +211,7 @@ app.get('/sellphone',function(req,res){
 });
 
 //save data 
-app.post('/sellphone',upload.single('file'),function(req,res){ 
+app.post('/sellphone',upload.single('image'),function(req,res){ 
 
 
   
