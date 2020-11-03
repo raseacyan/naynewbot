@@ -211,15 +211,13 @@ app.get('/sellphone',function(req,res){
 });
 
 //save data 
-app.post('/sellphone',upload.single('image'),function(req,res){ 
-
-
-  
+app.post('/sellphone',upload.single('image'),function(req,res){   
     let title = req.body.title;
     let price = parseInt(req.body.price);
     let description = req.body.description;
     let seller_name = req.body.seller_name;
     let seller_phone = req.body.seller_phone;
+    let created_on = new Date();
 
     let file = req.file;
     if (file) {
@@ -231,7 +229,8 @@ app.post('/sellphone',upload.single('image'),function(req,res){
             description: description,          
             seller_name: seller_name,
             seller_phone: seller_phone,
-            image: img_url
+            image: img_url,
+            created_on: created_on
             }).then(success => {   
               console.log("DATA SAVED")
               let text = "Thank you. You have added a post";      
@@ -247,9 +246,31 @@ app.post('/sellphone',upload.single('image'),function(req,res){
 });
 
 
-app.get('/myphones',function(req,res){    
-    sess = req.session;
-    res.render('phone/myphones.ejs', {uid:user_id});
+app.get('/myphones', async(req,res)=>{    
+  const phonesRef = db.collection('phones').orderBy('created_on', 'desc');
+  const snapshot = await phonesRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+      let data = []; 
+
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+        product = doc.data();        
+        product.id = doc.id;         
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+        data.push(product);
+        
+      });
+
+      console.log('myphones', data); 
+      res.render('myphones.ejs', {data:data});
+
+  }
 });
 
 app.get('/buyphone',function(req,res){    
