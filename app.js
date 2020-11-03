@@ -509,34 +509,37 @@ app.get('/shop_orders/:user_id', async(req,res)=>{
   }else{
     snapshot.forEach(doc => { 
         shop_id = doc.id;             
-    }); 
+    });
+
+    const ordersRef = db.collection('orders').where("shop_id", "==", shop_id);
+    const snapshot2 = await ordersRef.get();
+
+    if (snapshot2.empty) {
+      res.send('no data');
+    }else{
+        let data = []; 
+
+        snapshot2.forEach(doc => { 
+          
+          let product = {}; 
+          product = doc.data();        
+          product.id = doc.id;         
+          let d = new Date(doc.data().created_on._seconds);
+          d = d.toString();
+          product.created_on = d;
+          data.push(product);        
+        });
+
+        console.log('View Orders', data);
+     
+        res.render('phone/vieworders.ejs', {data:data, uid:user_id});
+
+    }
+     
   }
    
 
-  const ordersRef = db.collection('orders').where("shop_id", "==", shop_id);
-  const snapshot2 = await ordersRef.get();
-
-  if (snapshot2.empty) {
-    res.send('no data');
-  }else{
-      let data = []; 
-
-      snapshot2.forEach(doc => { 
-        
-        let product = {}; 
-        product = doc.data();        
-        product.id = doc.id;         
-        let d = new Date(doc.data().created_on._seconds);
-        d = d.toString();
-        product.created_on = d;
-        data.push(product);        
-      });
-
-      console.log('View Orders', data);
-   
-      res.render('phone/vieworders.ejs', {data:data, uid:user_id});
-
-  }
+  
 });
 //remove listng
 app.post('/deletenewphone',async(req,res)=>{    
