@@ -280,7 +280,7 @@ app.get('/buyphone',function(req,res){
 app.post('/delete',async(req,res)=>{    
     let pid = req.body.pid;
 
-    const res = await db.collection('phones').doc(pid).delete();
+    const delProduct = await db.collection('phones').doc(pid).delete();
     let text = "Thank you. You have deleted a post";      
     let response = {"text": text};
     callSend(user_id, response); 
