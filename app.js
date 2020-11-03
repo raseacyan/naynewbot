@@ -675,7 +675,7 @@ const memberActions = (sender_psid) =>{
 const shopActions = async(sender_psid) =>{
 
     const shopsRef = db.collection('orders').where("fbid", "==", user_id).limit(1);
-    const snapshot = await ordersRef.get();
+    const snapshot = await shopsRef.get();
 
 
     if (snapshot.empty) {
