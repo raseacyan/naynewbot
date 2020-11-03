@@ -19,18 +19,19 @@
   <body>
   <h1>My Phones</h1>
 
-  <% data.forEach(function(post){ %>
+  <% data.forEach(function(product){ %>
 
   	<div class="product">
-	  	<img src="<%= post.image %>" />
-	  	<h4><%= post.title %></h4>
-	  	<p><%= post.price %></p>
-	  	<p><%= post.description %></p>
-	  	<p><%= post.seller_name %></p>
-	  	<p><%= post.seller_phone %></p>
+	  	<img src="<%= product.image %>" />
+	  	<h4>$<%= product.title %> </h4>
+	  	<p>price: $<%= product.price %></p>
+	  	<p>description: <%= product.description %></p>
+	  	<p>seller: <%= product.seller_name %></p>
+	  	<p><a href="tel:<%= post.seller_phone %>">contact seller</a></p>
 
-	    <form action="../cart" method="post">
-	    
+	    <form action="../delete" method="post">
+	    	<input type="hidden" name="pid" value="<%= product.id %>">
+	    	<input type="submit" name="submit" value="remove"/>
 	    </form> 	
   	</div>
 

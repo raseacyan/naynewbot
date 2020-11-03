@@ -266,7 +266,7 @@ app.get('/myphones', async(req,res)=>{
         data.push(product);        
       });
    
-      res.render('phone/myphones.ejs', {data:data});
+      res.render('phone/myphones.ejs', {data:data, uid:user_id});
 
   }
 });
