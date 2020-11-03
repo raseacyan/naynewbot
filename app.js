@@ -201,6 +201,8 @@ app.get('/privatepage',function(req,res){
 
 app.get('/sellphone',function(req,res){ 
     sess = req.session;
+
+    console.log('SESSUID', sess.uid);
     res.render('phone/sellphone.ejs', {uid:sess.uid});
 });
 
