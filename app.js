@@ -225,6 +225,7 @@ app.post('/sellphone',upload.single('image'),function(req,res){
     if (file) {
       uploadImageToStorage(file).then((img_url) => {
           db.collection('phones').add({
+            fbid: user_id;
             title: title,
             price: price,
             description: description,          
