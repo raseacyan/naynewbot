@@ -297,7 +297,7 @@ app.get('/buyphone', async(req,res)=>{
 });
 
 app.get('/buynewphone', async(req,res)=>{    
-    const phonesRef = db.collection('newphones').orderBy('created_on', 'desc');
+  const phonesRef = db.collection('newphones').orderBy('created_on', 'desc');
   const snapshot = await phonesRef.get();
 
   if (snapshot.empty) {
@@ -319,6 +319,25 @@ app.get('/buynewphone', async(req,res)=>{
       res.render('phone/buynewphones.ejs', {data:data, uid:user_id});
 
   }
+});
+
+
+app.get('/order/:pid', async(req,res)=>{  
+  let pid = req.params.pid; 
+
+  const phonesRef = db.collection('newphones').doc(pid);
+  const doc = await phonesRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+    
+    let data = doc.data();
+    data.doc_id = doc.id;
+
+    console.log('GET ORDER', data);
+    
+    res.render('phone/order.ejs', {data:data});
+  }  
 });
 
 //remove listng
@@ -794,7 +813,7 @@ const memberActions = (sender_psid) =>{
               "buttons": [              
                 {
                   "type": "web_url",
-                  "title": "buy phone",
+                  "title": "buy used phone",
                   "url":APP_URL+"buyphone/",
                    "webview_height_ratio": "full",
                   "messenger_extensions": true,          
@@ -807,7 +826,7 @@ const memberActions = (sender_psid) =>{
               "buttons": [              
                 {
                   "type": "web_url",
-                  "title": "buy phone",
+                  "title": "buy new phone",
                   "url":APP_URL+"buynewphone/",
                    "webview_height_ratio": "full",
                   "messenger_extensions": true,          
