@@ -96,7 +96,7 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {  
 
-  sess = req.session;
+  
    
   // Parse the request body from the POST
   let body = req.body;  
@@ -110,6 +110,9 @@ app.post('/webhook', (req, res) => {
       
       user_id = sender_psid; 
 
+      sess = req.session;
+      sess.uid = sender_psid;
+      console.log('inside page object', sess.uid);
       
 
       if(!userInputs[user_id]){
@@ -119,9 +122,8 @@ app.post('/webhook', (req, res) => {
                
 
       if (webhook_event.message) {
-      sess.uid = sender_psid;
-      console.log('inside page object', sess.uid);
       
+
         if(webhook_event.message.quick_reply){
             handleQuickReply(sender_psid, webhook_event.message.quick_reply.payload);
           }else{
