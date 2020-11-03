@@ -272,8 +272,28 @@ app.get('/myphones', async(req,res)=>{
 });
 
 app.get('/buyphone',function(req,res){    
-    sess = req.session;
-    res.render('phone/buyphones.ejs', {uid:user_id});
+    const phonesRef = db.collection('phones').orderBy('created_on', 'desc');
+  const snapshot = await phonesRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+      let data = []; 
+
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+        product = doc.data();        
+        product.id = doc.id;         
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+        data.push(product);        
+      });
+   
+      res.render('phone/buyphones.ejs', {data:data, uid:user_id});
+
+  }
 });
 
 //remove listng
