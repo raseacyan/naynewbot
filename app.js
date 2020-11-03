@@ -321,6 +321,8 @@ app.post('/shop_register', async(req,res)=>{
 
     const addShop = await db.collection('shops').add(data);
 
+    console.log(addShop);
+
     addShop.then(()=>{
       let text = "Thank you. You have registered your shop";      
       let response = {"text": text};
