@@ -317,7 +317,7 @@ app.post('/shop_register', async(req,res)=>{
     let data = {
       name:req.body.name,
       address:req.body.address,
-      fbid: user_id
+      fbid: req.body.uid
     }
 
     const addShop = await db.collection('shops').add(data);
