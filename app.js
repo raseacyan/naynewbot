@@ -271,7 +271,7 @@ app.get('/myphones', async(req,res)=>{
   }
 });
 
-app.get('/buyphone',function(req,res){    
+app.get('/buyphone', async(req,res)=>{    
     const phonesRef = db.collection('phones').orderBy('created_on', 'desc');
   const snapshot = await phonesRef.get();
 
