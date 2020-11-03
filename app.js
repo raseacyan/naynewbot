@@ -218,12 +218,13 @@ app.post('/sellphone',upload.single('image'),function(req,res){
     let seller_name = req.body.seller_name;
     let seller_phone = req.body.seller_phone;
     let created_on = new Date();
+    let fbid = req.body.uid;
 
     let file = req.file;
     if (file) {
       uploadImageToStorage(file).then((img_url) => {
           db.collection('phones').add({
-            fbid: user_id,
+            fbid: fbid,
             title: title,
             price: price,
             description: description,          
