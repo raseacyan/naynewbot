@@ -100,6 +100,7 @@ app.post('/webhook', (req, res) => {
    
   // Parse the request body from the POST
   let body = req.body;  
+  sess = req.session;
 
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
@@ -110,9 +111,9 @@ app.post('/webhook', (req, res) => {
       
       user_id = sender_psid; 
 
-      sess = req.session;
+      
       sess.uid = sender_psid;
-      console.log('inside page object', sess.uid);
+     
       
 
       if(!userInputs[user_id]){
@@ -208,17 +209,17 @@ app.get('/sellphone',function(req,res){
     sess = req.session;
 
     console.log('SESSUID', sess.uid);
-    res.render('phone/sellphone.ejs', {uid:sess.uid});
+    res.render('phone/sellphone.ejs', {uid:user_id});
 });
 
 app.get('/myphones',function(req,res){    
     sess = req.session;
-    res.render('phone/myphones.ejs', {uid:sess.uid});
+    res.render('phone/myphones.ejs', {uid:user_id});
 });
 
 app.get('/buyphone',function(req,res){    
     sess = req.session;
-    res.render('phone/buyphones.ejs', {uid:sess.uid});
+    res.render('phone/buyphones.ejs', {uid:user_id});
 });
 
 
