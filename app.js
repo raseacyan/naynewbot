@@ -211,7 +211,12 @@ app.get('/sellphone',function(req,res){
 });
 
 //save data 
-app.post('/sellphone',function(req,res){   
+app.post('/sellphone',function(req,res){ 
+
+    console.log('inside post sellphone', req.body); 
+
+
+    /* 
     let title = req.body.title;
     let price = req.body.price;
     let description = req.body.description;
@@ -239,7 +244,7 @@ app.post('/sellphone',function(req,res){
       }).catch((error) => {
         console.error(error);
       });
-    }       
+    }  */     
 });
 
 
