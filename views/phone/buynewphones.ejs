@@ -49,8 +49,13 @@
 	  	<h4>$<%= product.title %> </h4>
 	  	<p>price: $<%= product.price %></p>
 	  	<p>description: <%= product.description %></p>
-	  	<p>seller: <%= product.seller_name %></p>
-	  	<p>Contace: <%= product.seller_phone %> <a href="tel:<%= product.seller_phone %>">call</a></p>
+	  	<p>shop: <%= product.shop_name %></p>
+
+
+      <a href="../order/<%= product.id %>">Order</a>
+	  	
+
+     
 	    	
   	</div>
 
