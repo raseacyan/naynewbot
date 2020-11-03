@@ -514,14 +514,14 @@ app.get('/shop_orders/:user_id', async(req,res)=>{
    
 
   const ordersRef = db.collection('orders').where("shop_id", "==", shop_id);
-  const snapshot = await phonesRef.get();
+  const snapshot2 = await ordersRef.get();
 
-  if (snapshot.empty) {
+  if (snapshot2.empty) {
     res.send('no data');
   }else{
       let data = []; 
 
-      snapshot.forEach(doc => { 
+      snapshot2.forEach(doc => { 
         
         let product = {}; 
         product = doc.data();        
