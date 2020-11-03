@@ -211,12 +211,10 @@ app.get('/sellphone',function(req,res){
 });
 
 //save data 
-app.post('/sellphone',function(req,res){ 
-
-    console.log('inside post sellphone', req.body); 
+app.post('/sellphone',upload.single('file'),function(req,res){ 
 
 
-    /* 
+  
     let title = req.body.title;
     let price = req.body.price;
     let description = req.body.description;
@@ -226,7 +224,7 @@ app.post('/sellphone',function(req,res){
     let file = req.file;
     if (file) {
       uploadImageToStorage(file).then((img_url) => {
-          db.collection('webview').add({
+          db.collection('phones').add({
             title: title,
             price: price,
             description: description,          
@@ -244,7 +242,7 @@ app.post('/sellphone',function(req,res){
       }).catch((error) => {
         console.error(error);
       });
-    }  */     
+    }      
 });
 
 
