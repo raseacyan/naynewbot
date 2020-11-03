@@ -494,6 +494,50 @@ app.get('/shop_phoneslist', async(req,res)=>{
   }
 });
 
+
+
+app.get('/shop_orders/:user_id', async(req,res)=>{ 
+
+  let user_id = req.params.user_id;
+  let shop_id = "";
+
+  const userRef = db.collection('shops').where("fbid", "==", user_id).limit(1);
+  const snapshot = await userRef.get();
+
+  if (snapshot.empty) {
+    res.send('no user');
+  }else{
+    snapshot.forEach(doc => { 
+        shop_id = doc.id;             
+    }); 
+  }
+   
+
+  const ordersRef = db.collection('orders').where("shop_id", "==", shop_id);
+  const snapshot = await phonesRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+      let data = []; 
+
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+        product = doc.data();        
+        product.id = doc.id;         
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+        data.push(product);        
+      });
+
+      console.log('View Orders', data);
+   
+      res.render('phone/vieworders.ejs', {data:data, uid:user_id});
+
+  }
+});
 //remove listng
 app.post('/deletenewphone',async(req,res)=>{    
     let pid = req.body.pid;
@@ -936,8 +980,8 @@ const shopActions = async(sender_psid) =>{
                   "buttons": [              
                     {
                       "type": "web_url",
-                      "title": "sell phone",
-                      "url":APP_URL+"shop_orders/",
+                      "title": "view orders",
+                      "url":APP_URL+"shop_orders/user_id",
                        "webview_height_ratio": "full",
                       "messenger_extensions": true,          
                     },
