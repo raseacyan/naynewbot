@@ -296,7 +296,7 @@ function handleQuickReply(sender_psid, received_message) {
   received_message = received_message.toLowerCase();  
 
   switch(received_message) {                
-      case "memember":          
+      case "member":          
           memberActions(sender_psid);
         break;
       case "sell-phone":          
