@@ -296,6 +296,31 @@ app.get('/buyphone', async(req,res)=>{
   }
 });
 
+app.get('/buynewphone', async(req,res)=>{    
+    const phonesRef = db.collection('newphones').orderBy('created_on', 'desc');
+  const snapshot = await phonesRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+      let data = []; 
+
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+        product = doc.data();        
+        product.id = doc.id;         
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+        data.push(product);        
+      });
+   
+      res.render('phone/buynewphones.ejs', {data:data, uid:user_id});
+
+  }
+});
+
 //remove listng
 app.post('/delete',async(req,res)=>{    
     let pid = req.body.pid;
@@ -713,15 +738,15 @@ startsecondhandshop
 const startGreeting =(sender_psid) => {
   let response = {"text": "Welcome to secondhand shop"};
   let response2 = {
-    "text": "Select your activitiy",
+    "text": "Select your user type",
     "quick_replies":[
             {
               "content_type":"text",
-              "title":"Member",
+              "title":"Normal",
               "payload":"member",              
             },{
               "content_type":"text",
-              "title":"Shop",
+              "title":"Shop Sellers",
               "payload":"shop",             
             }
     ]
@@ -765,12 +790,25 @@ const memberActions = (sender_psid) =>{
               ],
             },
             {
-              "title": "Buy Phone",                       
+              "title": "Buy Used Phone",                       
               "buttons": [              
                 {
                   "type": "web_url",
                   "title": "buy phone",
                   "url":APP_URL+"buyphone/",
+                   "webview_height_ratio": "full",
+                  "messenger_extensions": true,          
+                },
+                
+              ],
+            },
+            {
+              "title": "Buy New Phone",                       
+              "buttons": [              
+                {
+                  "type": "web_url",
+                  "title": "buy phone",
+                  "url":APP_URL+"buynewphone/",
                    "webview_height_ratio": "full",
                   "messenger_extensions": true,          
                 },
