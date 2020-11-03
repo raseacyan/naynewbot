@@ -2,7 +2,7 @@
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const APP_URL = process.env.APP_URL;
 
-//new text
+//https://www.facebook.com/messages/t/102578394918324
 
 // Imports dependencies and set up http server
 const 
@@ -296,10 +296,12 @@ function handleQuickReply(sender_psid, received_message) {
   received_message = received_message.toLowerCase();  
 
   switch(received_message) {                
-      case "register":
-          current_question = "q1";
-          botQuestions(current_question, sender_psid);
-        break;                 
+      case "memember":          
+          memberActions(sender_psid);
+        break;
+      case "sell-phone":          
+          sellPhone(sender_psid);
+        break;                
       default:
           defaultReply(sender_psid);
   } 
@@ -481,7 +483,7 @@ startsecondhandshop
 const startGreeting =(sender_psid) => {
   let response = {"text": "Welcome to secondhand shop"};
   let response2 = {
-    "text": "Confirm to register",
+    "text": "Select your activitiy",
     "quick_replies":[
             {
               "content_type":"text",
@@ -498,6 +500,62 @@ const startGreeting =(sender_psid) => {
     return callSend(sender_psid, response2);
   });
 }
+
+const memberActions = (sender_psid) =>{
+  let  response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [
+            {
+              "title": "Sell Phone",                       
+              "buttons": [              
+                {
+                  "type": "web_url",
+                  "title": "sell phone",
+                  "url":APP_URL+"sellphone/",
+                   "webview_height_ratio": "full",
+                  "messenger_extensions": true,          
+                },
+                
+              ],
+            },
+            {
+              "title": "Sell Phone",                       
+              "buttons": [              
+                {
+                  "type": "web_url",
+                  "title": "my phones",
+                  "url":APP_URL+"myphones/",
+                   "webview_height_ratio": "full",
+                  "messenger_extensions": true,          
+                },
+                
+              ],
+            },
+            {
+              "title": "Sell Phone",                       
+              "buttons": [              
+                {
+                  "type": "web_url",
+                  "title": "buy phone",
+                  "url":APP_URL+"buyphone/",
+                   "webview_height_ratio": "full",
+                  "messenger_extensions": true,          
+                },
+                
+              ],
+            }
+
+
+            ]
+          }
+        }
+      }
+    callSendAPI(sender_psid, response);
+}
+
 
 /**************
 endsecondhandshop
