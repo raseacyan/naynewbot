@@ -306,6 +306,11 @@ app.post('/delete',async(req,res)=>{
     callSend(user_id, response); 
 });
 
+// register shop
+app.get('/shop_register',function(req,res){ 
+    res.render('phone/shop_register.ejs', {uid:user_id});
+});
+
 
 //end secondhandshop routes
 
@@ -667,7 +672,7 @@ const memberActions = (sender_psid) =>{
 
 
 
-const shopActions = (sender_psid) =>{
+const shopActions = async(sender_psid) =>{
 
     const shopsRef = db.collection('orders').where("fbid", "==", user_id).limit(1);
     const snapshot = await ordersRef.get();
