@@ -317,12 +317,12 @@ app.post('/shop_register', async(req,res)=>{
     let data = {
       name:req.body.name,
       address:req.body.address
+      fbid: user_id
     }
 
     const addShop = await db.collection('shops').add(data);
 
-    console.log('test', addShop.exists);
-
+    
     if(addShop){
       let text = "Thank you. You have registered your shop";      
       let response = {"text": text};
@@ -700,7 +700,7 @@ const memberActions = (sender_psid) =>{
 
 const shopActions = async(sender_psid) =>{
 
-    const shopsRef = db.collection('orders').where("fbid", "==", user_id).limit(1);
+    const shopsRef = db.collection('shops').where("fbid", "==", user_id).limit(1);
     const snapshot = await shopsRef.get();
 
 
