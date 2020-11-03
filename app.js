@@ -417,6 +417,16 @@ app.get('/shop_phoneslist', async(req,res)=>{
   }
 });
 
+//remove listng
+app.post('/deletenewphone',async(req,res)=>{    
+    let pid = req.body.pid;
+
+    const delProduct = await db.collection('phones').doc(pid).delete();
+    let text = "Thank you. You have deleted a post";      
+    let response = {"text": text};
+    callSend(user_id, response); 
+});
+
 
 //end secondhandshop routes
 
