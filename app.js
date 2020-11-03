@@ -94,13 +94,11 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {  
+
+  sess = req.session;
    
   // Parse the request body from the POST
-  let body = req.body;
-
-
-
-  
+  let body = req.body;  
 
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
@@ -110,6 +108,8 @@ app.post('/webhook', (req, res) => {
       let sender_psid = webhook_event.sender.id;       
       
       user_id = sender_psid; 
+
+      sess.uid = sender_psid;
 
       if(!userInputs[user_id]){
         userInputs[user_id] = {};
@@ -194,6 +194,23 @@ app.get('/privatepage',function(req,res){
     }else{
       res.send('you are not authorized to view this page');
     }   
+});
+
+//secondhandshop routes
+
+app.get('/sellphone',function(req,res){ 
+    sess = req.session;
+    res.render('phone/sellphone.ejs', {uid:sess.uid});
+});
+
+app.get('/myphones',function(req,res){    
+    sess = req.session;
+    res.render('phone/myphones.ejs', {uid:sess.uid});
+});
+
+app.get('/buyphone',function(req,res){    
+    sess = req.session;
+    res.render('phone/buyphones.ejs', {uid:sess.uid});
 });
 
 
@@ -522,7 +539,7 @@ const memberActions = (sender_psid) =>{
               ],
             },
             {
-              "title": "Sell Phone",                       
+              "title": "My Phones",                       
               "buttons": [              
                 {
                   "type": "web_url",
@@ -535,7 +552,7 @@ const memberActions = (sender_psid) =>{
               ],
             },
             {
-              "title": "Sell Phone",                       
+              "title": "Buy Phone",                       
               "buttons": [              
                 {
                   "type": "web_url",
