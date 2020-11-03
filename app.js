@@ -216,7 +216,7 @@ app.post('/sellphone',upload.single('image'),function(req,res){
 
   
     let title = req.body.title;
-    let price = req.body.price;
+    let price = parseInt(req.body.price);
     let description = req.body.description;
     let seller_name = req.body.seller_name;
     let seller_phone = req.body.seller_phone;
