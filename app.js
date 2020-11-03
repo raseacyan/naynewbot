@@ -205,12 +205,43 @@ app.get('/privatepage',function(req,res){
 
 //secondhandshop routes
 
+//sell phone form
 app.get('/sellphone',function(req,res){ 
-    sess = req.session;
-
-    console.log('SESSUID', sess.uid);
     res.render('phone/sellphone.ejs', {uid:user_id});
 });
+
+//save data 
+app.post('/sellphone',function(req,res){   
+    let title = req.body.title;
+    let price = req.body.price;
+    let description = req.body.description;
+    let seller_name = req.body.seller_name;
+    let seller_phone = req.body.seller_phone;
+
+    let file = req.file;
+    if (file) {
+      uploadImageToStorage(file).then((img_url) => {
+          db.collection('webview').add({
+            title: title,
+            price: price,
+            description: description,          
+            seller_name: seller_name,
+            seller_phone: seller_phone,
+            image: img_url
+            }).then(success => {   
+              console.log("DATA SAVED")
+              let text = "Thank you. You have added a post";      
+              let response = {"text": text};
+              callSend(user_id, response);     
+            }).catch(error => {
+              console.log(error);
+            }); 
+      }).catch((error) => {
+        console.error(error);
+      });
+    }       
+});
+
 
 app.get('/myphones',function(req,res){    
     sess = req.session;
@@ -221,6 +252,9 @@ app.get('/buyphone',function(req,res){
     sess = req.session;
     res.render('phone/buyphones.ejs', {uid:user_id});
 });
+
+
+//end secondhandshop routes
 
 
 
@@ -240,11 +274,7 @@ app.post('/webview',upload.single('file'),function(req,res){
       let name  = req.body.name;
       let email = req.body.email;
       let img_url = "";
-      let sender = req.body.sender;  
-
-      console.log("REQ FILE:",req.file);
-
-
+      let sender = req.body.sender; 
 
       let file = req.file;
       if (file) {
