@@ -340,6 +340,39 @@ app.get('/order/:pid', async(req,res)=>{
   }  
 });
 
+
+app.post('/order', async(req,res)=>{  
+  
+
+    let data = {
+      p_id:req.body.p_id,
+      p_name:req.body.p_name,
+      shop_id:req.body.shop_id,
+      shop_name:req.body.shop_name,
+      price:parseInt(req.body.price),
+      qty:parseInt(req.body.qty),
+      cus_name:req.body.cus_name,
+      cus_address:req.body.cus_address,
+      cus_phone:req.body.cus_phone,
+      cus_fbid: req.body.uid,  
+      total_price: parseInt(req.body.qty) * parseInt(req.body.price),
+      created_on: new Date()
+    }
+
+
+    const addOrder = await db.collection('orders').add(data);
+
+    
+    if(addOrder){
+      let text = "Thank you. You have placed an order. The shop will contact you";      
+      let response = {"text": text};
+      callSend(user_id, response);
+    }else{
+      console.log('reg error');
+    }
+
+});
+
 //remove listng
 app.post('/delete',async(req,res)=>{    
     let pid = req.body.pid;
