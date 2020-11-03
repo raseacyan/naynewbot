@@ -348,6 +348,7 @@ app.post('/shop_sell',upload.single('image'),async(req,res)=>{
     let description = req.body.description;    
     let created_on = new Date();
     let fbid = req.body.uid;
+    let shop_id = '';
     let shop_name = '';
 
     const shopRef = db.collection('shops').where("fbid", "==",fbid);
@@ -357,7 +358,8 @@ app.post('/shop_sell',upload.single('image'),async(req,res)=>{
       res.send('no shop');
     }else{
       snapshot.forEach(doc => {      
-        shop_name = doc.id;           
+        shop_id = doc.id;
+        shop_name = doc.data().name;           
       });
     }
 
@@ -370,7 +372,8 @@ app.post('/shop_sell',upload.single('image'),async(req,res)=>{
             fbid: fbid,
             title: title,
             price: price,
-            description: description,          
+            description: description,    
+            shop_id: shop_id,      
             shop_name: shop_name,
             image: img_url,
             created_on: created_on
@@ -386,6 +389,32 @@ app.post('/shop_sell',upload.single('image'),async(req,res)=>{
         console.error(error);
       });
     }      
+});
+
+
+app.get('/shop_phoneslist', async(req,res)=>{    
+  const phonesRef = db.collection('newphones').where("fbid", "==", user_id);
+  const snapshot = await phonesRef.get();
+
+  if (snapshot.empty) {
+    res.send('no data');
+  }else{
+      let data = []; 
+
+      snapshot.forEach(doc => { 
+        
+        let product = {}; 
+        product = doc.data();        
+        product.id = doc.id;         
+        let d = new Date(doc.data().created_on._seconds);
+        d = d.toString();
+        product.created_on = d;
+        data.push(product);        
+      });
+   
+      res.render('phone/shop_phoneslist.ejs', {data:data, uid:user_id});
+
+  }
 });
 
 
