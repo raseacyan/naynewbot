@@ -321,15 +321,17 @@ app.post('/shop_register', async(req,res)=>{
 
     const addShop = await db.collection('shops').add(data);
 
-    console.log(addShop);
+    console.log('test', addShop.exists);
 
-    addShop.then(()=>{
+    if(addShop.exists){
       let text = "Thank you. You have registered your shop";      
       let response = {"text": text};
       callSend(user_id, response);
-    }).cathc((error)=>{
-      console.error('reg error:',error);
-    });
+    }else{
+      console.log('reg error');
+    }
+
+   
 
     
     
