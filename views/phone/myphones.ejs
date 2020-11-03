@@ -52,7 +52,7 @@
 	  	<p>seller: <%= product.seller_name %></p>
 	  	<p>Contace: <%= product.seller_phone %> <a href="tel:<%= product.seller_phone %>">call</a></p>
 
-	    <form action="../delete" method="post">
+	    <form id="form" action="../delete" method="post">
 	    	<input type="hidden" name="pid" value="<%= product.id %>">
 	    	<input type="submit" name="submit" value="remove"/>
 	    </form> 	
