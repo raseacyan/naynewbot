@@ -263,12 +263,10 @@ app.get('/myphones', async(req,res)=>{
         let d = new Date(doc.data().created_on._seconds);
         d = d.toString();
         product.created_on = d;
-        data.push(product);
-        
+        data.push(product);        
       });
-
-      console.log('myphones', data); 
-      res.render('myphones.ejs', {data:data});
+   
+      res.render('phone/myphones.ejs', {data:data});
 
   }
 });

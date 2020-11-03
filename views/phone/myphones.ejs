@@ -1,1 +1,42 @@
-show my own phones
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    	.product{
+    		width:200px;   
+    		border:1px solid black; 		
+    	}
+    	.product img{
+    		width:100%;
+    		max-width: 200px;
+    	}
+    </style>
+ </head>
+
+  <body>
+  <h1>My Phones</h1>
+
+  <% data.forEach(function(post){ %>
+
+  	<div class="product">
+	  	<img src="<%= post.image %>" />
+	  	<h4><%= post.title %></h4>
+	  	<p><%= post.price %></p>
+	  	<p><%= post.description %></p>
+	  	<p><%= post.seller_name %></p>
+	  	<p><%= post.seller_phone %></p>
+
+	    <form action="../cart" method="post">
+	    
+	    </form> 	
+  	</div>
+
+     
+  <% }); %> 
+  
+  </body>
+
+</html>
