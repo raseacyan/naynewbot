@@ -336,7 +336,7 @@ app.get('/order/:pid', async(req,res)=>{
 
     console.log('GET ORDER', data);
     
-    res.render('phone/order.ejs', {data:data});
+    res.render('phone/order.ejs', {data:data, uid:user_id});
   }  
 });
 
