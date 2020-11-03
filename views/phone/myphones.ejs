@@ -27,7 +27,7 @@
 	  	<p>price: $<%= product.price %></p>
 	  	<p>description: <%= product.description %></p>
 	  	<p>seller: <%= product.seller_name %></p>
-	  	<p><a href="tel:<%= post.seller_phone %>">contact seller</a></p>
+	  	<p><a href="tel:<%= product.seller_phone %>">contact seller</a></p>
 
 	    <form action="../delete" method="post">
 	    	<input type="hidden" name="pid" value="<%= product.id %>">
