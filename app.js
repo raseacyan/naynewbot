@@ -361,6 +361,8 @@ app.post('/shop_sell',upload.single('image'),async(req,res)=>{
       });
     }
 
+    console.log('SHOP NAME', shop_name);
+
     let file = req.file;
     if (file) {
       uploadImageToStorage(file).then((img_url) => {
