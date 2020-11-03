@@ -247,7 +247,7 @@ app.post('/sellphone',upload.single('image'),function(req,res){
 
 
 app.get('/myphones', async(req,res)=>{    
-  const phonesRef = db.collection('phones').orderBy('created_on', 'desc');
+  const phonesRef = db.collection('phones').where("fbid", "==", user_id);
   const snapshot = await phonesRef.get();
 
   if (snapshot.empty) {
