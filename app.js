@@ -739,7 +739,7 @@ const shopActions = async(sender_psid) =>{
                 "template_type": "generic",
                 "elements": [
                 {
-                  "title": "Sell New Phone",                  
+                  "title": "Sell Phone",                  
                   "buttons": [              
                     {
                       "type": "web_url",
@@ -765,11 +765,11 @@ const shopActions = async(sender_psid) =>{
                   ],
                 },
                 {
-                  "title": "View Orders",                  
+                  "title": "My Listing",                  
                   "buttons": [              
                     {
                       "type": "web_url",
-                      "title": "sell phone",
+                      "title": "phones list",
                       "url":APP_URL+"shop_phoneslist/",
                        "webview_height_ratio": "full",
                       "messenger_extensions": true,          
